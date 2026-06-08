@@ -9,7 +9,6 @@
   .scan{position:fixed;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(250,204,21,0.4) 50%,transparent 100%);animation:sd 5s linear infinite;pointer-events:none;z-index:1;}
   @keyframes sd{0%{top:0;opacity:0;}5%{opacity:1;}95%{opacity:1;}100%{top:100%;opacity:0;}}
   
-  /* Camada do Conteúdo Principal ACIMA do disco de vinil */
   .sa{position:relative;z-index:5;padding:28px 20px 140px;overflow-y:auto;height:100vh;scrollbar-width:none;}
   .sa::-webkit-scrollbar{display:none;}
   .ct{text-align:center;max-width:680px;margin:0 auto;}
@@ -31,13 +30,12 @@
   .sw .sn{color:#fde047;font-size:clamp(13px,3vw,15px);font-weight:500;letter-spacing:0.5px;}
   .dv2{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,0.4),rgba(34,197,94,0.4),transparent);margin-bottom:18px;}
   
-  /* ALINHAMENTO CORRIGIDO DOS BOTÕES DO MENU */
-  .btn{display:block;width:100%;border-radius:14px;padding:18px 55px 18px 20px;margin-bottom:12px;cursor:pointer;text-decoration:none;border:1px solid rgba(34,197,94,0.3);background:rgba(20,83,45,0.25);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);position:relative;overflow:hidden;transition:border-color .2s,background .2s;}
+  .btn{display:block;width:100%;border-radius:14px;padding:18px 50px 18px 20px;margin-bottom:12px;cursor:pointer;text-decoration:none;border:1px solid rgba(34,197,94,0.3);background:rgba(20,83,45,0.25);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);position:relative;overflow:hidden;transition:border-color .2s,background .2s;}
   .btn:hover{border-color:rgba(34,197,94,0.7);background:rgba(34,197,94,0.16);}
   .bp{border-color:rgba(34,197,94,0.55);background:rgba(34,197,94,0.14);}
   .bl{color:#fff;font-size:clamp(17px,4vw,22px);font-weight:700;display:flex;align-items:center;gap:10px;text-align:left;}
   .bl .dot{width:9px;height:9px;border-radius:50%;background:#4ade80;flex-shrink:0;}
-  .bs{color:rgba(134,239,172,0.6);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;padding-left:19px;text-align:left;}
+  .bs{color:rgba(134,239,172,0.6);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;padding-left:19px;text-align:left;line-height:1.4;}
   
   .ba-wp{position:absolute;right:20px;top:50%;transform:translateY(-50%);width:22px;height:22px;fill:#4ade80;opacity:0.85;transition:opacity 0.2s;}
   .btn:hover .ba-wp{opacity:1;}
@@ -60,19 +58,43 @@
   .rsub.open{display:block;}
   .rsb{display:block;width:100%;border-radius:10px;padding:14px 45px 14px 16px;margin-bottom:8px;text-decoration:none;border:1px solid rgba(59,130,246,0.22);background:rgba(30,64,175,0.07);color:#93c5fd;font-size:14px;font-weight:500;position:relative;transition:border-color .2s,background .2s;}
   .rsb:hover{border-color:rgba(59,130,246,0.55);background:rgba(30,64,175,0.14);}
-  .rsb .ba-wp{width:16px;height:16px;right:16px;}
+  .rsb .ba-wp{width:16px;height:16px;right:16px;fill:#93c5fd;}
   
-  .cflag{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px;}
-  .cstr{flex:1;height:2px;background:linear-gradient(90deg,transparent,rgba(34,197,94,0.6));}
-  .cstr.r{background:linear-gradient(90deg,rgba(34,197,94,0.6),transparent);}
+  #quizSection{display:none;margin-top:15px;}
+  .quiz-step{display:none;}
+  .quiz-step.active{display:block;}
+  .quiz-title{color:#fff;font-size:22px;font-weight:700;margin-bottom:24px;line-height:1.4;text-align:center;min-height:62px;}
+  .quiz-opt{display:block;width:100%;border-radius:12px;padding:18px 20px;margin-bottom:12px;cursor:pointer;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:500;text-align:left;transition:all 0.2s ease;}
+  .quiz-opt:hover{background:rgba(34,197,94,0.15);border-color:#4ade80;}
   
-  /* VINIL JOGADO PARA CAMADA INFERIOR (z-index: 1) SEM AFETAR O LAYOUT */
-  .vinyl-fixed{position:fixed;bottom:20%;right:0;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;touch-action:none;transform:translateX(50%);pointer-events:auto;}
+  .quiz-back{display:block;width:100%;border-radius:12px;padding:12px 20px;margin-top:8px;cursor:pointer;background:transparent;border:1px dashed rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;transition:all 0.2s ease;}
+  .quiz-back:hover{border-color:rgba(250,204,21,0.5);color:#fde047;background:rgba(250,204,21,0.03);}
+  
+  .input-date-container {width:100%;margin-bottom:18px;text-align:left;}
+  .input-date-label {color:rgba(134,239,172,0.8);font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;display:block;}
+  .quiz-input-date {width:100%;padding:18px 20px;background:rgba(2,13,7,0.6);border:1px solid rgba(34,197,94,0.3);border-radius:12px;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:500;outline:none;transition:border-color 0.2s;}
+  .quiz-input-date:focus {border-color:#4ade80;}
+  
+  .btn-wp-final{display:flex;align-items:center;justify-content:center;gap:12px;background:#16a34a;border:1px solid #22c55e;box-shadow:0 4px 15px rgba(22,163,74,0.4);padding:18px 24px;border-radius:14px;color:#fff;font-size:18px;font-weight:700;text-decoration:none;width:100%;margin-top:15px;transition:background 0.2s;text-transform:uppercase;letter-spacing:0.5px;}
+  .btn-wp-final:hover{background:#15803d;}
+  .btn-wp-final svg{width:22px;height:22px;fill:#fff;}
+
+  .vinyl-fixed{position:fixed;bottom:20%;right:0;z-index:1;display:fixed;flex-direction:column;align-items:center;gap:8px;touch-action:none;transform:translateX(50%);pointer-events:auto;}
   .vinyl-svg{display:block;width:320px;height:320px;cursor:grab;filter:drop-shadow(-12px 8px 24px rgba(0,0,0,0.9));}
   .vinyl-svg:active{cursor:grabbing;}
-  
   .vinyl-arrows{transform:translateX(-85px);font-family:'Space Grotesk',sans-serif;white-space:nowrap;text-shadow:0 2px 5px rgba(0,0,0,0.95);font-size:16px;color:#4ade80;letter-spacing:2px;font-weight:700;}
   .sound-badge{transform:translateX(-85px);font-family:'Space Grotesk',sans-serif;white-space:nowrap;text-shadow:0 2px 5px rgba(0,0,0,0.95);font-size:10px;letter-spacing:0.5px;color:#4ade80;background:rgba(2,13,7,0.95);padding:4px 10px;border-radius:20px;border:1px solid rgba(74,222,128,0.3);box-shadow:0 4px 12px rgba(0,0,0,0.65);}
+
+  .ld-screen{position:fixed;inset:0;background:rgba(2,13,7,0.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:999;display:none;align-items:center;justify-content:center;padding:24px;}
+  .ld-screen.active{display:flex;}
+  .ld-box{text-align:center;max-width:440px;display:flex;flex-direction:column;align-items:center;gap:24px;}
+  .ld-spin{width:46px;height:46px;border:3px solid rgba(74,222,128,0.15);border-top-color:#4ade80;border-radius:50%;animation:spinLoader 0.7s linear infinite;}
+  @keyframes spinLoader{to{transform:rotate(360deg);}}
+  .ld-txt{color:#fff;font-size:20px;font-weight:500;line-height:1.5;min-height:60px;text-align:center;}
+  .ld-txt span{color:#fde047;}
+  .ld-cursor{display:inline-block;width:8px;height:18px;background:#4ade80;margin-left:4px;animation:blinkCursor 0.6s step-end infinite;}
+  @keyframes blinkCursor{from,to{background:transparent;}50%{background:#4ade80;}}
+  .ld-timer{font-size:14px;color:rgba(134,239,172,0.5);letter-spacing:2px;text-transform:uppercase;font-weight:700;}
 </style>
 
 <div class="pw">
@@ -80,80 +102,149 @@
   <div class="gtop"></div>
   <div class="scan"></div>
 
-  <!-- Área do Menu -->
-  <div class="sa" id="scrollArea">
-    <div class="ct">
-      
-      <div class="logo-wrap">
-        <img src="unnamed.png" alt="Abertura Para DJ" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div style="display:none;flex-direction:column;align-items:center;">
-          <span style="color:#4ade80;font-size:22px;font-weight:700;letter-spacing:2px;">ABERTURA</span>
-          <span style="color:#fde047;font-size:14px;letter-spacing:3px;">PARA DJ</span>
-        </div>
-      </div>
-      
-      <div class="cflag"><div class="cstr"></div><span style="font-size:20px;">🇧🇷</span><span style="font-size:20px;">⚽</span><span style="font-size:20px;">🇧🇷</span><div class="cstr r"></div></div>
-      <p class="tag">Voz dos maiores festivais Brasil afora</p>
-      <div class="badge">Orçamento sem compromisso</div>
-      
-      <div class="stats">
-        <div class="stat"><div class="sn" data-target="7000" data-prefix="+" data-suffix="">0</div><div class="sl">Aberturas produzidas</div></div>
-        <div class="stat"><div class="sn" data-target="10" data-prefix="+" data-suffix=" países">0</div><div class="sl">Países atendidos</div></div>
-        <div class="stat"><div class="sn" data-target="3" data-prefix="+" data-suffix="M views">0</div><div class="sl">Views no YouTube</div></div>
-        <div class="stat"><div class="sn" data-target="600" data-prefix="+" data-suffix="">0</div><div class="sl">Produções publicadas</div></div>
-        <div class="stat sw"><div class="sn">🏆 Maior portfólio público de aberturas para shows no Mundo</div></div>
-      </div>
-
-      <div class="dv2"></div>
-
-      <h1 class="ttl">O que <span>deseja?</span></h1>
-      <p class="sub">Selecione o serviço abaixo</p>
-      <div class="dv"></div>
-      
-      <a href="https://linkly.link/2indt" target="_blank" class="btn bp">
-        <div class="bl"><span class="dot"></span>Abertura Completa</div>
-        <div class="bs">Áudio + vídeo profissional</div>
-        <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.58-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
-      </a>
-      
-      <a href="https://linkly.link/2indu" target="_blank" class="btn">
-        <div class="bl"><span class="dot"></span>Abertura em Áudio</div>
-        <div class="bs">Locução + trilha cinemática</div>
-        <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.58-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
-      </a>
-      
-      <button onclick="toggleRemix()" class="rtog">
-        <div class="btn bz" style="margin-bottom:0;">
-          <div class="bl"><span class="dot"></span>Remix Profissional</div>
-          <div class="bs">Alavancar minha carreira</div>
-          <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.58-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
-        </div>
-      </button>
-      <div class="rsub" id="rs">
-        <a href="https://linkly.link/2indv" target="_blank" class="rsb">↳ Já sei qual música quero remixar <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.58-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg></a>
-        <a href="https://linkly.link/2indw" target="_blank" class="rsb">↳ Preciso de ideia de música <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.58-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg></a>
-      </div>
-      
-      <p class="sl2">Marketing & Crescimento</p>
-      <a href="https://linkly.link/2indx" target="_blank" class="btn by">
-        <div class="bl"><span class="dot"></span>Lotar Minha Agenda</div>
-        <div class="bs">Ads e presença digital para artistas</div>
-        <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.58-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
-      </a>
-      <a href="https://linkly.link/2indy" target="_blank" class="btn by">
-        <div class="bl"><span class="dot"></span>Vender Mais Ingressos</div>
-        <div class="bs">Ads e funil para festas</div>
-        <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.58-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
-      </a>
-      <a href="https://linkly.link/2indz" target="_blank" class="btn">
-        <div class="bl"><span class="dot"></span>Patentear Minha Marca</div>
-        <div class="bs">Nome artístico e acompanhamento</div>
-        <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.58-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
-      </a>
+  <div class="ld-screen" id="loadingScreen">
+    <div class="ld-box">
+      <div class="ld-spin"></div>
+      <div class="ld-txt"><span id="typewriterTarget"></span><span class="ld-cursor"></span></div>
+      <div class="ld-timer" id="loadingTimer">Conectando em 5s...</div>
     </div>
   </div>
 
-  <!-- Vinil Renderizado Atrás do Menu (z-index: 1) -->
+  <div class="sa" id="scrollArea">
+    <div class="ct">
+      <div id="headerBrandSection">
+        <div class="logo-wrap">
+          <img src="unnamed.png" alt="Abertura Para DJ" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div style="display:none;flex-direction:column;align-items:center;">
+            <span style="color:#4ade80;font-size:22px;font-weight:700;letter-spacing:2px;">ABERTURA</span>
+            <span style="color:#fde047;font-size:14px;letter-spacing:3px;">PARA DJ</span>
+          </div>
+        </div>
+        <div class="cflag"><div class="cstr"></div><span style="font-size:20px;">🇧🇷</span><span style="font-size:20px;">⚽</span><span style="font-size:20px;">🇧🇷</span><div class="cstr r"></div></div>
+        <p class="tag">Voz dos maiores festivais Brasil afora</p>
+        <div class="badge">Orçamento sem compromisso</div>
+        <div class="stats">
+          <div class="stat"><div class="sn" data-target="7000" data-prefix="+" data-suffix="">0</div><div class="sl">Aberturas produzidas</div></div>
+          <div class="stat"><div class="sn" data-target="10" data-prefix="+" data-suffix=" países">0</div><div class="sl">Países atendidos</div></div>
+          <div class="stat"><div class="sn" data-target="3" data-prefix="+" data-suffix="M views">0</div><div class="sl">Views no YouTube</div></div>
+          <div class="stat"><div class="sn" data-target="600" data-prefix="+" data-suffix="">0</div><div class="sl">Produções publicadas</div></div>
+          <div class="stat sw"><div class="sn">🏆 Maior portfólio público de aberturas para shows no Mundo</div></div>
+        </div>
+        <div class="dv2"></div>
+      </div>
+
+      <div id="mainMenuSection">
+        <h1 class="ttl">O que <span>deseja?</span></h1>
+        <p class="sub">Selecione o serviço abaixo</p>
+        <div class="dv"></div>
+        <a href="#" class="btn bp" onclick="handleMenuSelection(event, 'Abertura Completa', true)">
+          <div class="bl"><span class="dot"></span>Abertura Completa</div>
+          <div class="bs">Áudio exclusivo + vídeo profissional Ultra HD</div>
+          <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.580-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
+        </a>
+        <a href="#" class="btn" onclick="handleMenuSelection(event, 'Abertura em Áudio', true)">
+          <div class="bl"><span class="dot"></span>Abertura em Áudio</div>
+          <div class="bs">Locução + produção de trilha sonora e efeitos exclusivos</div>
+          <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.580-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
+        </a>
+        <button onclick="toggleRemix()" class="rtog">
+          <div class="btn bz" style="margin-bottom:0;">
+            <div class="bl"><span class="dot"></span>Remix Profissional</div>
+            <div class="bs">Alavancar minha carreira</div>
+            <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.580-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
+          </div>
+        </button>
+        <div class="rsub" id="rs">
+          <a href="#" class="rsb" onclick="handleMenuSelection(event, 'Remix Profissional', false)">↳ Já sei qual música quero remixar <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.580-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg></a>
+          <a href="#" class="rsb" onclick="handleMenuSelection(event, 'Remix Profissional', false)">↳ Preciso de ideia de música <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.580-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg></a>
+        </div>
+        
+        <p class="sl2">Marketing & Crescimento</p>
+        <a href="#" class="btn by" onclick="handleMenuSelection(event, 'Lotar Minha Agenda', false)">
+          <div class="bl"><span class="dot"></span>Lotar Minha Agenda</div>
+          <div class="bs">Ads e presença digital para artistas</div>
+          <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.580-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
+        </a>
+        <a href="#" class="btn by" onclick="handleMenuSelection(event, 'Vender Mais Ingressos', false)">
+          <div class="bl"><span class="dot"></span>Vender Mais Ingressos</div>
+          <div class="bs">Ads e funil para festas</div>
+          <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.580-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
+        </a>
+        <a href="#" class="btn" onclick="handleMenuSelection(event, 'Patentear Minha Marca', false)">
+          <div class="bl"><span class="dot"></span>Patentear Minha Marca</div>
+          <div class="bs">Nome artístico e acompanhamento</div>
+          <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.580-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
+        </a>
+      </div>
+
+      <div id="quizSection">
+        
+        <div class="quiz-step active" id="step1">
+          <p class="quiz-title" id="title1"></p>
+          <button class="quiz-opt" onclick="nextStep(1, 'Sim')">✅ Sim, responder rápido</button>
+          <button class="quiz-opt" onclick="executeBypassRedirect(event)">❌ Não. Prefiro que demore mais o atendimento</button>
+        </div>
+
+        <div class="quiz-step" id="step2">
+          <p class="quiz-title" id="title2"></p>
+          <button class="quiz-opt" onclick="nextStep(2, 'Sim, trabalho com eventos')">🎤 Sim, trabalho profissionalmente com eventos</button>
+          <button class="quiz-opt" onclick="nextStep(2, 'Sim, mas estou começando')">🎧 Sim, mas ainda estou começando a engrenar</button>
+          <button class="quiz-opt" onclick="nextStep(2, 'Ainda não sou DJ')">🚫 Ainda não sou DJ / Apenas Hobby</button>
+          <button class="quiz-back" onclick="prevStep(2)">← Corrigir Pergunta Anterior</button>
+        </div>
+
+        <div class="quiz-step" id="step3">
+          <p class="quiz-title" id="title3"></p>
+          <button class="quiz-opt" onclick="nextStep(3, 'Sim, profissional')">🔥 Sim, já utilizo uma abertura de alto nível</button>
+          <button class="quiz-opt" onclick="nextStep(3, 'Sim, mas simples')">⚡ Sim, mas é um material básico e antigo</button>
+          <button class="quiz-opt" onclick="nextStep(3, 'Não utilizo')">❌ Não utilizo nenhuma abertura no momento</button>
+          <button class="quiz-back" onclick="prevStep(3)">← Corrigir Pergunta Anterior</button>
+        </div>
+
+        <div class="quiz-step" id="step4">
+          <p class="quiz-title" id="title4"></p>
+          <button class="quiz-opt" onclick="nextStep(4, '1 minuto')">⏱️ 1 Minuto</button>
+          <button class="quiz-opt" onclick="nextStep(4, '1 minuto e meio')">⏱️ 1 Minuto e Meio (1:30)</button>
+          <button class="quiz-opt" onclick="nextStep(4, '2 minutos')">⏱️ 2 Minutos</button>
+          <button class="quiz-opt" onclick="nextStep(4, '2 minutos e meio')">⏱️ 2 Minutos e Meio (2:30)</button>
+          <button class="quiz-opt" onclick="nextStep(4, '3 minutos')">⏱️ 3 Minutos</button>
+          <button class="quiz-back" onclick="prevStep(4)">← Corrigir Pergunta Anterior</button>
+        </div>
+
+        <div class="quiz-step" id="step5">
+          <p class="quiz-title" id="title5"></p>
+          <button class="quiz-opt" onclick="nextStep(5, 'Sim, quero investir pois já tenho um evento para usar')">💎 Sim, quero investir pois já tenho um evento para usar</button>
+          <button class="quiz-opt" onclick="nextStep(5, 'Está ainda no campo das ideias')">📈 Está ainda no campo das ideias</button>
+          <button class="quiz-opt" onclick="nextStep(5, 'No momento estou apenas pesquisando opções e valores')">🔍 No momento estou apenas pesquisando opções e valores</button>
+          <button class="quiz-back" onclick="prevStep(5)">← Corrigir Pergunta Anterior</button>
+        </div>
+
+        <div class="quiz-step" id="step6">
+          <p class="quiz-title" id="title6"></p>
+          <div class="input-date-container">
+            <label class="input-date-label" for="datePickerInput">Selecione o Dia Limite:</label>
+            <input type="date" class="quiz-input-date" id="datePickerInput">
+          </div>
+          <button class="quiz-opt" style="text-align:center; background:rgba(34,197,94,0.15);" onclick="captureDateAndProceed()">Confirmar Data de Entrega</button>
+          <button class="quiz-back" onclick="prevStep(6)">← Corrigir Pergunta Anterior</button>
+        </div>
+
+        <div class="quiz-step" id="stepFinal">
+          <h2 class="ttl" style="margin-bottom:12px;"><span>Entendido!</span></h2>
+          <p class="sub" style="font-size:16px; color:#fff; line-height:1.4;">Perfeito! Com base nas suas respostas, seu atendimento será bem mais rápido.</p>
+          <div class="dv" style="margin-bottom:24px;"></div>
+          
+          <a href="#" class="btn-wp-final" onclick="executeFinalRedirect(event)">
+            Avançar para o WhatsApp
+            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.580-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
+          </a>
+          <button class="quiz-back" style="margin-top:20px;" onclick="prevStep('Final')">← Modificar Respostas</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <div class="vinyl-fixed" id="vinylWrap">
     <div class="vinyl-arrows">↑ ↓</div>
     <svg class="vinyl-svg" id="vinylSvg" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
@@ -165,32 +256,24 @@
       </defs>
       <circle cx="48" cy="48" r="46" fill="#111" stroke="#333" stroke-width="1.5"/>
       <circle cx="48" cy="48" r="44" fill="url(#vg)"/>
-      
       <circle cx="48" cy="48" r="43" fill="none" stroke="#2a2a2a" stroke-width="0.7"/>
       <circle cx="48" cy="48" r="41" fill="none" stroke="#222" stroke-width="0.5"/>
       <circle cx="48" cy="48" r="39" fill="none" stroke="#2a2a2a" stroke-width="0.6"/>
       <circle cx="48" cy="48" r="37" fill="none" stroke="#222" stroke-width="0.5"/>
       <circle cx="48" cy="48" r="35" fill="none" stroke="#2a2a2a" stroke-width="0.6"/>
-      
-      <!-- Setas Amarelas de Fluxo Integradas na Arte -->
       <g stroke="#fde047" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.75">
         <path d="M 72 32 A 28 28 0 0 1 78 54" />
         <polyline points="75,52 78,55 81,50" transform="rotate(2, 78, 54)"/>
-        
         <path d="M 24 64 A 28 28 0 0 1 18 42" />
         <polyline points="21,44 18,41 15,46" transform="rotate(2, 18, 42)"/>
       </g>
-      
       <circle cx="48" cy="48" r="33" fill="none" stroke="#222" stroke-width="0.5"/>
       <circle cx="48" cy="48" r="31" fill="none" stroke="#2a2a2a" stroke-width="0.6"/>
       <circle cx="48" cy="48" r="29" fill="none" stroke="#222" stroke-width="0.5"/>
       <circle cx="48" cy="48" r="27" fill="none" stroke="#2a2a2a" stroke-width="0.6"/>
       <circle cx="48" cy="48" r="25" fill="none" stroke="#1e1e1e" stroke-width="0.5"/>
-      
-      <!-- Centro Amarelo -->
       <circle cx="48" cy="48" r="20" fill="#fde047"/>
       <circle cx="48" cy="48" r="19.5" fill="none" stroke="#ca8a04" stroke-width="0.8"/>
-      
       <circle cx="48" cy="48" r="15" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="0.5"/>
       <circle cx="48" cy="48" r="10" fill="none" stroke="rgba(0,0,0,0.2)" stroke-width="0.5"/>
       <line x1="32" y1="44" x2="64" y2="44" stroke="rgba(0,0,0,0.2)" stroke-width="0.5"/>
@@ -204,27 +287,338 @@
 </div>
 
 <script>
+let userAnswers = {
+  serviçoEscolhido: "",
+  autorizacao: "",
+  atuacao: "",
+  aberturaAtual: "",
+  duracaoDesejada: "",
+  intencaoInvestimento: "",
+  dataLimiteEntrega: "Não informada / Perfil Pesquisador"
+};
+
+const WHATSAPP_NUMBER = "556191073673"; 
+
+const quizTexts = {
+  1: "Estamos com alto volume de atendimentos. Posso fazer 3 perguntas rápidas para te passar um orçamento mais rápido?",
+  2: "Você já trabalha e atua ativamente como DJ?",
+  3: "Você já possui alguma abertura estruturada para seus shows?",
+  4: "Qual é a duração estimada que você deseja para a sua abertura?",
+  5: "Pretende investir por agora? Ou:",
+  6: "Para qual data limite você precisa desse projeto pronto e entregue?"
+};
+
 function toggleRemix(){
+  playShortClickSound();
   const s=document.getElementById('rs');
   s.classList.toggle('open');
 }
 
+function handleMenuSelection(event, nomeServico, requereQuiz) {
+  event.preventDefault();
+  playShortClickSound();
+  userAnswers.serviçoEscolhido = nomeServico;
+  
+  if(requereQuiz) {
+    document.getElementById('headerBrandSection').style.display = 'none';
+    document.getElementById('mainMenuSection').style.display = 'none';
+    document.getElementById('quizSection').style.display = 'block';
+    runTypewriterQuestion(1);
+  } else {
+    executeDirectBypassRedirect(nomeServico);
+  }
+}
+
+let currentTypewriterTimeout = null;
+let typingOscillator = null;
+
+function stopTypingSound() {
+  if (typingOscillator) {
+    try { typingOscillator.stop(); } catch(e){}
+    typingOscillator = null;
+  }
+}
+
+function playTypingSound() {
+  if (!audioCtx) return;
+  stopTypingSound();
+  
+  typingOscillator = audioCtx.createOscillator();
+  const typingGain = audioCtx.createGain();
+  
+  typingOscillator.type = 'triangle';
+  typingOscillator.frequency.setValueAtTime(120, audioCtx.currentTime);
+  
+  typingOscillator.frequency.randomize = setInterval(() => {
+    if(typingOscillator) {
+      typingOscillator.frequency.setValueAtTime(90 + Math.random() * 80, audioCtx.currentTime);
+    }
+  }, 45);
+
+  typingGain.gain.setValueAtTime(0.015, audioCtx.currentTime);
+  typingOscillator.connect(typingGain);
+  typingGain.connect(audioCtx.destination);
+  typingOscillator.start();
+}
+
+function runTypewriterQuestion(stepId) {
+  const targetEl = document.getElementById(`title${stepId}`);
+  if(!targetEl) return;
+  
+  if(currentTypewriterTimeout) clearTimeout(currentTypewriterTimeout);
+  initAudio();
+  
+  targetEl.textContent = "";
+  const text = quizTexts[stepId];
+  let charIndex = 0;
+  
+  playTypingSound();
+  
+  function type() {
+    if (charIndex < text.length) {
+      targetEl.textContent += text.charAt(charIndex);
+      charIndex++;
+      currentTypewriterTimeout = setTimeout(type, 18);
+    } else {
+      stopTypingSound();
+      clearInterval(typingOscillator?.frequency.randomize);
+    }
+  }
+  type();
+}
+
+function nextStep(current, value) {
+  playShortClickSound();
+  if(current === 1) userAnswers.autorizacao = value;
+  if(current === 2) userAnswers.atuacao = value;
+  if(current === 3) userAnswers.aberturaAtual = value;
+  if(current === 4) userAnswers.duracaoDesejada = value;
+  if(current === 5) userAnswers.intencaoInvestimento = value;
+
+  document.getElementById(`step${current}`).classList.remove('active');
+  
+  let nextTarget = current + 1;
+  
+  if(current === 5) {
+    const djReal = (userAnswers.atuacao === "Sim, trabalho com eventos" || userAnswers.atuacao === "Sim, mas estou começando");
+    const intencaoReal = (userAnswers.intencaoInvestimento === "Sim, quero investir pois já tenho um evento para usar" || userAnswers.intencaoInvestimento === "Está ainda no campo das ideias");
+    
+    if(djReal && intencaoReal) {
+      nextTarget = 6; 
+    } else {
+      nextTarget = 'Final'; 
+    }
+  }
+
+  let nextEl = document.getElementById(`step${nextTarget}`);
+  if(nextEl) {
+    nextEl.classList.add('active');
+    runTypewriterQuestion(nextTarget);
+  } else {
+    document.getElementById('stepFinal').classList.add('active');
+  }
+}
+
+function prevStep(current) {
+  playShortClickSound();
+  if(current === 'Final') {
+    document.getElementById('stepFinal').classList.remove('active');
+    const djReal = (userAnswers.atuacao === "Sim, trabalho com eventos" || userAnswers.atuacao === "Sim, mas estou começando");
+    const intencaoReal = (userAnswers.intencaoInvestimento === "Sim, quero investir pois já tenho um evento para usar" || userAnswers.intencaoInvestimento === "Está ainda no campo das ideias");
+    
+    if(djReal && intencaoReal) {
+      document.getElementById('step6').classList.add('active');
+      runTypewriterQuestion(6);
+    } else {
+      document.getElementById('step5').classList.add('active');
+      runTypewriterQuestion(5);
+    }
+    return;
+  }
+  
+  document.getElementById(`step${current}`).classList.remove('active');
+  let prevTarget = current - 1;
+  document.getElementById(`step${prevTarget}`).classList.add('active');
+  runTypewriterQuestion(prevTarget);
+}
+
+function captureDateAndProceed() {
+  playShortClickSound();
+  const dateInput = document.getElementById('datePickerInput').value;
+  if(dateInput) {
+    const splitDate = dateInput.split('-');
+    userAnswers.dataLimiteEntrega = `${splitDate[2]}/${splitDate[1]}/${splitDate[0]}`;
+  }
+  document.getElementById('step6').classList.remove('active');
+  document.getElementById('stepFinal').classList.add('active');
+}
+
+function executeDirectBypassRedirect(nomeServico) {
+  const loader = document.getElementById('loadingScreen');
+  const txtTarget = document.getElementById('typewriterTarget');
+  const timerTarget = document.getElementById('loadingTimer');
+  
+  loader.classList.add('active');
+  txtTarget.textContent = "";
+  
+  const textToType = "Redirecionando para o orçamento no WhatsApp...";
+  let idx = 0;
+  
+  playTypingSound();
+  function type() {
+    if (idx < textToType.length) {
+      txtTarget.innerHTML += textToType.charAt(idx);
+      idx++;
+      setTimeout(type, 20);
+    } else {
+      stopTypingSound();
+    }
+  }
+  type();
+  
+  const mensagemDirect = `Olá! Tudo bem? Vi seus serviços e fiquei interessado na produção de ${nomeServico}. Como faço para receber um orçamento?`;
+  const wpUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(mensagemDirect)}`;
+  
+  let timeLeft = 5;
+  timerTarget.textContent = `Conectando em ${timeLeft}s...`;
+  const interval = setInterval(() => {
+    timeLeft--;
+    if(timeLeft > 0) {
+      timerTarget.textContent = `Conectando em ${timeLeft}s...`;
+    } else {
+      clearInterval(interval);
+      loader.classList.remove('active');
+      window.location.href = wpUrl;
+    }
+  }, 1000);
+}
+
+function executeBypassRedirect(event) {
+  event.preventDefault();
+  playShortClickSound();
+  
+  const loader = document.getElementById('loadingScreen');
+  const txtTarget = document.getElementById('typewriterTarget');
+  const timerTarget = document.getElementById('loadingTimer');
+  
+  loader.classList.add('active');
+  txtTarget.textContent = ""; 
+  
+  const textToType = "Redirecionando para a fila comum do WhatsApp...";
+  let iIdx = 0;
+  
+  playTypingSound();
+  function typeWriter() {
+    if (iIdx < textToType.length) {
+      txtTarget.innerHTML += textToType.charAt(iIdx);
+      iIdx++;
+      setTimeout(typeWriter, 20);
+    } else {
+      stopTypingSound();
+    }
+  }
+  typeWriter();
+  
+  const mensagemBypass = `Olá! Tudo bem? Vi seus serviços e fiquei interessado na ${userAnswers.serviçoEscolhido}. Como faço para receber um orçamento?`;
+  const bypassWpUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(mensagemBypass)}`;
+  
+  let timeLeft = 5;
+  timerTarget.textContent = `Conectando em ${timeLeft}s...`;
+  
+  const countdownInterval = setInterval(() => {
+    timeLeft--;
+    if (timeLeft > 0) {
+      timerTarget.textContent = `Conectando em ${timeLeft}s...`;
+    } else {
+      clearInterval(countdownInterval);
+      loader.classList.remove('active');
+      window.location.href = bypassWpUrl;
+    }
+  }, 1000);
+}
+
+function executeFinalRedirect(event) {
+  event.preventDefault();
+  playShortClickSound();
+  
+  const loader = document.getElementById('loadingScreen');
+  const txtTarget = document.getElementById('typewriterTarget');
+  const timerTarget = document.getElementById('loadingTimer');
+  
+  loader.classList.add('active');
+  txtTarget.textContent = ""; 
+  
+  const textToType = "Iniciando cotação sem compromisso no whatsapp...";
+  let iIdx = 0;
+  
+  playTypingSound();
+  function typeWriter() {
+    if (iIdx < textToType.length) {
+      txtTarget.innerHTML += textToType.charAt(iIdx);
+      iIdx++;
+      setTimeout(typeWriter, 20);
+    } else {
+      stopTypingSound();
+    }
+  }
+  typeWriter();
+  
+  const mensagemWp = `Olá! Quero um orçamento para o serviço:\n` +
+                     `🔥 *${userAnswers.serviçoEscolhido}*\n\n` +
+                     `Aqui estão as respostas do meu perfil de DJ:\n` +
+                     `• Já trabalha como DJ?: ${userAnswers.atuacao}\n` +
+                     `• Já possui abertura?: ${userAnswers.aberturaAtual}\n` +
+                     `• Duração da Abertura: ${userAnswers.duracaoDesejada}\n` +
+                     `• Pretende investir agora?: ${userAnswers.intencaoInvestimento}\n` +
+                     `• Data de entrega limite: ${userAnswers.dataLimiteEntrega}`;
+  
+  const finalWpUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(mensagemWp)}`;
+  
+  let timeLeft = 5;
+  timerTarget.textContent = `Conectando em ${timeLeft}s...`;
+  
+  const countdownInterval = setInterval(() => {
+    timeLeft--;
+    if (timeLeft > 0) {
+      timerTarget.textContent = `Conectando em ${timeLeft}s...`;
+    } else {
+      clearInterval(countdownInterval);
+      loader.classList.remove('active');
+      window.location.href = finalWpUrl;
+    }
+  }, 1000);
+}
+
 function animateCounters(){
   document.querySelectorAll('[data-target]').forEach(el=>{
-    const t=parseInt(el.dataset.target),pre=el.dataset.prefix||'',suf=el.dataset.suffix||'';
-    let c=0;const inc=t/60;
+    const targetVal=parseInt(el.dataset.target),pre=el.dataset.prefix||'',suf=el.dataset.suffix||'';
+    let currentVal=0;const inc=targetVal/60;
     const tm=setInterval(()=>{
-      c+=inc;if(c>=t){c=t;clearInterval(tm);}
-      const d=t>=1000?Math.round(c).toLocaleString('pt-BR'):Math.round(c);
+      currentVal+=inc;if(currentVal>=targetVal){currentVal=targetVal;clearInterval(tm);}
+      const d=targetVal>=1000?Math.round(currentVal).toLocaleString('pt-BR'):Math.round(currentVal);
       el.textContent=pre+d+suf;
     },33);
   });
 }
 const ob=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){animateCounters();ob.disconnect();}});},{threshold:0.3});
-const st=document.querySelector('.stats');
-if(st)ob.observe(st);
+const st = document.querySelector('.stats');
+if(st) ob.observe(st);
 
-// ── ENGINE DE ÁUDIO REAL DE SCRATCH ──
+function playShortClickSound() {
+  if(!audioCtx) return;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.04);
+  gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.start();
+  osc.stop(audioCtx.currentTime + 0.05);
+}
+
 let audioCtx=null;
 let audioReady=false;
 let normalBuffer=null;
@@ -234,7 +628,6 @@ let gainNode=null;
 let isPlaying=false;
 let lastDirection=0; 
 let scratchTimeout=null;
-const soundBadge=document.getElementById('soundBadge');
 
 const FILE_NAME = "DJ STOP & SCRATCH FREE SOUND EFFECT (SFX) 2025 - FX VAULT (youtube).mp3";
 
@@ -242,20 +635,16 @@ function generateFallbackBuffers() {
   const sr = audioCtx.sampleRate;
   const dur = 1.5;
   const len = Math.floor(sr * dur);
-  
   normalBuffer = audioCtx.createBuffer(1, len, sr);
   reverseBuffer = audioCtx.createBuffer(1, len, sr);
-  
   const nData = normalBuffer.getChannelData(0);
   const rData = reverseBuffer.getChannelData(0);
-  
   for(let i=0; i<len; i++){
     const t = i/sr;
     let s = (Math.random() * 2 - 1) * 0.4;
     s += Math.sin(2 * Math.PI * 140 * t + Math.sin(2 * Math.PI * 4 * t) * 3) * 0.35;
     s += Math.sin(2 * Math.PI * 880 * t) * 0.05; 
     const env = Math.min(i/(sr*0.03), (len-i)/(sr*0.03), 1);
-    
     nData[i] = s * env;
     rData[len - 1 - i] = s * env;
   }
@@ -268,19 +657,16 @@ async function initAudio(){
     }
     return;
   }
-  
   try {
     audioCtx = new(window.AudioContext || window.webkitAudioContext)();
     gainNode = audioCtx.createGain();
     gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
     gainNode.connect(audioCtx.destination);
-
     try {
       const response = await fetch(FILE_NAME);
       if(!response.ok) throw new Error();
       const arrayBuffer = await response.arrayBuffer();
       normalBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-      
       const channels = normalBuffer.numberOfChannels;
       const length = normalBuffer.length;
       reverseBuffer = audioCtx.createBuffer(channels, length, normalBuffer.sampleRate);
@@ -292,7 +678,6 @@ async function initAudio(){
     } catch(err) {
       generateFallbackBuffers();
     }
-
     audioReady = true;
     soundBadge.textContent = '♪ Som Ativo';
     setTimeout(() => soundBadge.style.opacity = '0', 1200);
@@ -303,12 +688,9 @@ async function initAudio(){
 
 function playScratchReal(direction, intensity) {
   if(!audioReady) return;
-  
   const targetBuffer = (direction > 0) ? normalBuffer : reverseBuffer;
-  
   if(lastDirection !== direction || !isPlaying || !currentSource) {
     if(currentSource) { try { currentSource.stop(); } catch(e){} }
-    
     currentSource = audioCtx.createBufferSource();
     currentSource.buffer = targetBuffer;
     currentSource.loop = true;
@@ -317,20 +699,16 @@ function playScratchReal(direction, intensity) {
     isPlaying = true;
     lastDirection = direction;
   }
-  
   const speed = Math.min(Math.max(intensity * 0.35, 0.5), 2.2);
   currentSource.playbackRate.setTargetAtTime(speed, audioCtx.currentTime, 0.01);
   gainNode.gain.setTargetAtTime(0.85, audioCtx.currentTime, 0.01);
-  
   clearTimeout(scratchTimeout);
   scratchTimeout = setTimeout(stopScratchReal, 90); 
 }
 
 function stopScratchReal() {
   if(!audioReady || !isPlaying) return;
-  if(gainNode) {
-    gainNode.gain.setTargetAtTime(0, audioCtx.currentTime, 0.03);
-  }
+  if(gainNode) { gainNode.gain.setTargetAtTime(0, audioCtx.currentTime, 0.03); }
   setTimeout(() => {
     if(!isPlaying && currentSource) {
       try { currentSource.stop(); } catch(e){}
@@ -340,7 +718,6 @@ function stopScratchReal() {
   isPlaying = false;
 }
 
-// ── CONTROLADORES DE INTERAÇÃO DO VINIL ──
 const vSvg=document.getElementById('vinylSvg');
 const scrollArea=document.getElementById('scrollArea');
 let dragging=false,lastAngle=0,rot=0,vel=0,raf=null,lastT=0;
@@ -373,13 +750,13 @@ function glide(){
   }
 }
 
-function onStart(x,y){
+onStart = function(x,y){
   initAudio();
   dragging=true;vel=0;lastT=Date.now();
   if(raf)cancelAnimationFrame(raf);
   const c=center();lastAngle=getAngle(c.x,c.y,x,y);
 }
-function onMove(x,y){
+onMove = function(x,y){
   if(!dragging)return;
   const c=center();
   const a=getAngle(c.x,c.y,x,y);
@@ -427,23 +804,3 @@ scrollArea.addEventListener('scroll',()=>{
 window.addEventListener('touchstart', () => { initAudio(); }, {once: false, passive: true});
 window.addEventListener('click', () => { initAudio(); });
 </script>
-
-<style>
-@media (max-width:768px){
-  .sa{padding:20px 14px 140px;}
-  .logo-wrap{width:240px;height:80px;}
-  .tag{font-size:15px;}
-  .badge{font-size:13px;padding:6px 16px;}
-  .sub{font-size:15px;}
-  .bl{font-size:24px;}
-  .bs{font-size:13px;}
-  .btn{padding:22px 50px 22px 20px;}
-  .sl{font-size:12px;}
-  
-  /* Mantém o Vinil 2x Grande em plano de fundo no Mobile */
-  .vinyl-fixed{bottom:25%;transform:translateX(50%);}
-  .vinyl-svg{width:220px;height:220px;}
-  .vinyl-arrows, .sound-badge{transform:translateX(-60px);}
-  .vinyl-arrows{font-size:13px;}
-}
-</style>
