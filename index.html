@@ -12,7 +12,6 @@
   .sa::-webkit-scrollbar{display:none;}
   .ct{text-align:center;max-width:680px;margin:0 auto;}
   
-  /* Ajuste de exibição da LOGO unnamed.png */
   .logo-wrap{margin:0 auto 18px;width:290px;height:95px;display:flex;align-items:center;justify-content:center;}
   .logo-wrap img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
   
@@ -74,7 +73,6 @@
   <div class="sa" id="scrollArea">
     <div class="ct">
       
-      <!-- LOGO FILTRADA E CORRIGIDA -->
       <div class="logo-wrap">
         <img src="unnamed.png" alt="Abertura Para DJ" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
         <div style="display:none;flex-direction:column;align-items:center;">
@@ -87,7 +85,6 @@
       <p class="tag">Voz dos maiores festivais Brasil afora</p>
       <div class="badge">Orçamento sem compromisso</div>
       
-      <!-- Bloco de Estatísticas -->
       <div class="stats">
         <div class="stat"><div class="sn" data-target="7000" data-prefix="+" data-suffix="">0</div><div class="sl">Aberturas produzidas</div></div>
         <div class="stat"><div class="sn" data-target="10" data-prefix="+" data-suffix=" países">0</div><div class="sl">Países atendidos</div></div>
@@ -98,7 +95,6 @@
 
       <div class="dv2"></div>
 
-      <!-- Formulário / Botões -->
       <h1 class="ttl">O que <span>deseja?</span></h1>
       <p class="sub">Selecione o serviço abaixo</p>
       <div class="dv"></div>
@@ -144,7 +140,6 @@
     </div>
   </div>
 
-  <!-- Vinil -->
   <div class="vinyl-fixed" id="vinylWrap">
     <div class="vinyl-arrows">↑ ↓</div>
     <svg class="vinyl-svg" id="vinylSvg" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
@@ -177,7 +172,7 @@
       <path d="M 20 38 A 28 28 0 0 1 58 18" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="3" stroke-linecap="round"/>
     </svg>
     <div class="vinyl-hint">Gire para rolar</div>
-    <div class="sound-badge" id="soundBadge">♪ Clique no disco p/ ativar som</div>
+    <div class="sound-badge" id="soundBadge">♪ Toque no disco p/ ativar som</div>
   </div>
 </div>
 
@@ -203,7 +198,7 @@ const ob=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){animate
 const st=document.querySelector('.stats');
 if(st)ob.observe(st);
 
-// ── SISTEMA DE ÁUDIO REESCRITO (COM FALLBACK ANTI-BLOQUEIO) ─────────────────
+// ── ENGINE DE ÁUDIO (MISTURA HÍBRIDA + DESBLOQUEIO MOBILE COMPLETO) ──
 let audioCtx=null;
 let audioReady=false;
 let normalBuffer=null;
@@ -215,10 +210,8 @@ let lastDirection=0;
 let scratchTimeout=null;
 const soundBadge=document.getElementById('soundBadge');
 
-// Nome do arquivo referenciado para o efeito
 const FILE_NAME = "DJ STOP & SCRATCH FREE SOUND EFFECT (SFX) 2025 - FX VAULT (youtube).mp3";
 
-// Função para gerar onda de scratch sintética caso o arquivo externo seja bloqueado
 function generateFallbackBuffers() {
   const sr = audioCtx.sampleRate;
   const dur = 1.5;
@@ -232,18 +225,24 @@ function generateFallbackBuffers() {
   
   for(let i=0; i<len; i++){
     const t = i/sr;
-    let s = (Math.random() * 2 - 1) * 0.4; // ruído base de agulha
-    s += Math.sin(2 * Math.PI * 140 * t + Math.sin(2 * Math.PI * 4 * t) * 3) * 0.35; // Wah gordo
+    let s = (Math.random() * 2 - 1) * 0.4;
+    s += Math.sin(2 * Math.PI * 140 * t + Math.sin(2 * Math.PI * 4 * t) * 3) * 0.35;
     s += Math.sin(2 * Math.PI * 880 * t) * 0.05; 
     const env = Math.min(i/(sr*0.03), (len-i)/(sr*0.03), 1);
     
     nData[i] = s * env;
-    rData[len - 1 - i] = s * env; // Inversão perfeita do buffer
+    rData[len - 1 - i] = s * env;
   }
 }
 
 async function initAudio(){
-  if(audioReady) return;
+  if(audioReady) {
+    // Força reativação no mobile caso o contexto entre em "sleep" ou suspenso
+    if (audioCtx && audioCtx.state === 'suspended') {
+      await audioCtx.resume();
+    }
+    return;
+  }
   
   try {
     audioCtx = new(window.AudioContext || window.webkitAudioContext)();
@@ -251,14 +250,12 @@ async function initAudio(){
     gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
     gainNode.connect(audioCtx.destination);
 
-    // Tentativa de carregar o arquivo customizado solicitado
     try {
       const response = await fetch(FILE_NAME);
-      if(!response.ok) throw new Error("Local file load standard fallback triggered");
+      if(!response.ok) throw new Error();
       const arrayBuffer = await response.arrayBuffer();
       normalBuffer = await audioCtx.decodeAudioData(arrayBuffer);
       
-      // Criação do buffer invertido em tempo real para o scroll inverso
       const channels = normalBuffer.numberOfChannels;
       const length = normalBuffer.length;
       reverseBuffer = audioCtx.createBuffer(channels, length, normalBuffer.sampleRate);
@@ -268,15 +265,14 @@ async function initAudio(){
         for (let i = 0; i < length; i++) { rD[i] = nD[length - 1 - i]; }
       }
     } catch(err) {
-      // Ativação do Fallback Synth se o arquivo não estiver na mesma pasta de execução
       generateFallbackBuffers();
     }
 
     audioReady = true;
-    soundBadge.textContent = '♪ Som Conectado';
+    soundBadge.textContent = '♪ Som Ativo';
     setTimeout(() => soundBadge.style.opacity = '0', 1200);
   } catch(e) {
-    soundBadge.textContent = '❌ Clique para Ativar';
+    soundBadge.textContent = '❌ Erro de Áudio';
   }
 }
 
@@ -297,15 +293,12 @@ function playScratchReal(direction, intensity) {
     lastDirection = direction;
   }
   
-  // Controle milimétrico de pitch baseado na velocidade do scroll
   const speed = Math.min(Math.max(intensity * 0.35, 0.5), 2.2);
   currentSource.playbackRate.setTargetAtTime(speed, audioCtx.currentTime, 0.01);
-  
-  // Abre o volume somente ao detectar movimento continuo
   gainNode.gain.setTargetAtTime(0.85, audioCtx.currentTime, 0.01);
   
   clearTimeout(scratchTimeout);
-  scratchTimeout = setTimeout(stopScratchReal, 85); 
+  scratchTimeout = setTimeout(stopScratchReal, 90); 
 }
 
 function stopScratchReal() {
@@ -355,8 +348,9 @@ function glide(){
   }
 }
 
+// Gatilho unificado para Mobile (Toques na tela)
 function onStart(x,y){
-  initAudio();
+  initAudio(); // Ativa e dá bypass na trava mobile
   dragging=true;vel=0;lastT=Date.now();
   if(raf)cancelAnimationFrame(raf);
   const c=center();lastAngle=getAngle(c.x,c.y,x,y);
@@ -379,15 +373,26 @@ function onEnd(){
   raf=requestAnimationFrame(glide);
 }
 
+// Ouvintes de interações diretas no Vinil (Mouse e Touchscreen)
 vSvg.addEventListener('mousedown',e=>{onStart(e.clientX,e.clientY);e.preventDefault();});
 window.addEventListener('mousemove',e=>{onMove(e.clientX,e.clientY);});
 window.addEventListener('mouseup',onEnd);
-vSvg.addEventListener('touchstart',e=>{const t=e.touches[0];onStart(t.clientX,t.clientY);e.preventDefault();},{passive:false});
-window.addEventListener('touchmove',e=>{if(dragging){const t=e.touches[0];onMove(t.clientX,t.clientY);e.preventDefault();}},{passive:false});
+
+vSvg.addEventListener('touchstart',e=>{
+  const t=e.touches[0];
+  onStart(t.clientX,t.clientY);
+},{passive:true});
+
+window.addEventListener('touchmove',e=>{
+  if(dragging){
+    const t=e.touches[0];
+    onMove(t.clientX,t.clientY);
+  }
+},{passive:true});
 window.addEventListener('touchend',onEnd);
 
+// Evento de Scroll nativo da página
 scrollArea.addEventListener('scroll',()=>{
-  if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
   if(!dragging){
     const curr=scrollArea.scrollTop;
     const d=curr-lastScrollTop;
@@ -397,7 +402,8 @@ scrollArea.addEventListener('scroll',()=>{
   }
 });
 
-// Desbloqueia contexto de áudio em qualquer clique na tela por garantia
+// Desbloqueia o áudio globalmente no celular ao tocar em qualquer canto da página
+window.addEventListener('touchstart', () => { initAudio(); }, {once: false, passive: true});
 window.addEventListener('click', () => { initAudio(); });
 </script>
 
