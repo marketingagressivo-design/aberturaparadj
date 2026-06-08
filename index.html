@@ -1,281 +1,351 @@
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
-
-  .fu-wrap {
-    font-family: 'Space Grotesk', var(--font-sans);
-    background: #07060f;
-    border-radius: 20px;
-    padding: 28px 20px 32px;
-    position: relative;
-    overflow: hidden;
-  }
-  .fu-grid-bg {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(109,40,217,0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(109,40,217,0.08) 1px, transparent 1px);
-    background-size: 32px 32px;
-    pointer-events: none;
-  }
-  .fu-glow-top {
-    position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
-    width: 320px; height: 160px;
-    background: radial-gradient(ellipse, rgba(139,92,246,0.22) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .fu-scan-line {
-    position: absolute; left: 0; right: 0; height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgba(139,92,246,0.3) 50%, transparent 100%);
-    animation: scanDown 4s linear infinite;
-    pointer-events: none;
-  }
-  @keyframes scanDown {
-    0% { top: 0%; opacity: 0; } 5% { opacity: 1; } 95% { opacity: 1; } 100% { top: 100%; opacity: 0; }
-  }
-  .fu-content { position: relative; z-index: 1; }
-
-  .fu-logo {
-    display: block;
-    max-width: 180px;
-    max-height: 90px;
-    margin: 0 auto 18px;
-    object-fit: contain;
-    filter: drop-shadow(0 0 12px rgba(139,92,246,0.4));
-  }
-
-  .fu-tagline {
-    color: rgba(167,139,250,0.7);
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin: 0 0 4px;
-  }
-
-  .fu-badge {
-    display: inline-block;
-    border: 1px solid rgba(139,92,246,0.5);
-    color: #a78bfa; font-size: 11px; letter-spacing: 2px;
-    padding: 4px 14px; border-radius: 100px; margin-bottom: 16px;
-    text-transform: uppercase;
-  }
-  .fu-title {
-    color: #fff; font-size: clamp(26px, 6vw, 38px); font-weight: 700;
-    line-height: 1.1; margin: 0 0 6px;
-  }
-  .fu-title span {
-    background: linear-gradient(90deg, #a78bfa, #60a5fa);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .fu-sub { color: rgba(167,139,250,0.55); font-size: 13px; margin: 0 0 18px; letter-spacing: 1px; }
-  .fu-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(139,92,246,0.4), transparent);
-    margin-bottom: 8px;
-  }
-
-  /* STATS */
-  .fu-stats {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 10px; margin-bottom: 22px;
-  }
-  .fu-stat {
-    background: rgba(109,40,217,0.1);
-    border: 1px solid rgba(139,92,246,0.2);
-    border-radius: 12px; padding: 14px 12px; text-align: center;
-  }
-  .fu-stat-num {
-    color: #a78bfa; font-size: clamp(20px,5vw,28px); font-weight: 700; line-height: 1;
-  }
-  .fu-stat-label {
-    color: rgba(167,139,250,0.5); font-size: 10px; letter-spacing: 1px;
-    text-transform: uppercase; margin-top: 5px; line-height: 1.3;
-  }
-  .fu-stat-wide {
-    grid-column: 1 / -1;
-    background: rgba(96,165,250,0.07);
-    border-color: rgba(96,165,250,0.2);
-  }
-  .fu-stat-wide .fu-stat-num { color: #60a5fa; font-size: clamp(13px,3vw,15px); font-weight: 500; letter-spacing: 0.5px; }
-
-  .fu-divider2 {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(139,92,246,0.3), transparent);
-    margin-bottom: 18px;
-  }
-
-  .fu-btn {
-    display: block; width: 100%; box-sizing: border-box;
-    border-radius: 14px; padding: 18px 20px; margin-bottom: 12px;
-    cursor: pointer; text-decoration: none;
-    border: 1px solid rgba(139,92,246,0.3);
-    background: rgba(109,40,217,0.12);
-    position: relative; overflow: hidden;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .fu-btn::before {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(139,92,246,0.15) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .fu-btn:hover { border-color: rgba(139,92,246,0.7); background: rgba(109,40,217,0.2); }
-  .fu-btn-primary { border-color: rgba(139,92,246,0.5); background: rgba(109,40,217,0.2); }
-  .fu-btn-label {
-    color: #fff; font-size: clamp(17px, 4vw, 22px); font-weight: 700;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .fu-btn-label .dot { width: 8px; height: 8px; border-radius: 50%; background: #a78bfa; flex-shrink: 0; }
-  .fu-btn-sub {
-    color: rgba(167,139,250,0.6); font-size: 11px; letter-spacing: 1.5px;
-    text-transform: uppercase; margin-top: 5px; padding-left: 18px;
-  }
-  .fu-btn-arrow { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: rgba(139,92,246,0.5); font-size: 18px; }
-  .fu-btn-blue { border-color: rgba(96,165,250,0.3); background: rgba(37,99,235,0.1); }
-  .fu-btn-blue::before { background: linear-gradient(135deg, rgba(96,165,250,0.12) 0%, transparent 60%); }
-  .fu-btn-blue:hover { border-color: rgba(96,165,250,0.6); background: rgba(37,99,235,0.18); }
-  .fu-btn-blue .dot { background: #60a5fa; }
-  .fu-btn-blue .fu-btn-sub { color: rgba(96,165,250,0.6); }
-  .fu-btn-blue .fu-btn-arrow { color: rgba(96,165,250,0.5); }
-  .fu-btn-teal { border-color: rgba(52,211,153,0.25); background: rgba(5,150,105,0.08); }
-  .fu-btn-teal::before { background: linear-gradient(135deg, rgba(52,211,153,0.1) 0%, transparent 60%); }
-  .fu-btn-teal:hover { border-color: rgba(52,211,153,0.5); background: rgba(5,150,105,0.15); }
-  .fu-btn-teal .dot { background: #34d399; }
-  .fu-btn-teal .fu-btn-sub { color: rgba(52,211,153,0.55); }
-  .fu-btn-teal .fu-btn-arrow { color: rgba(52,211,153,0.45); }
-  .fu-remix-toggle { display: block; width: 100%; background: none; border: none; padding: 0; cursor: pointer; text-align: left; }
-  .fu-submenu { margin-top: 2px; margin-bottom: 12px; padding-left: 12px; border-left: 1px solid rgba(96,165,250,0.2); display: none; }
-  .fu-submenu.open { display: block; }
-  .fu-submenu-btn {
-    display: block; width: 100%; box-sizing: border-box; border-radius: 10px;
-    padding: 14px 16px; margin-bottom: 8px; text-decoration: none;
-    border: 1px solid rgba(96,165,250,0.2); background: rgba(37,99,235,0.07);
-    color: #93c5fd; font-size: 14px; font-weight: 500;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .fu-submenu-btn:hover { border-color: rgba(96,165,250,0.5); background: rgba(37,99,235,0.15); }
-  .fu-section-label { color: rgba(167,139,250,0.35); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin: 18px 0 10px; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  .pw{font-family:'Space Grotesk',sans-serif;background:#020d07;min-height:100vh;position:relative;overflow:hidden;}
+  .gbg{position:fixed;inset:0;background-image:linear-gradient(rgba(34,197,94,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(34,197,94,0.07) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
+  .gtop{position:fixed;top:-80px;left:50%;transform:translateX(-50%);width:400px;height:200px;background:radial-gradient(ellipse,rgba(250,204,21,0.14) 0%,rgba(34,197,94,0.09) 50%,transparent 70%);pointer-events:none;z-index:0;}
+  .scan{position:fixed;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(250,204,21,0.4) 50%,transparent 100%);animation:sd 5s linear infinite;pointer-events:none;z-index:1;}
+  @keyframes sd{0%{top:0;opacity:0;}5%{opacity:1;}95%{opacity:1;}100%{top:100%;opacity:0;}}
+  .sa{position:relative;z-index:2;padding:28px 20px 140px;overflow-y:auto;height:100vh;scrollbar-width:none;}
+  .sa::-webkit-scrollbar{display:none;}
+  .ct{text-align:center;max-width:480px;margin:0 auto;}
+  .logo-wrap{margin:0 auto 18px;width:220px;height:80px;display:flex;align-items:center;justify-content:center;}
+  .logo-wrap img{max-width:220px;max-height:80px;object-fit:contain;filter:invert(1) sepia(1) saturate(3) hue-rotate(70deg) brightness(1.1);}
+  .tag{color:rgba(134,239,172,0.7);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin:0 0 4px;}
+  .badge{display:inline-block;border:1px solid rgba(250,204,21,0.6);color:#fde047;font-size:11px;letter-spacing:2px;padding:4px 14px;border-radius:100px;margin-bottom:16px;text-transform:uppercase;}
+  .ttl{color:#fff;font-size:clamp(26px,6vw,38px);font-weight:700;line-height:1.1;margin:0 0 6px;}
+  .ttl span{background:linear-gradient(90deg,#fde047,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .sub{color:rgba(134,239,172,0.5);font-size:13px;margin:0 0 18px;letter-spacing:1px;}
+  .dv{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,0.5),rgba(34,197,94,0.5),transparent);margin-bottom:8px;}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
+  .stat{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:12px;padding:14px 12px;text-align:center;}
+  .sn{color:#4ade80;font-size:clamp(20px,5vw,28px);font-weight:700;line-height:1;}
+  .sl{color:rgba(134,239,172,0.5);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-top:5px;line-height:1.3;}
+  .sw{grid-column:1/-1;background:rgba(250,204,21,0.07);border-color:rgba(250,204,21,0.25);}
+  .sw .sn{color:#fde047;font-size:clamp(13px,3vw,15px);font-weight:500;letter-spacing:0.5px;}
+  .dv2{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,0.4),rgba(34,197,94,0.4),transparent);margin-bottom:18px;}
+  .btn{display:block;width:100%;border-radius:14px;padding:18px 20px;margin-bottom:12px;cursor:pointer;text-decoration:none;border:1px solid rgba(34,197,94,0.3);background:rgba(34,197,94,0.08);position:relative;overflow:hidden;transition:border-color .2s,background .2s;}
+  .btn:hover{border-color:rgba(34,197,94,0.7);background:rgba(34,197,94,0.16);}
+  .bp{border-color:rgba(34,197,94,0.55);background:rgba(34,197,94,0.14);}
+  .bl{color:#fff;font-size:clamp(17px,4vw,22px);font-weight:700;display:flex;align-items:center;gap:10px;}
+  .bl .dot{width:9px;height:9px;border-radius:50%;background:#4ade80;flex-shrink:0;}
+  .bs{color:rgba(134,239,172,0.6);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;padding-left:18px;}
+  .ba{position:absolute;right:18px;top:50%;transform:translateY(-50%);color:rgba(74,222,128,0.6);font-size:20px;}
+  .by{border-color:rgba(250,204,21,0.3);background:rgba(250,204,21,0.07);}
+  .by:hover{border-color:rgba(250,204,21,0.65);background:rgba(250,204,21,0.13);}
+  .by .dot{background:#fde047;}
+  .by .bs{color:rgba(253,224,71,0.6);}
+  .by .ba{color:rgba(253,224,71,0.55);}
+  .bz{border-color:rgba(59,130,246,0.3);background:rgba(30,64,175,0.08);}
+  .bz:hover{border-color:rgba(59,130,246,0.6);background:rgba(30,64,175,0.14);}
+  .bz .dot{background:#60a5fa;}
+  .bz .bs{color:rgba(96,165,250,0.6);}
+  .bz .ba{color:rgba(96,165,250,0.5);}
+  .sl2{color:rgba(250,204,21,0.4);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin:18px 0 10px;}
+  .rtog{display:block;width:100%;background:none;border:none;padding:0;cursor:pointer;text-align:left;}
+  .rsub{margin-top:2px;margin-bottom:12px;padding-left:12px;border-left:1px solid rgba(59,130,246,0.25);display:none;}
+  .rsub.open{display:block;}
+  .rsb{display:block;width:100%;border-radius:10px;padding:14px 16px;margin-bottom:8px;text-decoration:none;border:1px solid rgba(59,130,246,0.22);background:rgba(30,64,175,0.07);color:#93c5fd;font-size:14px;font-weight:500;transition:border-color .2s,background .2s;}
+  .rsb:hover{border-color:rgba(59,130,246,0.55);background:rgba(30,64,175,0.14);}
+  .cflag{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px;}
+  .cstr{flex:1;height:2px;background:linear-gradient(90deg,transparent,rgba(34,197,94,0.6));}
+  .cstr.r{background:linear-gradient(90deg,rgba(34,197,94,0.6),transparent);}
+  .vinyl-fixed{position:fixed;bottom:24px;right:20px;z-index:200;display:flex;flex-direction:column;align-items:center;gap:5px;touch-action:none;}
+  .vinyl-svg{display:block;width:96px;height:96px;cursor:grab;filter:drop-shadow(0 4px 18px rgba(0,0,0,0.8));}
+  .vinyl-svg:active{cursor:grabbing;}
+  .vinyl-hint{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(250,204,21,0.75);white-space:nowrap;text-align:center;animation:pulse 2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:.45;}50%{opacity:1;}}
+  .vinyl-arrows{font-family:'Space Grotesk',sans-serif;font-size:13px;color:rgba(134,239,172,0.6);letter-spacing:2px;}
+  .sound-badge{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:1px;color:rgba(74,222,128,0.5);text-align:center;}
 </style>
 
-<div class="fu-wrap">
-  <div class="fu-grid-bg"></div>
-  <div class="fu-glow-top"></div>
-  <div class="fu-scan-line"></div>
+<div class="pw">
+  <div class="gbg"></div>
+  <div class="gtop"></div>
+  <div class="scan"></div>
 
-  <div class="fu-content" style="text-align:center;">
-    <img
-      src="https://lh3.googleusercontent.com/sitesv/AA5AbUAwP621MWpWdh1UI4473iQNb-Ql4scn4ygxEsLRI2v_nSgYKaMSJXVGvwixb95ELhKKHUIDuROEJr9Gxo47Yyc0QrSFVIGYPNhLYtAfQIGofRqCcNGM_RIoSnMacZ4QLhm_GcBx8da1NxCm--D5HmA6cnBA1mWPoQuJtY83D9wkpZ5rro1I0i92dtrknv4=w16383"
-      class="fu-logo"
-      alt="Logo"
-      onerror="this.style.display='none'"
-    />
-
-    <p class="fu-tagline">Voz dos maiores festivais Brasil afora</p>
-    <div class="fu-badge">Orçamento sem compromisso</div>
-    <h1 class="fu-title">O que <span>deseja?</span></h1>
-    <p class="fu-sub">Selecione o serviço abaixo</p>
-    <div class="fu-divider"></div>
-
-    <div class="fu-stats">
-      <div class="fu-stat">
-        <div class="fu-stat-num" data-target="7000" data-prefix="+" data-suffix="">0</div>
-        <div class="fu-stat-label">Aberturas produzidas</div>
+  <div class="sa" id="scrollArea">
+    <div class="ct">
+      <div class="logo-wrap">
+        <img src="/mnt/user-data/uploads/unnamed.png" alt="Abertura Para DJ" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div style="display:none;flex-direction:column;align-items:center;">
+          <span style="color:#4ade80;font-size:22px;font-weight:700;letter-spacing:2px;">ABERTURA</span>
+          <span style="color:#fde047;font-size:14px;letter-spacing:3px;">PARA DJ</span>
+        </div>
       </div>
-      <div class="fu-stat">
-        <div class="fu-stat-num" data-target="10" data-prefix="+" data-suffix=" países">0</div>
-        <div class="fu-stat-label">Países atendidos</div>
+      <div class="cflag"><div class="cstr"></div><span style="font-size:20px;">🇧🇷</span><span style="font-size:20px;">⚽</span><span style="font-size:20px;">🇧🇷</span><div class="cstr r"></div></div>
+      <p class="tag">Voz dos maiores festivais Brasil afora</p>
+      <div class="badge">Orçamento sem compromisso</div>
+      <h1 class="ttl">O que <span>deseja?</span></h1>
+      <p class="sub">Selecione o serviço abaixo</p>
+      <div class="dv"></div>
+      <div class="stats">
+        <div class="stat"><div class="sn" data-target="7000" data-prefix="+" data-suffix="">0</div><div class="sl">Aberturas produzidas</div></div>
+        <div class="stat"><div class="sn" data-target="10" data-prefix="+" data-suffix=" países">0</div><div class="sl">Países atendidos</div></div>
+        <div class="stat"><div class="sn" data-target="3" data-prefix="+" data-suffix="M views">0</div><div class="sl">Views no YouTube</div></div>
+        <div class="stat"><div class="sn" data-target="600" data-prefix="+" data-suffix="">0</div><div class="sl">Produções publicadas</div></div>
+        <div class="stat sw"><div class="sn">🏆 Maior portfólio público de aberturas para shows no Mundo</div></div>
       </div>
-      <div class="fu-stat">
-        <div class="fu-stat-num" data-target="3" data-prefix="+" data-suffix="M views">0</div>
-        <div class="fu-stat-label">Visualizações no YouTube</div>
+      <div class="dv2"></div>
+      <a href="https://linkly.link/2indt" target="_blank" class="btn bp">
+        <div class="bl"><span class="dot"></span>Abertura Completa</div>
+        <div class="bs">Áudio + vídeo profissional</div>
+        <span class="ba">›</span>
+      </a>
+      <a href="https://linkly.link/2indu" target="_blank" class="btn">
+        <div class="bl"><span class="dot"></span>Abertura em Áudio</div>
+        <div class="bs">Locução + trilha cinemática</div>
+        <span class="ba">›</span>
+      </a>
+      <button onclick="toggleRemix()" class="rtog">
+        <div class="btn bz" style="margin-bottom:0;">
+          <div class="bl"><span class="dot"></span>Remix Profissional</div>
+          <div class="bs">Alavancar minha carreira</div>
+          <span class="ba" id="ra">›</span>
+        </div>
+      </button>
+      <div class="rsub" id="rs">
+        <a href="https://linkly.link/2indv" target="_blank" class="rsb">↳ Já sei qual música quero remixar</a>
+        <a href="https://linkly.link/2indw" target="_blank" class="rsb">↳ Preciso de ideia de música</a>
       </div>
-      <div class="fu-stat">
-        <div class="fu-stat-num" data-target="600" data-prefix="+" data-suffix="">0</div>
-        <div class="fu-stat-label">Produções publicadas</div>
-      </div>
-      <div class="fu-stat fu-stat-wide">
-        <div class="fu-stat-num">🏆 Maior portfólio público de aberturas para shows no Mundo</div>
-      </div>
+      <p class="sl2">Marketing & Crescimento</p>
+      <a href="https://linkly.link/2indx" target="_blank" class="btn by">
+        <div class="bl"><span class="dot"></span>Lotar Minha Agenda</div>
+        <div class="bs">Ads e presença digital para artistas</div>
+        <span class="ba">›</span>
+      </a>
+      <a href="https://linkly.link/2indy" target="_blank" class="btn by">
+        <div class="bl"><span class="dot"></span>Vender Mais Ingressos</div>
+        <div class="bs">Ads e funil para festas</div>
+        <span class="ba">›</span>
+      </a>
+      <a href="https://linkly.link/2indz" target="_blank" class="btn">
+        <div class="bl"><span class="dot"></span>Patentear Minha Marca</div>
+        <div class="bs">Nome artístico e acompanhamento</div>
+        <span class="ba">›</span>
+      </a>
     </div>
-
-    <div class="fu-divider2"></div>
   </div>
 
-  <div class="fu-content">
-    <a href="https://linkly.link/2indt" target="_blank" class="fu-btn fu-btn-primary">
-      <div class="fu-btn-label"><span class="dot"></span>Abertura Completa</div>
-      <div class="fu-btn-sub">Áudio + vídeo profissional</div>
-      <span class="fu-btn-arrow">›</span>
-    </a>
-    <a href="https://linkly.link/2indu" target="_blank" class="fu-btn">
-      <div class="fu-btn-label"><span class="dot"></span>Abertura em Áudio</div>
-      <div class="fu-btn-sub">Locução + trilha cinemática</div>
-      <span class="fu-btn-arrow">›</span>
-    </a>
-    <button onclick="toggleRemix()" class="fu-remix-toggle">
-      <div class="fu-btn fu-btn-blue" style="margin-bottom:0;">
-        <div class="fu-btn-label"><span class="dot"></span>Remix Profissional</div>
-        <div class="fu-btn-sub">Alavancar minha carreira</div>
-        <span class="fu-btn-arrow" id="remix-arrow">›</span>
-      </div>
-    </button>
-    <div class="fu-submenu" id="remix-sub">
-      <a href="https://linkly.link/2indv" target="_blank" class="fu-submenu-btn">↳ Já sei qual música quero remixar</a>
-      <a href="https://linkly.link/2indw" target="_blank" class="fu-submenu-btn">↳ Preciso de ideia de música</a>
-    </div>
-    <p class="fu-section-label">Marketing & Crescimento</p>
-    <a href="https://linkly.link/2indx" target="_blank" class="fu-btn fu-btn-teal">
-      <div class="fu-btn-label"><span class="dot"></span>Lotar Minha Agenda</div>
-      <div class="fu-btn-sub">Ads e presença digital para artistas</div>
-      <span class="fu-btn-arrow">›</span>
-    </a>
-    <a href="https://linkly.link/2indy" target="_blank" class="fu-btn fu-btn-teal">
-      <div class="fu-btn-label"><span class="dot"></span>Vender Mais Ingressos</div>
-      <div class="fu-btn-sub">Ads e funil para festas</div>
-      <span class="fu-btn-arrow">›</span>
-    </a>
-    <a href="https://linkly.link/2indz" target="_blank" class="fu-btn">
-      <div class="fu-btn-label"><span class="dot"></span>Patentear Minha Marca</div>
-      <div class="fu-btn-sub">Nome artístico e acompanhamento</div>
-      <span class="fu-btn-arrow">›</span>
-    </a>
+  <div class="vinyl-fixed" id="vinylWrap">
+    <div class="vinyl-arrows">↑ ↓</div>
+    <svg class="vinyl-svg" id="vinylSvg" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="vg" cx="42%" cy="38%" r="60%">
+          <stop offset="0%" stop-color="#1a1a1a"/>
+          <stop offset="100%" stop-color="#080808"/>
+        </radialGradient>
+      </defs>
+      <circle cx="48" cy="48" r="46" fill="#111" stroke="#333" stroke-width="1.5"/>
+      <circle cx="48" cy="48" r="44" fill="url(#vg)"/>
+      <circle cx="48" cy="48" r="43" fill="none" stroke="#2a2a2a" stroke-width="0.7"/>
+      <circle cx="48" cy="48" r="41" fill="none" stroke="#222" stroke-width="0.5"/>
+      <circle cx="48" cy="48" r="39" fill="none" stroke="#2a2a2a" stroke-width="0.6"/>
+      <circle cx="48" cy="48" r="37" fill="none" stroke="#222" stroke-width="0.5"/>
+      <circle cx="48" cy="48" r="35" fill="none" stroke="#2a2a2a" stroke-width="0.6"/>
+      <circle cx="48" cy="48" r="33" fill="none" stroke="#222" stroke-width="0.5"/>
+      <circle cx="48" cy="48" r="31" fill="none" stroke="#2a2a2a" stroke-width="0.6"/>
+      <circle cx="48" cy="48" r="29" fill="none" stroke="#222" stroke-width="0.5"/>
+      <circle cx="48" cy="48" r="27" fill="none" stroke="#2a2a2a" stroke-width="0.6"/>
+      <circle cx="48" cy="48" r="25" fill="none" stroke="#1e1e1e" stroke-width="0.5"/>
+      <circle cx="48" cy="48" r="20" fill="#e07800"/>
+      <circle cx="48" cy="48" r="19.5" fill="none" stroke="#c06800" stroke-width="0.8"/>
+      <circle cx="48" cy="48" r="15" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="0.5"/>
+      <circle cx="48" cy="48" r="10" fill="none" stroke="rgba(0,0,0,0.2)" stroke-width="0.5"/>
+      <line x1="32" y1="44" x2="64" y2="44" stroke="rgba(0,0,0,0.2)" stroke-width="0.5"/>
+      <line x1="32" y1="48" x2="64" y2="48" stroke="rgba(0,0,0,0.15)" stroke-width="0.5"/>
+      <line x1="32" y1="52" x2="64" y2="52" stroke="rgba(0,0,0,0.2)" stroke-width="0.5"/>
+      <circle cx="48" cy="48" r="3.5" fill="#111" stroke="#333" stroke-width="0.5"/>
+      <path d="M 20 38 A 28 28 0 0 1 58 18" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <div class="vinyl-hint">Gire para rolar</div>
+    <div class="sound-badge" id="soundBadge">♪ toque para ativar som</div>
   </div>
 </div>
 
 <script>
-function toggleRemix() {
-  const sub = document.getElementById('remix-sub');
-  const arrow = document.getElementById('remix-arrow');
-  const open = sub.classList.toggle('open');
-  arrow.textContent = open ? '⌄' : '›';
+function toggleRemix(){
+  const s=document.getElementById('rs'),a=document.getElementById('ra');
+  s.classList.toggle('open');
+  a.textContent=s.classList.contains('open')?'⌄':'›';
 }
 
-function animateCounters() {
-  const els = document.querySelectorAll('[data-target]');
-  els.forEach(el => {
-    const target = parseInt(el.dataset.target);
-    const prefix = el.dataset.prefix || '';
-    const suffix = el.dataset.suffix || '';
-    const duration = 2000;
-    const steps = 60;
-    const stepTime = duration / steps;
-    let current = 0;
-    const increment = target / steps;
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        current = target;
-        clearInterval(timer);
-      }
-      const display = target >= 1000
-        ? (current >= 1000 ? Math.round(current).toLocaleString('pt-BR') : Math.round(current))
-        : Math.round(current);
-      el.textContent = prefix + display + suffix;
-    }, stepTime);
+function animateCounters(){
+  document.querySelectorAll('[data-target]').forEach(el=>{
+    const t=parseInt(el.dataset.target),pre=el.dataset.prefix||'',suf=el.dataset.suffix||'';
+    let c=0;const inc=t/60;
+    const tm=setInterval(()=>{
+      c+=inc;if(c>=t){c=t;clearInterval(tm);}
+      const d=t>=1000?Math.round(c).toLocaleString('pt-BR'):Math.round(c);
+      el.textContent=pre+d+suf;
+    },33);
   });
 }
+const ob=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){animateCounters();ob.disconnect();}});},{threshold:0.3});
+const st=document.querySelector('.stats');
+if(st)ob.observe(st);
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { animateCounters(); observer.disconnect(); } });
-}, { threshold: 0.3 });
-observer.observe(document.querySelector('.fu-stats'));
+// ── AUDIO ENGINE ─────────────────────────────────────────────
+let audioCtx=null;
+let audioReady=false;
+let scratchBuffer=null;
+let scratchSource=null;
+let scratchGain=null;
+let playbackRate=1.0;
+let targetRate=0;
+let rateRaf=null;
+const soundBadge=document.getElementById('soundBadge');
+
+function initAudio(){
+  if(audioReady)return;
+  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  scratchGain=audioCtx.createGain();
+  scratchGain.gain.value=0;
+  scratchGain.connect(audioCtx.destination);
+  buildScratchBuffer();
+  audioReady=true;
+  soundBadge.textContent='♪ som ativado';
+  setTimeout(()=>soundBadge.style.opacity='0',1500);
+}
+
+function buildScratchBuffer(){
+  // Synthetic vinyl scratch: pitched noise + low freq wobble
+  const sr=audioCtx.sampleRate;
+  const dur=2.0;
+  const len=Math.floor(sr*dur);
+  scratchBuffer=audioCtx.createBuffer(1,len,sr);
+  const data=scratchBuffer.getChannelData(0);
+  for(let i=0;i<len;i++){
+    const t=i/sr;
+    // base noise
+    let s=(Math.random()*2-1)*0.6;
+    // add characteristic scratch "wah" — low freq sweep
+    s+=Math.sin(2*Math.PI*180*t+Math.sin(2*Math.PI*3*t)*4)*0.25;
+    // add vinyl crackle character
+    s+=Math.sin(2*Math.PI*900*t)*0.08;
+    s+=Math.sin(2*Math.PI*440*t+Math.random()*0.5)*0.07;
+    // envelope — fade in/out
+    const env=Math.min(i/(sr*0.02),(len-i)/(sr*0.02),1);
+    data[i]=s*env*0.55;
+  }
+}
+
+function playScratch(direction){
+  if(!audioReady||!scratchBuffer)return;
+  if(scratchSource){
+    try{scratchSource.stop();}catch(e){}
+    scratchSource=null;
+  }
+  scratchSource=audioCtx.createBufferSource();
+  scratchSource.buffer=scratchBuffer;
+  scratchSource.loop=true;
+  // direction: 1 = forward (scroll down), -1 = reverse (scroll up)
+  scratchSource.playbackRate.value=Math.abs(direction)*1.0;
+  // For reverse: we can't truly reverse a buffer in real-time easily,
+  // so we pitch-shift up for forward and down for reverse to give clear direction cue
+  if(direction>0){
+    scratchSource.playbackRate.value=0.95+Math.abs(direction)*0.3;
+  } else {
+    scratchSource.playbackRate.value=0.55+Math.abs(direction)*0.2;
+  }
+  scratchSource.connect(scratchGain);
+  scratchGain.gain.cancelScheduledValues(audioCtx.currentTime);
+  scratchGain.gain.setValueAtTime(scratchGain.gain.value,audioCtx.currentTime);
+  scratchGain.gain.linearRampToValueAtTime(0.75,audioCtx.currentTime+0.04);
+  scratchSource.start();
+  _scratchDir=direction;
+}
+
+function stopScratch(){
+  if(!audioReady||!scratchGain)return;
+  scratchGain.gain.cancelScheduledValues(audioCtx.currentTime);
+  scratchGain.gain.setValueAtTime(scratchGain.gain.value,audioCtx.currentTime);
+  scratchGain.gain.linearRampToValueAtTime(0,audioCtx.currentTime+0.08);
+  setTimeout(()=>{
+    if(scratchSource){try{scratchSource.stop();}catch(e){}scratchSource=null;}
+  },120);
+}
+
+// ── VINYL DISC CONTROLLER ─────────────────────────────────────
+const vSvg=document.getElementById('vinylSvg');
+const scrollArea=document.getElementById('scrollArea');
+let dragging=false,lastAngle=0,rot=0,vel=0,raf=null,lastT=0;
+let _scratchDir=0;
+let scratchTimeout=null;
+let lastScrollTop=0;
+let lastDelta=0;
+
+function center(){
+  const r=vSvg.getBoundingClientRect();
+  return{x:r.left+r.width/2,y:r.top+r.height/2};
+}
+function getAngle(cx,cy,x,y){return Math.atan2(y-cy,x-cx)*180/Math.PI;}
+function normDelta(d){if(d>180)d-=360;if(d<-180)d+=360;return d;}
+function setRot(r){rot=r;vSvg.style.transform=`rotate(${rot}deg)`;}
+
+function triggerScratch(delta){
+  if(!audioReady)return;
+  const dir=delta>0?1:-1;
+  const speed=Math.min(Math.abs(delta)/8,2.5);
+  if(Math.abs(delta)<0.5){stopScratch();return;}
+  if(_scratchDir!==dir||!scratchSource){playScratch(dir*speed);}
+  clearTimeout(scratchTimeout);
+  scratchTimeout=setTimeout(stopScratch,180);
+}
+
+function glide(){
+  if(Math.abs(vel)>0.05){
+    scrollArea.scrollTop+=vel*3.5;
+    vel*=0.88;
+    setRot(rot+vel*0.9);
+    raf=requestAnimationFrame(glide);
+  } else {
+    stopScratch();
+  }
+}
+
+function onStart(x,y){
+  initAudio();
+  dragging=true;vel=0;lastT=Date.now();
+  if(raf)cancelAnimationFrame(raf);
+  const c=center();lastAngle=getAngle(c.x,c.y,x,y);
+}
+function onMove(x,y){
+  if(!dragging)return;
+  const c=center();
+  const a=getAngle(c.x,c.y,x,y);
+  let d=normDelta(a-lastAngle);
+  setRot(rot+d);
+  const now=Date.now(),dt=Math.max(1,now-lastT);
+  vel=d/dt*16;
+  lastAngle=a;lastT=now;
+  scrollArea.scrollTop+=d*3;
+  triggerScratch(d);
+  lastDelta=d;
+}
+function onEnd(){
+  if(!dragging)return;
+  dragging=false;
+  raf=requestAnimationFrame(glide);
+}
+
+vSvg.addEventListener('mousedown',e=>{onStart(e.clientX,e.clientY);e.preventDefault();});
+window.addEventListener('mousemove',e=>{onMove(e.clientX,e.clientY);});
+window.addEventListener('mouseup',onEnd);
+vSvg.addEventListener('touchstart',e=>{const t=e.touches[0];onStart(t.clientX,t.clientY);e.preventDefault();},{passive:false});
+window.addEventListener('touchmove',e=>{if(dragging){const t=e.touches[0];onMove(t.clientX,t.clientY);e.preventDefault();}},{passive:false});
+window.addEventListener('touchend',onEnd);
+
+// Spin disc on native scroll (mouse wheel / trackpad)
+scrollArea.addEventListener('scroll',()=>{
+  if(!dragging){
+    const curr=scrollArea.scrollTop;
+    const d=curr-lastScrollTop;
+    lastScrollTop=curr;
+    const spinAmt=d*0.18;
+    setRot(rot+spinAmt);
+    if(audioReady&&Math.abs(d)>1) triggerScratch(d>0?2:-2);
+  }
+});
 </script>
