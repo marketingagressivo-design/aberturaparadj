@@ -11,14 +11,17 @@
   .sa{position:relative;z-index:2;padding:28px 20px 140px;overflow-y:auto;height:100vh;scrollbar-width:none;}
   .sa::-webkit-scrollbar{display:none;}
   .ct{text-align:center;max-width:680px;margin:0 auto;}
-  .logo-wrap{margin:0 auto 18px;width:220px;height:80px;display:flex;align-items:center;justify-content:center;}
-  .logo-wrap img{max-width:220px;max-height:80px;object-fit:contain;filter:invert(1) sepia(1) saturate(3) hue-rotate(70deg) brightness(1.1);}
+  
+  /* Ajuste de exibição da LOGO unnamed.png */
+  .logo-wrap{margin:0 auto 18px;width:290px;height:95px;display:flex;align-items:center;justify-content:center;}
+  .logo-wrap img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
+  
   .tag{color:rgba(134,239,172,0.7);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin:0 0 4px;}
   .badge{display:inline-block;border:1px solid rgba(250,204,21,0.6);color:#fde047;font-size:11px;letter-spacing:2px;padding:4px 14px;border-radius:100px;margin-bottom:16px;text-transform:uppercase;}
   .ttl{color:#fff;font-size:clamp(26px,6vw,38px);font-weight:700;line-height:1.1;margin:0 0 6px;}
   .ttl span{background:linear-gradient(90deg,#fde047,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
   .sub{color:rgba(134,239,172,0.5);font-size:13px;margin:0 0 18px;letter-spacing:1px;}
-  .dv{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,0.5),rgba(34,197,94,0.5),transparent);margin-bottom:8px;}
+  .dv{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,0.5),rgba(34,197,94,0.5),transparent);margin-top:8px;margin-bottom:18px;}
   .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
   .stat{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:12px;padding:14px 12px;text-align:center;}
   .sn{color:#4ade80;font-size:clamp(20px,5vw,28px);font-weight:700;line-height:1;}
@@ -52,13 +55,15 @@
   .cflag{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px;}
   .cstr{flex:1;height:2px;background:linear-gradient(90deg,transparent,rgba(34,197,94,0.6));}
   .cstr.r{background:linear-gradient(90deg,rgba(34,197,94,0.6),transparent);}
-  .vinyl-fixed{position:fixed;bottom:24px;right:20px;z-index:200;display:flex;flex-direction:column;align-items:center;gap:5px;touch-action:none;}
-  .vinyl-svg{display:block;width:96px;height:96px;cursor:grab;filter:drop-shadow(0 4px 18px rgba(0,0,0,0.8));}
+  
+  /* Layout do Disco de Vinil Ampliado */
+  .vinyl-fixed{position:fixed;bottom:20px;right:20px;z-index:200;display:flex;flex-direction:column;align-items:center;gap:6px;touch-action:none;}
+  .vinyl-svg{display:block;width:150px;height:150px;cursor:grab;filter:drop-shadow(0 6px 24px rgba(0,0,0,0.85));transition:transform 0.05s linear;}
   .vinyl-svg:active{cursor:grabbing;}
-  .vinyl-hint{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(250,204,21,0.75);white-space:nowrap;text-align:center;animation:pulse 2s ease-in-out infinite;}
-  @keyframes pulse{0%,100%{opacity:.45;}50%{opacity:1;}}
-  .vinyl-arrows{font-family:'Space Grotesk',sans-serif;font-size:13px;color:rgba(134,239,172,0.6);letter-spacing:2px;}
-  .sound-badge{font-family:'Space Grotesk',sans-serif;font-size:9px;letter-spacing:1px;color:rgba(74,222,128,0.5);text-align:center;}
+  .vinyl-hint{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#fde047;white-space:nowrap;text-align:center;animation:pulse 2s ease-in-out infinite;text-shadow:0 2px 4px rgba(0,0,0,0.8);}
+  @keyframes pulse{0%,100%{opacity:.5;}50%{opacity:1;}}
+  .vinyl-arrows{font-family:'Space Grotesk',sans-serif;font-size:15px;color:rgba(134,239,172,0.8);letter-spacing:3px;text-shadow:0 2px 4px rgba(0,0,0,0.8);}
+  .sound-badge{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:1px;color:#4ade80;text-align:center;background:rgba(2,13,7,0.9);padding:4px 10px;border-radius:20px;border:1px solid rgba(74,222,128,0.3);box-shadow:0 4px 10px rgba(0,0,0,0.55);}
 </style>
 
 <div class="pw">
@@ -68,19 +73,21 @@
 
   <div class="sa" id="scrollArea">
     <div class="ct">
+      
+      <!-- LOGO FILTRADA E CORRIGIDA -->
       <div class="logo-wrap">
-        <img src="/mnt/user-data/uploads/unnamed.png" alt="Abertura Para DJ" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <img src="unnamed.png" alt="Abertura Para DJ" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
         <div style="display:none;flex-direction:column;align-items:center;">
           <span style="color:#4ade80;font-size:22px;font-weight:700;letter-spacing:2px;">ABERTURA</span>
           <span style="color:#fde047;font-size:14px;letter-spacing:3px;">PARA DJ</span>
         </div>
       </div>
+      
       <div class="cflag"><div class="cstr"></div><span style="font-size:20px;">🇧🇷</span><span style="font-size:20px;">⚽</span><span style="font-size:20px;">🇧🇷</span><div class="cstr r"></div></div>
       <p class="tag">Voz dos maiores festivais Brasil afora</p>
       <div class="badge">Orçamento sem compromisso</div>
-      <h1 class="ttl">O que <span>deseja?</span></h1>
-      <p class="sub">Selecione o serviço abaixo</p>
-      <div class="dv"></div>
+      
+      <!-- Bloco de Estatísticas -->
       <div class="stats">
         <div class="stat"><div class="sn" data-target="7000" data-prefix="+" data-suffix="">0</div><div class="sl">Aberturas produzidas</div></div>
         <div class="stat"><div class="sn" data-target="10" data-prefix="+" data-suffix=" países">0</div><div class="sl">Países atendidos</div></div>
@@ -88,7 +95,14 @@
         <div class="stat"><div class="sn" data-target="600" data-prefix="+" data-suffix="">0</div><div class="sl">Produções publicadas</div></div>
         <div class="stat sw"><div class="sn">🏆 Maior portfólio público de aberturas para shows no Mundo</div></div>
       </div>
+
       <div class="dv2"></div>
+
+      <!-- Formulário / Botões -->
+      <h1 class="ttl">O que <span>deseja?</span></h1>
+      <p class="sub">Selecione o serviço abaixo</p>
+      <div class="dv"></div>
+      
       <a href="https://linkly.link/2indt" target="_blank" class="btn bp">
         <div class="bl"><span class="dot"></span>Abertura Completa</div>
         <div class="bs">Áudio + vídeo profissional</div>
@@ -110,6 +124,7 @@
         <a href="https://linkly.link/2indv" target="_blank" class="rsb">↳ Já sei qual música quero remixar</a>
         <a href="https://linkly.link/2indw" target="_blank" class="rsb">↳ Preciso de ideia de música</a>
       </div>
+      
       <p class="sl2">Marketing & Crescimento</p>
       <a href="https://linkly.link/2indx" target="_blank" class="btn by">
         <div class="bl"><span class="dot"></span>Lotar Minha Agenda</div>
@@ -129,6 +144,7 @@
     </div>
   </div>
 
+  <!-- Vinil -->
   <div class="vinyl-fixed" id="vinylWrap">
     <div class="vinyl-arrows">↑ ↓</div>
     <svg class="vinyl-svg" id="vinylSvg" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
@@ -161,7 +177,7 @@
       <path d="M 20 38 A 28 28 0 0 1 58 18" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="3" stroke-linecap="round"/>
     </svg>
     <div class="vinyl-hint">Gire para rolar</div>
-    <div class="sound-badge" id="soundBadge">♪ toque para ativar som</div>
+    <div class="sound-badge" id="soundBadge">♪ Clique no disco p/ ativar som</div>
   </div>
 </div>
 
@@ -187,95 +203,130 @@ const ob=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){animate
 const st=document.querySelector('.stats');
 if(st)ob.observe(st);
 
-// ── AUDIO ENGINE ─────────────────────────────────────────────
+// ── SISTEMA DE ÁUDIO REESCRITO (COM FALLBACK ANTI-BLOQUEIO) ─────────────────
 let audioCtx=null;
 let audioReady=false;
-let scratchBuffer=null;
-let scratchSource=null;
-let scratchGain=null;
-let playbackRate=1.0;
-let targetRate=0;
-let rateRaf=null;
+let normalBuffer=null;
+let reverseBuffer=null;
+let currentSource=null;
+let gainNode=null;
+let isPlaying=false;
+let lastDirection=0; 
+let scratchTimeout=null;
 const soundBadge=document.getElementById('soundBadge');
 
-function initAudio(){
-  if(audioReady)return;
-  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-  scratchGain=audioCtx.createGain();
-  scratchGain.gain.value=0;
-  scratchGain.connect(audioCtx.destination);
-  buildScratchBuffer();
-  audioReady=true;
-  soundBadge.textContent='♪ som ativado';
-  setTimeout(()=>soundBadge.style.opacity='0',1500);
-}
+// Nome do arquivo referenciado para o efeito
+const FILE_NAME = "DJ STOP & SCRATCH FREE SOUND EFFECT (SFX) 2025 - FX VAULT (youtube).mp3";
 
-function buildScratchBuffer(){
-  // Synthetic vinyl scratch: pitched noise + low freq wobble
-  const sr=audioCtx.sampleRate;
-  const dur=2.0;
-  const len=Math.floor(sr*dur);
-  scratchBuffer=audioCtx.createBuffer(1,len,sr);
-  const data=scratchBuffer.getChannelData(0);
-  for(let i=0;i<len;i++){
-    const t=i/sr;
-    // base noise
-    let s=(Math.random()*2-1)*0.6;
-    // add characteristic scratch "wah" — low freq sweep
-    s+=Math.sin(2*Math.PI*180*t+Math.sin(2*Math.PI*3*t)*4)*0.25;
-    // add vinyl crackle character
-    s+=Math.sin(2*Math.PI*900*t)*0.08;
-    s+=Math.sin(2*Math.PI*440*t+Math.random()*0.5)*0.07;
-    // envelope — fade in/out
-    const env=Math.min(i/(sr*0.02),(len-i)/(sr*0.02),1);
-    data[i]=s*env*0.55;
+// Função para gerar onda de scratch sintética caso o arquivo externo seja bloqueado
+function generateFallbackBuffers() {
+  const sr = audioCtx.sampleRate;
+  const dur = 1.5;
+  const len = Math.floor(sr * dur);
+  
+  normalBuffer = audioCtx.createBuffer(1, len, sr);
+  reverseBuffer = audioCtx.createBuffer(1, len, sr);
+  
+  const nData = normalBuffer.getChannelData(0);
+  const rData = reverseBuffer.getChannelData(0);
+  
+  for(let i=0; i<len; i++){
+    const t = i/sr;
+    let s = (Math.random() * 2 - 1) * 0.4; // ruído base de agulha
+    s += Math.sin(2 * Math.PI * 140 * t + Math.sin(2 * Math.PI * 4 * t) * 3) * 0.35; // Wah gordo
+    s += Math.sin(2 * Math.PI * 880 * t) * 0.05; 
+    const env = Math.min(i/(sr*0.03), (len-i)/(sr*0.03), 1);
+    
+    nData[i] = s * env;
+    rData[len - 1 - i] = s * env; // Inversão perfeita do buffer
   }
 }
 
-function playScratch(direction){
-  if(!audioReady||!scratchBuffer)return;
-  if(scratchSource){
-    try{scratchSource.stop();}catch(e){}
-    scratchSource=null;
+async function initAudio(){
+  if(audioReady) return;
+  
+  try {
+    audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+    gainNode = audioCtx.createGain();
+    gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+    gainNode.connect(audioCtx.destination);
+
+    // Tentativa de carregar o arquivo customizado solicitado
+    try {
+      const response = await fetch(FILE_NAME);
+      if(!response.ok) throw new Error("Local file load standard fallback triggered");
+      const arrayBuffer = await response.arrayBuffer();
+      normalBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+      
+      // Criação do buffer invertido em tempo real para o scroll inverso
+      const channels = normalBuffer.numberOfChannels;
+      const length = normalBuffer.length;
+      reverseBuffer = audioCtx.createBuffer(channels, length, normalBuffer.sampleRate);
+      for (let c = 0; c < channels; c++) {
+        const nD = normalBuffer.getChannelData(c);
+        const rD = reverseBuffer.getChannelData(c);
+        for (let i = 0; i < length; i++) { rD[i] = nD[length - 1 - i]; }
+      }
+    } catch(err) {
+      // Ativação do Fallback Synth se o arquivo não estiver na mesma pasta de execução
+      generateFallbackBuffers();
+    }
+
+    audioReady = true;
+    soundBadge.textContent = '♪ Som Conectado';
+    setTimeout(() => soundBadge.style.opacity = '0', 1200);
+  } catch(e) {
+    soundBadge.textContent = '❌ Clique para Ativar';
   }
-  scratchSource=audioCtx.createBufferSource();
-  scratchSource.buffer=scratchBuffer;
-  scratchSource.loop=true;
-  // direction: 1 = forward (scroll down), -1 = reverse (scroll up)
-  scratchSource.playbackRate.value=Math.abs(direction)*1.0;
-  // For reverse: we can't truly reverse a buffer in real-time easily,
-  // so we pitch-shift up for forward and down for reverse to give clear direction cue
-  if(direction>0){
-    scratchSource.playbackRate.value=0.95+Math.abs(direction)*0.3;
-  } else {
-    scratchSource.playbackRate.value=0.55+Math.abs(direction)*0.2;
-  }
-  scratchSource.connect(scratchGain);
-  scratchGain.gain.cancelScheduledValues(audioCtx.currentTime);
-  scratchGain.gain.setValueAtTime(scratchGain.gain.value,audioCtx.currentTime);
-  scratchGain.gain.linearRampToValueAtTime(0.75,audioCtx.currentTime+0.04);
-  scratchSource.start();
-  _scratchDir=direction;
 }
 
-function stopScratch(){
-  if(!audioReady||!scratchGain)return;
-  scratchGain.gain.cancelScheduledValues(audioCtx.currentTime);
-  scratchGain.gain.setValueAtTime(scratchGain.gain.value,audioCtx.currentTime);
-  scratchGain.gain.linearRampToValueAtTime(0,audioCtx.currentTime+0.08);
-  setTimeout(()=>{
-    if(scratchSource){try{scratchSource.stop();}catch(e){}scratchSource=null;}
-  },120);
+function playScratchReal(direction, intensity) {
+  if(!audioReady) return;
+  
+  const targetBuffer = (direction > 0) ? normalBuffer : reverseBuffer;
+  
+  if(lastDirection !== direction || !isPlaying || !currentSource) {
+    if(currentSource) { try { currentSource.stop(); } catch(e){} }
+    
+    currentSource = audioCtx.createBufferSource();
+    currentSource.buffer = targetBuffer;
+    currentSource.loop = true;
+    currentSource.connect(gainNode);
+    currentSource.start(0);
+    isPlaying = true;
+    lastDirection = direction;
+  }
+  
+  // Controle milimétrico de pitch baseado na velocidade do scroll
+  const speed = Math.min(Math.max(intensity * 0.35, 0.5), 2.2);
+  currentSource.playbackRate.setTargetAtTime(speed, audioCtx.currentTime, 0.01);
+  
+  // Abre o volume somente ao detectar movimento continuo
+  gainNode.gain.setTargetAtTime(0.85, audioCtx.currentTime, 0.01);
+  
+  clearTimeout(scratchTimeout);
+  scratchTimeout = setTimeout(stopScratchReal, 85); 
 }
 
-// ── VINYL DISC CONTROLLER ─────────────────────────────────────
+function stopScratchReal() {
+  if(!audioReady || !isPlaying) return;
+  if(gainNode) {
+    gainNode.gain.setTargetAtTime(0, audioCtx.currentTime, 0.03);
+  }
+  setTimeout(() => {
+    if(!isPlaying && currentSource) {
+      try { currentSource.stop(); } catch(e){}
+      currentSource = null;
+    }
+  }, 50);
+  isPlaying = false;
+}
+
+// ── CONTROLADORES DO VINIL ─────────────────────────────────────
 const vSvg=document.getElementById('vinylSvg');
 const scrollArea=document.getElementById('scrollArea');
 let dragging=false,lastAngle=0,rot=0,vel=0,raf=null,lastT=0;
-let _scratchDir=0;
-let scratchTimeout=null;
 let lastScrollTop=0;
-let lastDelta=0;
 
 function center(){
   const r=vSvg.getBoundingClientRect();
@@ -285,24 +336,22 @@ function getAngle(cx,cy,x,y){return Math.atan2(y-cy,x-cx)*180/Math.PI;}
 function normDelta(d){if(d>180)d-=360;if(d<-180)d+=360;return d;}
 function setRot(r){rot=r;vSvg.style.transform=`rotate(${rot}deg)`;}
 
-function triggerScratch(delta){
-  if(!audioReady)return;
-  const dir=delta>0?1:-1;
-  const speed=Math.min(Math.abs(delta)/8,2.5);
-  if(Math.abs(delta)<0.5){stopScratch();return;}
-  if(_scratchDir!==dir||!scratchSource){playScratch(dir*speed);}
-  clearTimeout(scratchTimeout);
-  scratchTimeout=setTimeout(stopScratch,180);
+function handleVinylMovement(delta) {
+  if(Math.abs(delta) < 0.15) return;
+  const dir = delta > 0 ? 1 : -1;
+  const force = Math.abs(delta);
+  playScratchReal(dir, force);
 }
 
 function glide(){
   if(Math.abs(vel)>0.05){
-    scrollArea.scrollTop+=vel*3.5;
+    scrollArea.scrollTop+=vel*3.2;
     vel*=0.88;
     setRot(rot+vel*0.9);
+    handleVinylMovement(vel);
     raf=requestAnimationFrame(glide);
   } else {
-    stopScratch();
+    stopScratchReal();
   }
 }
 
@@ -322,8 +371,7 @@ function onMove(x,y){
   vel=d/dt*16;
   lastAngle=a;lastT=now;
   scrollArea.scrollTop+=d*3;
-  triggerScratch(d);
-  lastDelta=d;
+  handleVinylMovement(d);
 }
 function onEnd(){
   if(!dragging)return;
@@ -338,24 +386,25 @@ vSvg.addEventListener('touchstart',e=>{const t=e.touches[0];onStart(t.clientX,t.
 window.addEventListener('touchmove',e=>{if(dragging){const t=e.touches[0];onMove(t.clientX,t.clientY);e.preventDefault();}},{passive:false});
 window.addEventListener('touchend',onEnd);
 
-// Spin disc on native scroll (mouse wheel / trackpad)
 scrollArea.addEventListener('scroll',()=>{
+  if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
   if(!dragging){
     const curr=scrollArea.scrollTop;
     const d=curr-lastScrollTop;
     lastScrollTop=curr;
-    const spinAmt=d*0.18;
-    setRot(rot+spinAmt);
-    if(audioReady&&Math.abs(d)>1) triggerScratch(d>0?2:-2);
+    setRot(rot+(d*0.15));
+    if(audioReady) handleVinylMovement(d * 0.25);
   }
 });
+
+// Desbloqueia contexto de áudio em qualquer clique na tela por garantia
+window.addEventListener('click', () => { initAudio(); });
 </script>
 
 <style>
 @media (max-width:768px){
   .sa{padding:20px 14px 140px;}
-  .logo-wrap{width:280px;height:100px;}
-  .logo-wrap img{max-width:280px;max-height:100px;}
+  .logo-wrap{width:240px;height:80px;}
   .tag{font-size:15px;}
   .badge{font-size:13px;padding:6px 16px;}
   .sub{font-size:15px;}
@@ -363,6 +412,6 @@ scrollArea.addEventListener('scroll',()=>{
   .bs{font-size:13px;}
   .btn{padding:22px 20px;}
   .sl{font-size:12px;}
-  .vinyl-svg{width:110px;height:110px;}
+  .vinyl-svg{width:125px;height:125px;}
 }
 </style>
