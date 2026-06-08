@@ -8,7 +8,9 @@
   .gtop{position:fixed;top:-80px;left:50%;transform:translateX(-50%);width:400px;height:200px;background:radial-gradient(ellipse,rgba(250,204,21,0.14) 0%,rgba(34,197,94,0.09) 50%,transparent 70%);pointer-events:none;z-index:0;}
   .scan{position:fixed;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(250,204,21,0.4) 50%,transparent 100%);animation:sd 5s linear infinite;pointer-events:none;z-index:1;}
   @keyframes sd{0%{top:0;opacity:0;}5%{opacity:1;}95%{opacity:1;}100%{top:100%;opacity:0;}}
-  .sa{position:relative;z-index:2;padding:28px 20px 140px;overflow-y:auto;height:100vh;scrollbar-width:none;}
+  
+  /* Camada do Conteúdo Principal ACIMA do disco de vinil */
+  .sa{position:relative;z-index:5;padding:28px 20px 140px;overflow-y:auto;height:100vh;scrollbar-width:none;}
   .sa::-webkit-scrollbar{display:none;}
   .ct{text-align:center;max-width:680px;margin:0 auto;}
   
@@ -29,14 +31,15 @@
   .sw .sn{color:#fde047;font-size:clamp(13px,3vw,15px);font-weight:500;letter-spacing:0.5px;}
   .dv2{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,0.4),rgba(34,197,94,0.4),transparent);margin-bottom:18px;}
   
-  .btn{display:block;width:100%;border-radius:14px;padding:18px 50px 18px 20px;margin-bottom:12px;cursor:pointer;text-decoration:none;border:1px solid rgba(34,197,94,0.3);background:rgba(34,197,94,0.08);position:relative;overflow:hidden;transition:border-color .2s,background .2s;}
+  /* ALINHAMENTO CORRIGIDO DOS BOTÕES DO MENU */
+  .btn{display:block;width:100%;border-radius:14px;padding:18px 55px 18px 20px;margin-bottom:12px;cursor:pointer;text-decoration:none;border:1px solid rgba(34,197,94,0.3);background:rgba(20,83,45,0.25);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);position:relative;overflow:hidden;transition:border-color .2s,background .2s;}
   .btn:hover{border-color:rgba(34,197,94,0.7);background:rgba(34,197,94,0.16);}
   .bp{border-color:rgba(34,197,94,0.55);background:rgba(34,197,94,0.14);}
-  .bl{color:#fff;font-size:clamp(17px,4vw,22px);font-weight:700;display:flex;align-items:center;gap:10px;}
+  .bl{color:#fff;font-size:clamp(17px,4vw,22px);font-weight:700;display:flex;align-items:center;gap:10px;text-align:left;}
   .bl .dot{width:9px;height:9px;border-radius:50%;background:#4ade80;flex-shrink:0;}
-  .bs{color:rgba(134,239,172,0.6);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;padding-left:18px;text-align:left;}
+  .bs{color:rgba(134,239,172,0.6);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;padding-left:19px;text-align:left;}
   
-  .ba-wp{position:absolute;right:18px;top:50%;transform:translateY(-50%);width:22px;height:22px;fill:#4ade80;opacity:0.85;transition:opacity 0.2s;}
+  .ba-wp{position:absolute;right:20px;top:50%;transform:translateY(-50%);width:22px;height:22px;fill:#4ade80;opacity:0.85;transition:opacity 0.2s;}
   .btn:hover .ba-wp{opacity:1;}
   
   .by{border-color:rgba(250,204,21,0.3);background:rgba(250,204,21,0.07);}
@@ -45,13 +48,13 @@
   .by .bs{color:rgba(253,224,71,0.6);}
   .by .ba-wp{fill:#fde047;}
   
-  .bz{border-color:rgba(59,130,246,0.3);background:rgba(30,64,175,0.08);padding-right:50px;}
+  .bz{border-color:rgba(59,130,246,0.3);background:rgba(30,64,175,0.08);padding-right:55px;}
   .bz:hover{border-color:rgba(59,130,246,0.6);background:rgba(30,64,175,0.14);}
   .bz .dot{background:#60a5fa;}
   .bz .bs{color:rgba(96,165,250,0.6);}
   .bz .ba-wp{fill:#60a5fa;}
   
-  .sl2{color:rgba(250,204,21,0.4);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin:18px 0 10px;}
+  .sl2{color:rgba(250,204,21,0.4);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin:18px 0 10px;text-align:center;}
   .rtog{display:block;width:100%;background:none;border:none;padding:0;cursor:pointer;text-align:left;}
   .rsub{margin-top:2px;margin-bottom:12px;padding-left:12px;border-left:1px solid rgba(59,130,246,0.25);display:none;}
   .rsub.open{display:block;}
@@ -63,12 +66,11 @@
   .cstr{flex:1;height:2px;background:linear-gradient(90deg,transparent,rgba(34,197,94,0.6));}
   .cstr.r{background:linear-gradient(90deg,rgba(34,197,94,0.6),transparent);}
   
-  /* VINIL COM ESCALA 2X MAIOR (width/height dobrados de 160px para 320px) */
-  .vinyl-fixed{position:fixed;bottom:20%;right:0;z-index:200;display:flex;flex-direction:column;align-items:center;gap:8px;touch-action:none;transform:translateX(50%);}
+  /* VINIL JOGADO PARA CAMADA INFERIOR (z-index: 1) SEM AFETAR O LAYOUT */
+  .vinyl-fixed{position:fixed;bottom:20%;right:0;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;touch-action:none;transform:translateX(50%);pointer-events:auto;}
   .vinyl-svg{display:block;width:320px;height:320px;cursor:grab;filter:drop-shadow(-12px 8px 24px rgba(0,0,0,0.9));}
   .vinyl-svg:active{cursor:grabbing;}
   
-  /* Margem de afastamento das legendas atualizadas para o novo tamanho */
   .vinyl-arrows{transform:translateX(-85px);font-family:'Space Grotesk',sans-serif;white-space:nowrap;text-shadow:0 2px 5px rgba(0,0,0,0.95);font-size:16px;color:#4ade80;letter-spacing:2px;font-weight:700;}
   .sound-badge{transform:translateX(-85px);font-family:'Space Grotesk',sans-serif;white-space:nowrap;text-shadow:0 2px 5px rgba(0,0,0,0.95);font-size:10px;letter-spacing:0.5px;color:#4ade80;background:rgba(2,13,7,0.95);padding:4px 10px;border-radius:20px;border:1px solid rgba(74,222,128,0.3);box-shadow:0 4px 12px rgba(0,0,0,0.65);}
 </style>
@@ -78,6 +80,7 @@
   <div class="gtop"></div>
   <div class="scan"></div>
 
+  <!-- Área do Menu -->
   <div class="sa" id="scrollArea">
     <div class="ct">
       
@@ -94,7 +97,7 @@
       <div class="badge">Orçamento sem compromisso</div>
       
       <div class="stats">
-        <div class="stats"><div class="stat"><div class="sn" data-target="7000" data-prefix="+" data-suffix="">0</div><div class="sl">Aberturas produzidas</div></div>
+        <div class="stat"><div class="sn" data-target="7000" data-prefix="+" data-suffix="">0</div><div class="sl">Aberturas produzidas</div></div>
         <div class="stat"><div class="sn" data-target="10" data-prefix="+" data-suffix=" países">0</div><div class="sl">Países atendidos</div></div>
         <div class="stat"><div class="sn" data-target="3" data-prefix="+" data-suffix="M views">0</div><div class="sl">Views no YouTube</div></div>
         <div class="stat"><div class="sn" data-target="600" data-prefix="+" data-suffix="">0</div><div class="sl">Produções publicadas</div></div>
@@ -150,7 +153,7 @@
     </div>
   </div>
 
-  <!-- Vinil Escala Ampliada (Metade Cortada + Setas Curvas Nitidas Integradas no SVG) -->
+  <!-- Vinil Renderizado Atrás do Menu (z-index: 1) -->
   <div class="vinyl-fixed" id="vinylWrap">
     <div class="vinyl-arrows">↑ ↓</div>
     <svg class="vinyl-svg" id="vinylSvg" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
@@ -169,7 +172,7 @@
       <circle cx="48" cy="48" r="37" fill="none" stroke="#222" stroke-width="0.5"/>
       <circle cx="48" cy="48" r="35" fill="none" stroke="#2a2a2a" stroke-width="0.6"/>
       
-      <!-- Setas Amarelas de Fluxo Integradas na Arte (Giram com o Vinil) -->
+      <!-- Setas Amarelas de Fluxo Integradas na Arte -->
       <g stroke="#fde047" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.75">
         <path d="M 72 32 A 28 28 0 0 1 78 54" />
         <polyline points="75,52 78,55 81,50" transform="rotate(2, 78, 54)"/>
@@ -184,7 +187,7 @@
       <circle cx="48" cy="48" r="27" fill="none" stroke="#2a2a2a" stroke-width="0.6"/>
       <circle cx="48" cy="48" r="25" fill="none" stroke="#1e1e1e" stroke-width="0.5"/>
       
-      <!-- Centro Amarelo Fiel -->
+      <!-- Centro Amarelo -->
       <circle cx="48" cy="48" r="20" fill="#fde047"/>
       <circle cx="48" cy="48" r="19.5" fill="none" stroke="#ca8a04" stroke-width="0.8"/>
       
@@ -221,7 +224,7 @@ const ob=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){animate
 const st=document.querySelector('.stats');
 if(st)ob.observe(st);
 
-// ── ENGINE DE ÁUDIO REAL DE SCRATCH COM SUPORTE A STREAMING FALLBACK ──
+// ── ENGINE DE ÁUDIO REAL DE SCRATCH ──
 let audioCtx=null;
 let audioReady=false;
 let normalBuffer=null;
@@ -337,7 +340,7 @@ function stopScratchReal() {
   isPlaying = false;
 }
 
-// ── CONTROLADORES DE INTERAÇÃO ROTATIVA COMPATÍVEL ──
+// ── CONTROLADORES DE INTERAÇÃO DO VINIL ──
 const vSvg=document.getElementById('vinylSvg');
 const scrollArea=document.getElementById('scrollArea');
 let dragging=false,lastAngle=0,rot=0,vel=0,raf=null,lastT=0;
@@ -434,10 +437,10 @@ window.addEventListener('click', () => { initAudio(); });
   .sub{font-size:15px;}
   .bl{font-size:24px;}
   .bs{font-size:13px;}
-  .btn{padding:22px 45px 22px 20px;}
+  .btn{padding:22px 50px 22px 20px;}
   .sl{font-size:12px;}
   
-  /* Escala 2x Responsiva e adaptada para dispositivos móveis */
+  /* Mantém o Vinil 2x Grande em plano de fundo no Mobile */
   .vinyl-fixed{bottom:25%;transform:translateX(50%);}
   .vinyl-svg{width:220px;height:220px;}
   .vinyl-arrows, .sound-badge{transform:translateX(-60px);}
