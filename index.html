@@ -28,41 +28,49 @@
   .sw{grid-column:1/-1;background:rgba(250,204,21,0.07);border-color:rgba(250,204,21,0.25);}
   .sw .sn{color:#fde047;font-size:clamp(13px,3vw,15px);font-weight:500;letter-spacing:0.5px;}
   .dv2{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,0.4),rgba(34,197,94,0.4),transparent);margin-bottom:18px;}
-  .btn{display:block;width:100%;border-radius:14px;padding:18px 20px;margin-bottom:12px;cursor:pointer;text-decoration:none;border:1px solid rgba(34,197,94,0.3);background:rgba(34,197,94,0.08);position:relative;overflow:hidden;transition:border-color .2s,background .2s;}
+  
+  .btn{display:block;width:100%;border-radius:14px;padding:18px 50px 18px 20px;margin-bottom:12px;cursor:pointer;text-decoration:none;border:1px solid rgba(34,197,94,0.3);background:rgba(34,197,94,0.08);position:relative;overflow:hidden;transition:border-color .2s,background .2s;}
   .btn:hover{border-color:rgba(34,197,94,0.7);background:rgba(34,197,94,0.16);}
   .bp{border-color:rgba(34,197,94,0.55);background:rgba(34,197,94,0.14);}
   .bl{color:#fff;font-size:clamp(17px,4vw,22px);font-weight:700;display:flex;align-items:center;gap:10px;}
   .bl .dot{width:9px;height:9px;border-radius:50%;background:#4ade80;flex-shrink:0;}
-  .bs{color:rgba(134,239,172,0.6);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;padding-left:18px;}
-  .ba{position:absolute;right:18px;top:50%;transform:translateY(-50%);color:rgba(74,222,128,0.6);font-size:20px;}
+  .bs{color:rgba(134,239,172,0.6);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;padding-left:18px;text-align:left;}
+  
+  .ba-wp{position:absolute;right:18px;top:50%;transform:translateY(-50%);width:22px;height:22px;fill:#4ade80;opacity:0.85;transition:opacity 0.2s;}
+  .btn:hover .ba-wp{opacity:1;}
+  
   .by{border-color:rgba(250,204,21,0.3);background:rgba(250,204,21,0.07);}
   .by:hover{border-color:rgba(250,204,21,0.65);background:rgba(250,204,21,0.13);}
   .by .dot{background:#fde047;}
   .by .bs{color:rgba(253,224,71,0.6);}
-  .by .ba{color:rgba(253,224,71,0.55);}
-  .bz{border-color:rgba(59,130,246,0.3);background:rgba(30,64,175,0.08);}
+  .by .ba-wp{fill:#fde047;}
+  
+  .bz{border-color:rgba(59,130,246,0.3);background:rgba(30,64,175,0.08);padding-right:50px;}
   .bz:hover{border-color:rgba(59,130,246,0.6);background:rgba(30,64,175,0.14);}
   .bz .dot{background:#60a5fa;}
   .bz .bs{color:rgba(96,165,250,0.6);}
-  .bz .ba{color:rgba(96,165,250,0.5);}
+  .bz .ba-wp{fill:#60a5fa;}
+  
   .sl2{color:rgba(250,204,21,0.4);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin:18px 0 10px;}
   .rtog{display:block;width:100%;background:none;border:none;padding:0;cursor:pointer;text-align:left;}
   .rsub{margin-top:2px;margin-bottom:12px;padding-left:12px;border-left:1px solid rgba(59,130,246,0.25);display:none;}
   .rsub.open{display:block;}
-  .rsb{display:block;width:100%;border-radius:10px;padding:14px 16px;margin-bottom:8px;text-decoration:none;border:1px solid rgba(59,130,246,0.22);background:rgba(30,64,175,0.07);color:#93c5fd;font-size:14px;font-weight:500;transition:border-color .2s,background .2s;}
+  .rsb{display:block;width:100%;border-radius:10px;padding:14px 45px 14px 16px;margin-bottom:8px;text-decoration:none;border:1px solid rgba(59,130,246,0.22);background:rgba(30,64,175,0.07);color:#93c5fd;font-size:14px;font-weight:500;position:relative;transition:border-color .2s,background .2s;}
   .rsb:hover{border-color:rgba(59,130,246,0.55);background:rgba(30,64,175,0.14);}
+  .rsb .ba-wp{width:16px;height:16px;right:16px;}
+  
   .cflag{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px;}
   .cstr{flex:1;height:2px;background:linear-gradient(90deg,transparent,rgba(34,197,94,0.6));}
   .cstr.r{background:linear-gradient(90deg,rgba(34,197,94,0.6),transparent);}
   
-  /* Layout do Disco de Vinil Ampliado */
-  .vinyl-fixed{position:fixed;bottom:20px;right:20px;z-index:200;display:flex;flex-direction:column;align-items:center;gap:6px;touch-action:none;}
-  .vinyl-svg{display:block;width:150px;height:150px;cursor:grab;filter:drop-shadow(0 6px 24px rgba(0,0,0,0.85));transition:transform 0.05s linear;}
+  /* VINIL COM ESCALA 2X MAIOR (width/height dobrados de 160px para 320px) */
+  .vinyl-fixed{position:fixed;bottom:20%;right:0;z-index:200;display:flex;flex-direction:column;align-items:center;gap:8px;touch-action:none;transform:translateX(50%);}
+  .vinyl-svg{display:block;width:320px;height:320px;cursor:grab;filter:drop-shadow(-12px 8px 24px rgba(0,0,0,0.9));}
   .vinyl-svg:active{cursor:grabbing;}
-  .vinyl-hint{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#fde047;white-space:nowrap;text-align:center;animation:pulse 2s ease-in-out infinite;text-shadow:0 2px 4px rgba(0,0,0,0.8);}
-  @keyframes pulse{0%,100%{opacity:.5;}50%{opacity:1;}}
-  .vinyl-arrows{font-family:'Space Grotesk',sans-serif;font-size:15px;color:rgba(134,239,172,0.8);letter-spacing:3px;text-shadow:0 2px 4px rgba(0,0,0,0.8);}
-  .sound-badge{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:1px;color:#4ade80;text-align:center;background:rgba(2,13,7,0.9);padding:4px 10px;border-radius:20px;border:1px solid rgba(74,222,128,0.3);box-shadow:0 4px 10px rgba(0,0,0,0.55);}
+  
+  /* Margem de afastamento das legendas atualizadas para o novo tamanho */
+  .vinyl-arrows{transform:translateX(-85px);font-family:'Space Grotesk',sans-serif;white-space:nowrap;text-shadow:0 2px 5px rgba(0,0,0,0.95);font-size:16px;color:#4ade80;letter-spacing:2px;font-weight:700;}
+  .sound-badge{transform:translateX(-85px);font-family:'Space Grotesk',sans-serif;white-space:nowrap;text-shadow:0 2px 5px rgba(0,0,0,0.95);font-size:10px;letter-spacing:0.5px;color:#4ade80;background:rgba(2,13,7,0.95);padding:4px 10px;border-radius:20px;border:1px solid rgba(74,222,128,0.3);box-shadow:0 4px 12px rgba(0,0,0,0.65);}
 </style>
 
 <div class="pw">
@@ -86,7 +94,7 @@
       <div class="badge">Orçamento sem compromisso</div>
       
       <div class="stats">
-        <div class="stat"><div class="sn" data-target="7000" data-prefix="+" data-suffix="">0</div><div class="sl">Aberturas produzidas</div></div>
+        <div class="stats"><div class="stat"><div class="sn" data-target="7000" data-prefix="+" data-suffix="">0</div><div class="sl">Aberturas produzidas</div></div>
         <div class="stat"><div class="sn" data-target="10" data-prefix="+" data-suffix=" países">0</div><div class="sl">Países atendidos</div></div>
         <div class="stat"><div class="sn" data-target="3" data-prefix="+" data-suffix="M views">0</div><div class="sl">Views no YouTube</div></div>
         <div class="stat"><div class="sn" data-target="600" data-prefix="+" data-suffix="">0</div><div class="sl">Produções publicadas</div></div>
@@ -102,44 +110,47 @@
       <a href="https://linkly.link/2indt" target="_blank" class="btn bp">
         <div class="bl"><span class="dot"></span>Abertura Completa</div>
         <div class="bs">Áudio + vídeo profissional</div>
-        <span class="ba">›</span>
+        <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.58-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
       </a>
+      
       <a href="https://linkly.link/2indu" target="_blank" class="btn">
         <div class="bl"><span class="dot"></span>Abertura em Áudio</div>
         <div class="bs">Locução + trilha cinemática</div>
-        <span class="ba">›</span>
+        <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.58-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
       </a>
+      
       <button onclick="toggleRemix()" class="rtog">
         <div class="btn bz" style="margin-bottom:0;">
           <div class="bl"><span class="dot"></span>Remix Profissional</div>
           <div class="bs">Alavancar minha carreira</div>
-          <span class="ba" id="ra">›</span>
+          <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.58-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
         </div>
       </button>
       <div class="rsub" id="rs">
-        <a href="https://linkly.link/2indv" target="_blank" class="rsb">↳ Já sei qual música quero remixar</a>
-        <a href="https://linkly.link/2indw" target="_blank" class="rsb">↳ Preciso de ideia de música</a>
+        <a href="https://linkly.link/2indv" target="_blank" class="rsb">↳ Já sei qual música quero remixar <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.58-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg></a>
+        <a href="https://linkly.link/2indw" target="_blank" class="rsb">↳ Preciso de ideia de música <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.58-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg></a>
       </div>
       
       <p class="sl2">Marketing & Crescimento</p>
       <a href="https://linkly.link/2indx" target="_blank" class="btn by">
         <div class="bl"><span class="dot"></span>Lotar Minha Agenda</div>
         <div class="bs">Ads e presença digital para artistas</div>
-        <span class="ba">›</span>
+        <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.58-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
       </a>
       <a href="https://linkly.link/2indy" target="_blank" class="btn by">
         <div class="bl"><span class="dot"></span>Vender Mais Ingressos</div>
         <div class="bs">Ads e funil para festas</div>
-        <span class="ba">›</span>
+        <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.58-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
       </a>
       <a href="https://linkly.link/2indz" target="_blank" class="btn">
         <div class="bl"><span class="dot"></span>Patentear Minha Marca</div>
         <div class="bs">Nome artístico e acompanhamento</div>
-        <span class="ba">›</span>
+        <svg class="ba-wp" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.455L0 24zm6.59-4.846c1.66.986 3.288 1.479 5.362 1.48 5.432-.003 9.85-4.432 9.853-9.87.002-2.634-1.025-5.11-2.891-6.982-1.866-1.872-4.346-2.9-6.981-2.913-5.442 0-9.859 4.418-9.863 9.858-.001 2.111.521 3.754 1.508 5.37l-.993 3.63 3.731-.977zm11.374-3.719c-.246-.123-1.46-.721-1.687-.804-.228-.083-.393-.123-.559.123-.166.246-.641.804-.785.967-.143.164-.288.185-.534.061-1.036-.518-1.87-.946-2.593-1.58-1.018-.894-1.424-1.527-1.671-1.938-.247-.412-.025-.635.179-.83.183-.175.412-.482.618-.722.207-.241.275-.412.412-.687.137-.275.068-.515-.034-.721-.104-.206-.559-1.35-.765-1.849-.2-.486-.398-.419-.559-.427-.143-.008-.308-.01-.473-.01-.166 0-.436.062-.663.308-.228.246-.869.851-.869 2.074s.891 2.406.99 2.541c.099.135 1.75 2.674 4.241 3.746.592.255 1.055.407 1.416.521.596.19 1.138.163 1.567.099.478-.071 1.46-.596 1.666-1.173.206-.576.206-1.07.144-1.173-.061-.103-.227-.165-.473-.288z"/></svg>
       </a>
     </div>
   </div>
 
+  <!-- Vinil Escala Ampliada (Metade Cortada + Setas Curvas Nitidas Integradas no SVG) -->
   <div class="vinyl-fixed" id="vinylWrap">
     <div class="vinyl-arrows">↑ ↓</div>
     <svg class="vinyl-svg" id="vinylSvg" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
@@ -151,18 +162,32 @@
       </defs>
       <circle cx="48" cy="48" r="46" fill="#111" stroke="#333" stroke-width="1.5"/>
       <circle cx="48" cy="48" r="44" fill="url(#vg)"/>
+      
       <circle cx="48" cy="48" r="43" fill="none" stroke="#2a2a2a" stroke-width="0.7"/>
       <circle cx="48" cy="48" r="41" fill="none" stroke="#222" stroke-width="0.5"/>
       <circle cx="48" cy="48" r="39" fill="none" stroke="#2a2a2a" stroke-width="0.6"/>
       <circle cx="48" cy="48" r="37" fill="none" stroke="#222" stroke-width="0.5"/>
       <circle cx="48" cy="48" r="35" fill="none" stroke="#2a2a2a" stroke-width="0.6"/>
+      
+      <!-- Setas Amarelas de Fluxo Integradas na Arte (Giram com o Vinil) -->
+      <g stroke="#fde047" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.75">
+        <path d="M 72 32 A 28 28 0 0 1 78 54" />
+        <polyline points="75,52 78,55 81,50" transform="rotate(2, 78, 54)"/>
+        
+        <path d="M 24 64 A 28 28 0 0 1 18 42" />
+        <polyline points="21,44 18,41 15,46" transform="rotate(2, 18, 42)"/>
+      </g>
+      
       <circle cx="48" cy="48" r="33" fill="none" stroke="#222" stroke-width="0.5"/>
       <circle cx="48" cy="48" r="31" fill="none" stroke="#2a2a2a" stroke-width="0.6"/>
       <circle cx="48" cy="48" r="29" fill="none" stroke="#222" stroke-width="0.5"/>
       <circle cx="48" cy="48" r="27" fill="none" stroke="#2a2a2a" stroke-width="0.6"/>
       <circle cx="48" cy="48" r="25" fill="none" stroke="#1e1e1e" stroke-width="0.5"/>
-      <circle cx="48" cy="48" r="20" fill="#e07800"/>
-      <circle cx="48" cy="48" r="19.5" fill="none" stroke="#c06800" stroke-width="0.8"/>
+      
+      <!-- Centro Amarelo Fiel -->
+      <circle cx="48" cy="48" r="20" fill="#fde047"/>
+      <circle cx="48" cy="48" r="19.5" fill="none" stroke="#ca8a04" stroke-width="0.8"/>
+      
       <circle cx="48" cy="48" r="15" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="0.5"/>
       <circle cx="48" cy="48" r="10" fill="none" stroke="rgba(0,0,0,0.2)" stroke-width="0.5"/>
       <line x1="32" y1="44" x2="64" y2="44" stroke="rgba(0,0,0,0.2)" stroke-width="0.5"/>
@@ -171,16 +196,14 @@
       <circle cx="48" cy="48" r="3.5" fill="#111" stroke="#333" stroke-width="0.5"/>
       <path d="M 20 38 A 28 28 0 0 1 58 18" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="3" stroke-linecap="round"/>
     </svg>
-    <div class="vinyl-hint">Gire para rolar</div>
-    <div class="sound-badge" id="soundBadge">♪ Toque no disco p/ ativar som</div>
+    <div class="sound-badge" id="soundBadge">♪ Clique p/ ativar som</div>
   </div>
 </div>
 
 <script>
 function toggleRemix(){
-  const s=document.getElementById('rs'),a=document.getElementById('ra');
+  const s=document.getElementById('rs');
   s.classList.toggle('open');
-  a.textContent=s.classList.contains('open')?'⌄':'›';
 }
 
 function animateCounters(){
@@ -198,7 +221,7 @@ const ob=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){animate
 const st=document.querySelector('.stats');
 if(st)ob.observe(st);
 
-// ── ENGINE DE ÁUDIO (MISTURA HÍBRIDA + DESBLOQUEIO MOBILE COMPLETO) ──
+// ── ENGINE DE ÁUDIO REAL DE SCRATCH COM SUPORTE A STREAMING FALLBACK ──
 let audioCtx=null;
 let audioReady=false;
 let normalBuffer=null;
@@ -237,7 +260,6 @@ function generateFallbackBuffers() {
 
 async function initAudio(){
   if(audioReady) {
-    // Força reativação no mobile caso o contexto entre em "sleep" ou suspenso
     if (audioCtx && audioCtx.state === 'suspended') {
       await audioCtx.resume();
     }
@@ -315,7 +337,7 @@ function stopScratchReal() {
   isPlaying = false;
 }
 
-// ── CONTROLADORES DO VINIL ─────────────────────────────────────
+// ── CONTROLADORES DE INTERAÇÃO ROTATIVA COMPATÍVEL ──
 const vSvg=document.getElementById('vinylSvg');
 const scrollArea=document.getElementById('scrollArea');
 let dragging=false,lastAngle=0,rot=0,vel=0,raf=null,lastT=0;
@@ -348,9 +370,8 @@ function glide(){
   }
 }
 
-// Gatilho unificado para Mobile (Toques na tela)
 function onStart(x,y){
-  initAudio(); // Ativa e dá bypass na trava mobile
+  initAudio();
   dragging=true;vel=0;lastT=Date.now();
   if(raf)cancelAnimationFrame(raf);
   const c=center();lastAngle=getAngle(c.x,c.y,x,y);
@@ -373,7 +394,6 @@ function onEnd(){
   raf=requestAnimationFrame(glide);
 }
 
-// Ouvintes de interações diretas no Vinil (Mouse e Touchscreen)
 vSvg.addEventListener('mousedown',e=>{onStart(e.clientX,e.clientY);e.preventDefault();});
 window.addEventListener('mousemove',e=>{onMove(e.clientX,e.clientY);});
 window.addEventListener('mouseup',onEnd);
@@ -391,7 +411,6 @@ window.addEventListener('touchmove',e=>{
 },{passive:true});
 window.addEventListener('touchend',onEnd);
 
-// Evento de Scroll nativo da página
 scrollArea.addEventListener('scroll',()=>{
   if(!dragging){
     const curr=scrollArea.scrollTop;
@@ -402,7 +421,6 @@ scrollArea.addEventListener('scroll',()=>{
   }
 });
 
-// Desbloqueia o áudio globalmente no celular ao tocar em qualquer canto da página
 window.addEventListener('touchstart', () => { initAudio(); }, {once: false, passive: true});
 window.addEventListener('click', () => { initAudio(); });
 </script>
@@ -416,8 +434,13 @@ window.addEventListener('click', () => { initAudio(); });
   .sub{font-size:15px;}
   .bl{font-size:24px;}
   .bs{font-size:13px;}
-  .btn{padding:22px 20px;}
+  .btn{padding:22px 45px 22px 20px;}
   .sl{font-size:12px;}
-  .vinyl-svg{width:125px;height:125px;}
+  
+  /* Escala 2x Responsiva e adaptada para dispositivos móveis */
+  .vinyl-fixed{bottom:25%;transform:translateX(50%);}
+  .vinyl-svg{width:220px;height:220px;}
+  .vinyl-arrows, .sound-badge{transform:translateX(-60px);}
+  .vinyl-arrows{font-size:13px;}
 }
 </style>
