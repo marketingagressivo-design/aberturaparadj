@@ -262,7 +262,6 @@
         <p class="sub gradual-item" style="animation-delay: 2.9s;">SELECIONE O SERVIÇO ABAIXO</p>
         <div class="dv gradual-item" style="animation-delay: 3.2s;"></div>
         
-        <!-- Botão 1: Pisca primeiro -->
         <div class="btn-container gradual-item" style="animation-delay: 3.5s;">
           <div id="glowAberturaCompleta" class="glow-box"></div>
           <a href="#" id="btnAberturaCompleta" class="btn bp" onclick="handleMenuSelection(event, 'Abertura Completa', true)">
@@ -273,7 +272,6 @@
           </a>
         </div>
         
-        <!-- Botão 2: Recebe a classe com delay e pisca logo em sequência -->
         <div class="btn-container gradual-item" style="animation-delay: 3.8s;">
           <div id="glowAberturaAudio" class="glow-box delay-flash"></div>
           <a href="#" id="btnAberturaAudio" class="btn" onclick="handleMenuSelection(event, 'Abertura em Áudio', true)">
@@ -422,7 +420,6 @@
     </svg>
   </div>
 
-  <!-- CANVAS DO AUDIO SPECTRUM -->
   <canvas class="audio-spectrum-canvas" id="spectrumCanvas"></canvas>
 </div>
 
@@ -502,18 +499,23 @@ window.addEventListener('DOMContentLoaded', () => {
 function toggleRemix(){ document.getElementById('rs').classList.toggle('open'); }
 
 /* ==========================================================================
-   MÓDULO DE ÁUDIO INTERATIVO, MECÂNICA DE GIRO, ANIMAÇÃO DOS OLHOS E SPECTRUM
+   MÓDULO DE ÁUDIO INTERATIVO - CORREÇÃO DE SCRATCH COM AGULHA CONTÍNUA
    ========================================================================== */
 const AUDIO_URL = 'scratch.mp3'; 
 
 let audioCtx = null;
 let audioBufferNormal = null;
-let audioBufferReverse = null; // Buffer espelhado contendo o áudio de trás pra frente
+let audioBufferReverse = null; 
 let sourceNode = null;
 let lastScrollTop = 0;
 let scrollTimeout = null;
 let isAudioLoaded = false;
 let currentRotation = 0;
+
+// Variáveis de controle de agulha contínua
+let startTime = 0;      
+let lastOffset = 0;     
+let isPlaying = false;  
 
 const canvas = document.getElementById('spectrumCanvas');
 const ctx = canvas.getContext('2d');
@@ -532,7 +534,7 @@ for (let i = 0; i < numBars; i++) {
   barHeights.push(0);
 }
 
-// Inverte a matriz de áudio criando o buffer reverso na memória
+// Inverte a matriz de canais para gerar o buffer reverso na memória ram
 function createReverseBuffer(buffer) {
   let numChannels = buffer.numberOfChannels;
   let reverseBuffer = audioCtx.createBuffer(numChannels, buffer.length, buffer.sampleRate);
@@ -563,25 +565,48 @@ function initAudio() {
     .catch(err => console.error("Erro no carregamento:", err));
 }
 
-// Inicia um novo source de áudio passando o buffer correto (Normal ou Invertido)
+// Atualiza a posição da agulha dinamicamente baseada na velocidade do pitch anterior
+function updateOffset() {
+  if (isPlaying && audioCtx && sourceNode) {
+    let playedTime = audioCtx.currentTime - startTime;
+    let rate = sourceNode.playbackRate.value;
+    lastOffset = (lastOffset + playedTime * rate) % audioBufferNormal.duration;
+    if (lastOffset < 0) lastOffset += audioBufferNormal.duration;
+  }
+}
+
 function playBuffer(reverse = false) {
   if (!audioCtx || !isAudioLoaded) return;
   
+  // Salva a agulha atual antes de tombar o nó de áudio
+  updateOffset();
+  
   if (sourceNode) {
-    sourceNode.stop();
+    try { sourceNode.stop(); } catch(e){}
     sourceNode.disconnect();
   }
   
   sourceNode = audioCtx.createBufferSource();
-  sourceNode.buffer = reverse ? audioBufferReverse : audioBufferNormal;
+  
+  if (reverse) {
+    sourceNode.buffer = audioBufferReverse;
+    // O offset no buffer invertido é calculado de trás para frente
+    sourceNode.offsetTarget = audioBufferNormal.duration - lastOffset;
+  } else {
+    sourceNode.buffer = audioBufferNormal;
+    sourceNode.offsetTarget = lastOffset;
+  }
+  
   sourceNode.loop = true;
   sourceNode.connect(audioCtx.destination);
-  sourceNode.start(0);
+  
+  startTime = audioCtx.currentTime;
+  sourceNode.start(0, sourceNode.offsetTarget);
+  isPlaying = true;
 }
 
 function drawSpectrum() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
   const barWidth = canvas.width / numBars;
   const spacing = 3;
   
@@ -594,7 +619,6 @@ function drawSpectrum() {
     }
     
     barHeights[i] += (targetHeight - barHeights[i]) * 0.22;
-    
     const x = i * barWidth;
     const y = canvas.height - barHeights[i];
     const w = barWidth - spacing;
@@ -614,7 +638,6 @@ function drawSpectrum() {
     scrollVelocity *= 0.92;
     if (scrollVelocity < 0.1) scrollVelocity = 0;
   }
-  
   requestAnimationFrame(drawSpectrum);
 }
 requestAnimationFrame(drawSpectrum);
@@ -624,14 +647,10 @@ const vinylSvg = document.getElementById('vinylSvg');
 const leftEye = document.getElementById('leftEye');
 const rightEye = document.getElementById('rightEye');
 
-// Variável de controle para não re-triggar o buffer se o sentido do scroll continuar o mesmo
 let lastDirection = 0; 
 
-scrollArea.addEventListener('scroll', () => {
-  if (!audioCtx) { initAudio(); return; }
-  let currentScroll = scrollArea.scrollTop;
-  let delta = currentScroll - lastScrollTop;
-  if (Math.abs(delta) > 150) delta = 0;
+function handleScratchMovement(delta) {
+  if (Math.abs(delta) < 1) return;
 
   let speed = Math.abs(delta);
   scrollVelocity = Math.max(speed, scrollVelocity);
@@ -640,7 +659,6 @@ scrollArea.addEventListener('scroll', () => {
   vinylSvg.style.transform = `rotate(${currentRotation}deg)`;
 
   let eyeScale = 1 - Math.min(speed * 0.04, 0.85); 
-  
   if (leftEye && rightEye) {
     leftEye.style.transform = `scaleY(${eyeScale})`;
     rightEye.style.transform = `scaleY(${eyeScale})`;
@@ -649,38 +667,46 @@ scrollArea.addEventListener('scroll', () => {
   if (isAudioLoaded && speed > 0) {
     let currentDirection = delta > 0 ? 1 : -1;
     
-    // Altera o buffer dinamicamente apenas quando muda a direção do dedo
+    // Altera o buffer de direção com sincronismo contínuo
     if (currentDirection !== lastDirection) {
       lastDirection = currentDirection;
       playBuffer(currentDirection === -1);
     }
     
-    // Seta a velocidade baseada no ritmo do scroll
     if (sourceNode) {
       sourceNode.playbackRate.setValueAtTime(Math.min(speed * 0.08, 2.2), audioCtx.currentTime);
     }
   }
   
-  lastScrollTop = currentScroll;
-  
   clearTimeout(scrollTimeout);
   scrollTimeout = setTimeout(() => {
+    updateOffset(); // Congela o offset da agulha antes de parar
     if (sourceNode && isAudioLoaded) {
       sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
     }
-    lastDirection = 0; // Reseta direção quando o scroll para
+    lastDirection = 0; 
+    isPlaying = false;
     if (leftEye && rightEye) {
       leftEye.style.transform = 'scaleY(1)';
       rightEye.style.transform = 'scaleY(1)';
     }
-  }, 90); 
+  }, 90);
+}
+
+scrollArea.addEventListener('scroll', () => {
+  if (!audioCtx) { initAudio(); return; }
+  let currentScroll = scrollArea.scrollTop;
+  let delta = currentScroll - lastScrollTop;
+  if (Math.abs(delta) > 150) delta = 0;
+  
+  handleScratchMovement(delta);
+  lastScrollTop = currentScroll;
 });
 
 document.addEventListener('click', initAudio, { once: true });
 
 /* ------------------------------------------------------------------
-   MOBILE — touch events
-   Espelha exatamente o comportamento do scroll nativo no desktop.
+   MOBILE — touch events com sincronia direta de agulha
 ------------------------------------------------------------------ */
 let touchLastY = 0;
 
@@ -692,55 +718,21 @@ scrollArea.addEventListener('touchstart', (e) => {
 
 scrollArea.addEventListener('touchmove', (e) => {
   if (!audioCtx || !isAudioLoaded) return;
-
   const currentY = e.touches[0].clientY;
-  // dedo subindo → página desce → delta positivo (igual ao scroll nativo)
   const delta = -(currentY - touchLastY);
   touchLastY = currentY;
 
-  if (Math.abs(delta) < 1) return;
-
-  const speed = Math.abs(delta);
-  scrollVelocity = Math.max(speed, scrollVelocity);
-
-  currentRotation += delta * 0.4;
-  vinylSvg.style.transform = `rotate(${currentRotation}deg)`;
-
-  const eyeScale = 1 - Math.min(speed * 0.04, 0.85);
-  if (leftEye && rightEye) {
-    leftEye.style.transform = `scaleY(${eyeScale})`;
-    rightEye.style.transform = `scaleY(${eyeScale})`;
-  }
-
-  const currentDirection = delta > 0 ? 1 : -1;
-  if (currentDirection !== lastDirection) {
-    lastDirection = currentDirection;
-    playBuffer(currentDirection === -1);
-  }
-  if (sourceNode) {
-    sourceNode.playbackRate.setValueAtTime(Math.min(speed * 0.08, 2.2), audioCtx.currentTime);
-  }
-
-  clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(() => {
-    if (sourceNode && isAudioLoaded) {
-      sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
-    }
-    lastDirection = 0;
-    if (leftEye && rightEye) {
-      leftEye.style.transform = 'scaleY(1)';
-      rightEye.style.transform = 'scaleY(1)';
-    }
-  }, 90);
+  handleScratchMovement(delta);
 }, { passive: true });
 
 scrollArea.addEventListener('touchend', () => {
-  clearTimeout(scrollTimeout);
+  updateOffset();
   if (sourceNode && isAudioLoaded) {
     sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
   }
   lastDirection = 0;
   scrollVelocity = 0;
+  isPlaying = false;
   if (leftEye && rightEye) {
     leftEye.style.transform = 'scaleY(1)';
     rightEye.style.transform = 'scaleY(1)';
