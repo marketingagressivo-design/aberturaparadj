@@ -238,10 +238,10 @@
     <div class="ct">
       <div id="headerBrandSection">
         <div class="logo-wrap gradual-item" style="animation-delay: 0.1s;">
-          <img src="unnamed.png" alt="Abertura Para DJ" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <img src="unnamed.png" alt="Abertura Profissional" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
           <div style="display:none;flex-direction:column;align-items:center;">
             <span style="color:#4ade80;font-size:22px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">ABERTURA</span>
-            <span style="color:#fde047;font-size:14px;letter-spacing:3px;text-transform:uppercase;">PARA DJ</span>
+            <span style="color:#fde047;font-size:14px;letter-spacing:3px;text-transform:uppercase;">PARA SHOWS</span>
           </div>
         </div>
         <p class="tag gradual-item" style="animation-delay: 0.3s;">VOZ DOS MAIORES FESTIVAIS BRASIL AFORA</p>
@@ -262,6 +262,7 @@
         <p class="sub gradual-item" style="animation-delay: 2.9s;">SELECIONE O SERVIÇO ABAIXO</p>
         <div class="dv gradual-item" style="animation-delay: 3.2s;"></div>
         
+        <!-- Botão 1: Pisca primeiro -->
         <div class="btn-container gradual-item" style="animation-delay: 3.5s;">
           <div id="glowAberturaCompleta" class="glow-box"></div>
           <a href="#" id="btnAberturaCompleta" class="btn bp" onclick="handleMenuSelection(event, 'Abertura Completa', true)">
@@ -272,6 +273,7 @@
           </a>
         </div>
         
+        <!-- Botão 2: Recebe a classe com delay e pisca logo em sequência -->
         <div class="btn-container gradual-item" style="animation-delay: 3.8s;">
           <div id="glowAberturaAudio" class="glow-box delay-flash"></div>
           <a href="#" id="btnAberturaAudio" class="btn" onclick="handleMenuSelection(event, 'Abertura em Áudio', true)">
@@ -326,9 +328,9 @@
         
         <div class="quiz-step" id="step2">
           <p class="quiz-title" id="title2"></p>
-          <button class="quiz-opt" onclick="nextStep(2, 'Sim, trabalho com eventos')">🎤 SIM, TRABALHO PROFISSIONALMENTE COM EVENTOS</button>
-          <button class="quiz-opt" onclick="nextStep(2, 'Sim, mas estou começando')">🎧 SIM, MAS AINDA ESTOU COMEÇANDO A ENGRENAR</button>
-          <button class="quiz-opt" onclick="nextStep(2, 'Ainda não sou DJ')">🚫 AINDA NÃO SOU DJ / APENAS HOBBY</button>
+          <button class="quiz-opt" onclick="nextStep(2, 'Sim, trabalho com eventos')">🎤 SIM, TRABALHO PROFISSIONALMENTE COM SHOWS/EVENTOS</button>
+          <button class="quiz-opt" onclick="nextStep(2, 'Sim, mas estou começando')">🎧 SIM, MAS AINDA ESTOU COMEÇANDO NA CARREIRA</button>
+          <button class="quiz-opt" onclick="nextStep(2, 'Ainda não sou profissional')">🚫 APENAS HOBBY / NÃO ATUO EM EVENTOS</button>
           <button class="quiz-back" onclick="prevStep(2)">← VOLTAR</button>
           <button class="quiz-reset" onclick="resetToMainMenu()">🏠 INÍCIO</button>
         </div>
@@ -420,6 +422,7 @@
     </svg>
   </div>
 
+  <!-- CANVAS DO AUDIO SPECTRUM -->
   <canvas class="audio-spectrum-canvas" id="spectrumCanvas"></canvas>
 </div>
 
@@ -429,8 +432,8 @@ const WHATSAPP_NUMBER = "556191073673";
 
 const quizTexts = { 
   1: "ESTAMOS COM ALTO VOLUME DE ATENDIMENTOS.\n\nPOSSO FAZER ALGUMAS PERGUNTAS RÁPIDAS PARA TE PASSAR UM ORÇAMENTO MAIS RÁPIDO?", 
-  2: "VOCÊ JÁ TRABALHA E ATUA ATIVAMENTE COMO DJ?", 
-  3: "VOCÊ JÁ CONHECIA O CANAL ABERTURA PARA DJ ANTES?", 
+  2: "VOCÊ JÁ TRABALHA E ATUA ATIVAMENTE COMO ARTISTA PROFISSIONAL?", 
+  3: "VOCÊ JÁ CONHECIA O CANAL ABERTURA PARA SHOWS ANTES?", 
   4: "VOCÊ JÁ POSSUI ALGUMA ABERTURA ESTRUTURADA PARA SEUS SHOWS?", 
   5: "QUAL É A DURAÇÃO ESTIMADA QUE VOCÊ DESEJA PARA A SUA ABERTURA?", 
   6: "PRETENDE INVESTIR POR AGORA? OU:", 
@@ -788,9 +791,9 @@ function nextStep(current, value) {
   let nextTarget = current + 1;
   
   if(current === 6) {
-    const djReal = (userAnswers.atuacao === "SIM, TRABALHO COM EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
+    const artistaReal = (userAnswers.atuacao === "SIM, TRABALHO COM EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
     const intencaoReal = (userAnswers.intencaoInvestimento === "SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR" || userAnswers.intencaoInvestimento === "ESTÁ AINDA NO CAMPO DAS IDEIAS");
-    nextTarget = (djReal && intencaoReal) ? 7 : 'Final'; 
+    nextTarget = (artistaReal && intencaoReal) ? 7 : 'Final'; 
   }
   
   let nextEl = document.getElementById(`step${nextTarget}`);
@@ -801,9 +804,9 @@ function prevStep(current) {
   if(current === 'Final') {
     document.getElementById('stepFinal').classList.remove('active');
     if(userAnswers.autorizacao === "SIM") {
-        const djReal = (userAnswers.atuacao === "SIM, TRABALHO COM EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
+        const artistaReal = (userAnswers.atuacao === "SIM, TRABALHO COM EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
         const intencaoReal = (userAnswers.intencaoInvestimento === "SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR" || userAnswers.intencaoInvestimento === "ESTÁ AINDA NO CAMPO DAS IDEIAS");
-        if(djReal && intencaoReal) { document.getElementById('step7').classList.add('active'); runTypewriterQuestion(7); } else { document.getElementById('step6').classList.add('active'); runTypewriterQuestion(6); }
+        if(artistaReal && intencaoReal) { document.getElementById('step7').classList.add('active'); runTypewriterQuestion(7); } else { document.getElementById('step6').classList.add('active'); runTypewriterQuestion(6); }
     } else {
         document.getElementById('step1').classList.add('active');
         runTypewriterQuestion(1);
