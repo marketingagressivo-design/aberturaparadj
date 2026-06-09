@@ -4,15 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
+  /* Importação de fontes parecidas com Bank Gothic (Orbitron) e Agency FB (Saira Semi Condensed) */
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Saira+Semi+Condensed:wght@400;500;700;800&display=swap');
+  
   *{box-sizing:border-box;margin:0;padding:0;}
-  .pw{font-family:'Space Grotesk',sans-serif;background:#020d07;min-height:100vh;position:relative;overflow:hidden;}
+  
+  /* Definição das novas fontes no projeto */
+  .pw{font-family:'Orbitron',sans-serif;background:#020d07;min-height:100vh;position:relative;overflow:hidden;}
+  
   .gbg{position:fixed;inset:0;background-image:linear-gradient(rgba(34,197,94,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(34,197,94,0.07) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
   .gtop{position:fixed;top:-80px;left:50%;transform:translateX(-50%);width:400px;height:200px;background:radial-gradient(ellipse,rgba(250,204,21,0.14) 0%,rgba(34,197,94,0.09) 50%,transparent 70%);pointer-events:none;z-index:0;}
   .scan{position:fixed;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(250,204,21,0.4) 50%,transparent 100%);animation:sd 5s linear infinite;pointer-events:none;z-index:2;}
   @keyframes sd{0%{top:0;opacity:0;}5%{opacity:1;}95%{opacity:1;}100%{top:100%;opacity:0;}}
    
-  .sa{position:relative;z-index:5;padding:28px 20px 140px;overflow-y:auto;height:100vh;scrollbar-width:none;}
+  .sa{position:relative;z-index:5;padding:28px 20px 140px;overflow-y:auto;height:100vh;scrollbar-width:none;scroll-behavior:smooth;}
   .sa::-webkit-scrollbar{display:none;}
   .ct{text-align:center;max-width:680px;margin:0 auto;}
    
@@ -21,33 +26,86 @@
    
   .tag{color:rgba(134,239,172,0.7);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin:0 0 4px;}
   .badge{display:inline-block;border:1px solid rgba(250,204,21,0.6);color:#fde047;font-size:11px;letter-spacing:2px;padding:4px 14px;border-radius:100px;margin-bottom:16px;text-transform:uppercase;}
-  .ttl{color:#fff;font-size:clamp(26px,5vw,38px);font-weight:700;line-height:1.1;margin:0 0 6px;}
+  .ttl{color:#fff;font-size:clamp(26px,5vw,38px);font-weight:700;line-height:1.1;margin:0 0 6px;text-transform:uppercase;}
   .ttl span{background:linear-gradient(90deg,#fde047,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-  .sub{color:rgba(134,239,172,0.5);font-size:13px;margin:0 0 18px;letter-spacing:1px;}
+  .sub{color:rgba(134,239,172,0.5);font-size:13px;margin:0 0 18px;letter-spacing:1px;text-transform:uppercase;}
   .dv{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,0.5),rgba(34,197,94,0.5),transparent);margin-top:8px;margin-bottom:18px;}
   .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
   .stat{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:12px;padding:14px 12px;text-align:center;}
   .sn{color:#4ade80;font-size:clamp(20px,5vw,28px);font-weight:700;line-height:1;}
   .sl{color:rgba(134,239,172,0.5);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-top:5px;line-height:1.3;}
   .sw{grid-column:1/-1;background:rgba(250,204,21,0.07);border-color:rgba(250,204,21,0.25);}
-  .sw .sn{color:#fde047;font-size:clamp(13px,3vw,15px);font-weight:500;letter-spacing:0.5px;}
+  .sw .sn{color:#fde047;font-size:clamp(13px,3vw,15px);font-weight:500;letter-spacing:0.5px;text-transform:uppercase;}
   .dv2{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,0.4),rgba(34,197,94,0.4),transparent);margin-bottom:18px;}
    
-  .btn{display:block;width:100%;border-radius:14px;padding:18px 20px;margin-bottom:12px;cursor:pointer;text-decoration:none;border:1px solid rgba(34,197,94,0.3);background:rgba(20,83,45,0.25);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);position:relative;overflow:hidden;transition:border-color .2s,background .2s;}
+  /* Container relativo para suportar as luzes absolutas atrás */
+  .btn-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  /* Botões principais usando a Saira Semi Condensed (Estilo Agency FB) */
+  .btn{font-family: 'Saira Semi Condensed', sans-serif;display:block;width:100%;border-radius:14px;padding:18px 20px;margin-bottom:0;cursor:pointer;text-decoration:none;border:1px solid rgba(34,197,94,0.3);background:rgba(20,83,45,0.25);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);position:relative;z-index:2;overflow:hidden;transition:border-color .2s,background .2s;}
   .btn:hover{border-color:rgba(34,197,94,0.7);background:rgba(34,197,94,0.16);}
   .bp{border-color:rgba(34,197,94,0.55);background:rgba(34,197,94,0.14);}
-  .bl{color:#fff;font-size:clamp(17px,4vw,22px);font-weight:700;display:flex;align-items:center;gap:10px;text-align:left;}
+  .bl{color:#fff;font-size:clamp(17px,4vw,22px);font-weight:700;display:flex;align-items:center;gap:10px;text-align:left;text-transform:uppercase;}
   .bl .dot{width:9px;height:9px;border-radius:50%;background:#4ade80;flex-shrink:0;}
   .wp-icon{width:20px;height:20px;fill:#4ade80;margin-left:auto;}
   .bs{color:rgba(134,239,172,0.6);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;padding-left:19px;text-align:left;line-height:1.4;}
    
-  .by{border-color:rgba(250,204,21,0.3);background:rgba(250,204,21,0.07);}
+  /* Camada de efeito de iluminação absoluta desfocada por trás dos botões */
+  .glow-box {
+    position: absolute;
+    inset: -4px;
+    background: #4ade80;
+    border-radius: 16px;
+    filter: blur(20px);
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Animação que faz a luz desfocada dar um flash rápido e sumir completamente */
+  .flash-active {
+    animation: triggerBacklightFlash 1.2s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+  }
+
+  /* Delay específico adicionado para o segundo botão piscar logo após o primeiro */
+  .delay-flash {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes triggerBacklightFlash {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    30% {
+      opacity: 0.85;
+      transform: scale(1.02);
+    }
+    50% {
+      opacity: 0.30;
+      transform: scale(1.0);
+    }
+    70% {
+      opacity: 0.75;
+      transform: scale(1.01);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+  }
+
+  .by{border-color:rgba(250,204,21,0.3);background:rgba(250,204,21,0.07);margin-bottom:12px;}
   .by:hover{border-color:rgba(250,204,21,0.65);background:rgba(250,204,21,0.13);}
   .by .dot{background:#fde047;}
   .by .wp-icon{fill:#fde047;}
   .by .bs{color:rgba(253,224,71,0.6);}
    
-  .bz{border-color:rgba(59,130,246,0.3);background:rgba(30,64,175,0.08);}
+  .bz{border-color:rgba(59,130,246,0.3);background:rgba(30,64,175,0.08);margin-bottom:12px;}
   .bz:hover{border-color:rgba(59,130,246,0.6);background:rgba(30,64,175,0.14);}
   .bz .dot{background:#60a5fa;}
   .bz .wp-icon{fill:#60a5fa;}
@@ -57,31 +115,31 @@
   .rtog{display:block;width:100%;background:none;border:none;padding:0;cursor:pointer;text-align:left;}
   .rsub{margin-top:2px;margin-bottom:12px;padding-left:12px;border-left:1px solid rgba(59,130,246,0.25);display:none;}
   .rsub.open{display:block;}
-  .rsb{display:block;width:100%;border-radius:10px;padding:14px 16px;margin-bottom:8px;text-decoration:none;border:1px solid rgba(59,130,246,0.22);background:rgba(30,64,175,0.07);color:#93c5fd;font-size:14px;font-weight:500;position:relative;transition:border-color .2s,background .2s;}
+  .rsb{font-family: 'Saira Semi Condensed', sans-serif;display:block;width:100%;border-radius:10px;padding:14px 16px;margin-bottom:8px;text-decoration:none;border:1px solid rgba(59,130,246,0.22);background:rgba(30,64,175,0.07);color:#93c5fd;font-size:14px;font-weight:500;position:relative;transition:border-color .2s,background .2s;text-transform:uppercase;}
   .rsb:hover{border-color:rgba(59,130,246,0.55);background:rgba(30,64,175,0.14);}
    
   #quizSection{display:none;margin-top:15px;}
   .quiz-step{display:none;}
   .quiz-step.active{display:block;}
-  .quiz-title{color:#fff;font-size:22px;font-weight:700;margin-bottom:24px;line-height:1.4;text-align:center;min-height:62px;white-space:pre-wrap;}
-  .quiz-opt{display:block;width:100%;border-radius:12px;padding:18px 20px;margin-bottom:12px;cursor:pointer;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:500;text-align:left;transition:all 0.2s ease;}
+  .quiz-title{color:#fff;font-size:22px;font-weight:700;margin-bottom:24px;line-height:1.4;text-align:center;min-height:62px;white-space:pre-wrap;text-transform:uppercase;}
+  .quiz-opt{font-family: 'Saira Semi Condensed', sans-serif;display:block;width:100%;border-radius:12px;padding:18px 20px;margin-bottom:12px;cursor:pointer;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);color:#fff;font-size:16px;font-weight:500;text-align:left;transition:all 0.2s ease;text-transform:uppercase;}
   .quiz-opt:hover{background:rgba(34,197,94,0.15);border-color:#4ade80;}
    
-  .quiz-back{display:inline-block;width:calc(50% - 6px);border-radius:12px;padding:12px 10px;margin-top:8px;margin-right:12px;cursor:pointer;background:transparent;border:1px dashed rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;transition:all 0.2s ease;}
+  .quiz-back{font-family: 'Saira Semi Condensed', sans-serif;display:inline-block;width:calc(50% - 6px);border-radius:12px;padding:12px 10px;margin-top:8px;margin-right:12px;cursor:pointer;background:transparent;border:1px dashed rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;transition:all 0.2s ease;}
   .quiz-back:hover{border-color:rgba(250,204,21,0.5);color:#fde047;background:rgba(250,204,21,0.03);}
    
-  .quiz-reset{display:inline-block;width:calc(50% - 6px);border-radius:12px;padding:12px 10px;margin-top:8px;cursor:pointer;background:transparent;border:1px dashed rgba(239,68,68,0.3);color:rgba(239,68,68,0.6);font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;transition:all 0.2s ease;}
+  .quiz-reset{font-family: 'Saira Semi Condensed', sans-serif;display:inline-block;width:calc(50% - 6px);border-radius:12px;padding:12px 10px;margin-top:8px;cursor:pointer;background:transparent;border:1px dashed rgba(239,68,68,0.3);color:rgba(239,68,68,0.6);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;transition:all 0.2s ease;}
   .quiz-reset:hover{border-color:rgba(239,68,68,0.7);color:#ef4444;background:rgba(239,68,68,0.05);}
    
-  .quiz-reset-full{display:block;width:100%;border-radius:12px;padding:12px 20px;margin-top:8px;cursor:pointer;background:transparent;border:1px dashed rgba(239,68,68,0.3);color:rgba(239,68,68,0.6);font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;transition:all 0.2s ease;}
+  .quiz-reset-full{font-family: 'Saira Semi Condensed', sans-serif;display:block;width:100%;border-radius:12px;padding:12px 20px;margin-top:8px;cursor:pointer;background:transparent;border:1px dashed rgba(239,68,68,0.3);color:rgba(239,68,68,0.6);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;transition:all 0.2s ease;}
   .quiz-reset-full:hover{border-color:rgba(239,68,68,0.7);color:#ef4444;background:rgba(239,68,68,0.05);}
 
   .input-date-container {width:100%;margin-bottom:18px;text-align:left;}
   .input-date-label {color:rgba(134,239,172,0.8);font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;display:block;}
-  .quiz-input-date {width:100%;padding:18px 20px;background:rgba(2,13,7,0.6);border:1px solid rgba(34,197,94,0.3);border-radius:12px;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:500;outline:none;transition:border-color 0.2s;}
+  .quiz-input-date {font-family: 'Saira Semi Condensed', sans-serif;width:100%;padding:18px 20px;background:rgba(2,13,7,0.6);border:1px solid rgba(34,197,94,0.3);border-radius:12px;color:#fff;font-size:16px;font-weight:500;outline:none;transition:border-color 0.2s;}
   .quiz-input-date:focus {border-color:#4ade80;}
    
-  .btn-wp-final{display:flex;align-items:center;justify-content:center;gap:12px;background:#16a34a;border:1px solid #22c55e;box-shadow:0 4px 15px rgba(22,163,74,0.4);padding:18px 24px;border-radius:14px;color:#fff;font-size:18px;font-weight:700;text-decoration:none;width:100%;margin-top:15px;transition:background 0.2s;text-transform:uppercase;letter-spacing:0.5px;}
+  .btn-wp-final{font-family: 'Saira Semi Condensed', sans-serif;display:flex;align-items:center;justify-content:center;gap:12px;background:#16a34a;border:1px solid #22c55e;box-shadow:0 4px 15px rgba(22,163,74,0.4);padding:18px 24px;border-radius:14px;color:#fff;font-size:18px;font-weight:700;text-decoration:none;width:100%;margin-top:15px;transition:background 0.2s;text-transform:uppercase;letter-spacing:0.5px;}
   .btn-wp-final:hover{background:#15803d;}
   .btn-wp-final svg{width:22px;height:22px;fill:#fff;}
 
@@ -113,7 +171,7 @@
   .ld-box{text-align:center;max-width:440px;display:flex;flex-direction:column;align-items:center;gap:24px;}
   .ld-spin{width:46px;height:46px;border:3px solid rgba(74,222,128,0.15);border-top-color:#4ade80;border-radius:50%;animation:spinLoader 0.7s linear infinite;}
   @keyframes spinLoader{to{transform:rotate(360deg);}}
-  .ld-txt{color:#fff;font-size:20px;font-weight:500;line-height:1.5;min-height:60px;text-align:center;}
+  .ld-txt{color:#fff;font-size:20px;font-weight:500;line-height:1.5;min-height:60px;text-align:center;text-transform:uppercase;}
   .ld-txt span{color:#fde047;}
   .ld-cursor{display:inline-block;width:8px;height:18px;background:#4ade80;margin-left:4px;animation:blinkCursor 0.6s step-end infinite;}
   @keyframes blinkCursor{from,to{background:transparent;}50%{background:#4ade80;}}
@@ -171,8 +229,8 @@
   <div class="ld-screen" id="loadingScreen">
     <div class="ld-box">
       <div class="ld-spin"></div>
-      <div class="ld-txt">Estamos indo pro Whatsapp<span id="typewriterTarget"></span><span class="ld-cursor"></span></div>
-      <div class="ld-timer" id="loadingTimer">Conectando em 5s...</div>
+      <div class="ld-txt">ESTAMOS INDO PRO WHATSAPP<span id="typewriterTarget"></span><span class="ld-cursor"></span></div>
+      <div class="ld-timer" id="loadingTimer">CONECTANDO EM 5S...</div>
     </div>
   </div>
 
@@ -182,149 +240,157 @@
         <div class="logo-wrap gradual-item" style="animation-delay: 0.1s;">
           <img src="unnamed.png" alt="Abertura Para DJ" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
           <div style="display:none;flex-direction:column;align-items:center;">
-            <span style="color:#4ade80;font-size:22px;font-weight:700;letter-spacing:2px;">ABERTURA</span>
-            <span style="color:#fde047;font-size:14px;letter-spacing:3px;">PARA DJ</span>
+            <span style="color:#4ade80;font-size:22px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">ABERTURA</span>
+            <span style="color:#fde047;font-size:14px;letter-spacing:3px;text-transform:uppercase;">PARA DJ</span>
           </div>
         </div>
-        <p class="tag gradual-item" style="animation-delay: 0.3s;">Voz dos maiores festivals Brasil afora</p>
-        <div class="badge gradual-item" style="animation-delay: 0.5s;">Orçamento sem compromisso</div>
+        <p class="tag gradual-item" style="animation-delay: 0.3s;">VOZ DOS MAIORES FESTIVAIS BRASIL AFORA</p>
+        <div class="badge gradual-item" style="animation-delay: 0.5s;">ORÇAMENTO SEM COMPROMISSO</div>
         
         <div class="stats">
-          <div class="stat gradual-item" style="animation-delay: 0.8s;"><div class="sn" data-target="7000" data-prefix="+DE " data-suffix="">0</div><div class="sl">Aberturas produzidas</div></div>
-          <div class="stat gradual-item" style="animation-delay: 1.1s;"><div class="sn" data-target="10" data-prefix="+DE " data-suffix=" países">0</div><div class="sl">Países atendidos</div></div>
-          <div class="stat gradual-item" style="animation-delay: 1.4s;"><div class="sn" data-target="3" data-prefix="+DE " data-suffix="M views">0</div><div class="sl">Views no YouTube</div></div>
-          <div class="stat gradual-item" style="animation-delay: 1.7s;"><div class="sn" data-target="600" data-prefix="+DE " data-suffix="">0</div><div class="sl">Produções publicadas</div></div>
-          <div class="stat sw gradual-item" style="animation-delay: 2.0s;"><div class="sn">🏆 Maior portfólio público de aberturas para shows no Mundo</div></div>
+          <div class="stat gradual-item" style="animation-delay: 0.8s;"><div class="sn" data-target="7000" data-prefix="+DE " data-suffix="">0</div><div class="sl">ABERTURAS PRODUZIDAS</div></div>
+          <div class="stat gradual-item" style="animation-delay: 1.1s;"><div class="sn" data-target="10" data-prefix="+DE " data-suffix=" PAÍSES">0</div><div class="sl">PAÍSES ATENDIDOS</div></div>
+          <div class="stat gradual-item" style="animation-delay: 1.4s;"><div class="sn" data-target="3" data-prefix="+DE " data-suffix="M VIEWS">0</div><div class="sl">VIEWS NO YOUTUBE</div></div>
+          <div class="stat gradual-item" style="animation-delay: 1.7s;"><div class="sn" data-target="600" data-prefix="+DE " data-suffix="">0</div><div class="sl">PRODUÇÕES PUBLICADAS</div></div>
+          <div class="stat sw gradual-item" style="animation-delay: 2.0s;"><div class="sn">🏆 MAIOR PORTFÓLIO PÚBLICO DE ABERTURAS PARA SHOWS NO MUNDO</div></div>
         </div>
         <div class="dv2 gradual-item" style="animation-delay: 2.3s;"></div>
       </div>
 
       <div id="mainMenuSection">
-        <h1 class="ttl gradual-item" style="animation-delay: 2.6s;">O que <span>deseja?</span></h1>
-        <p class="sub gradual-item" style="animation-delay: 2.9s;">Selecione o serviço abaixo</p>
+        <h1 class="ttl gradual-item" style="animation-delay: 2.6s;">O QUE <span>DESEJA?</span></h1>
+        <p class="sub gradual-item" style="animation-delay: 2.9s;">SELECIONE O SERVIÇO ABAIXO</p>
         <div class="dv gradual-item" style="animation-delay: 3.2s;"></div>
         
-        <a href="#" class="btn bp gradual-item" style="animation-delay: 3.5s;" onclick="handleMenuSelection(event, 'Abertura Completa', true)">
-          <div class="bl"><span class="dot"></span>Abertura Completa
-            <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
-          </div>
-          <div class="bs">Áudio exclusivo + vídeo profissional Ultra HD</div>
-        </a>
+        <!-- Botão 1: Pisca primeiro -->
+        <div class="btn-container gradual-item" style="animation-delay: 3.5s;">
+          <div id="glowAberturaCompleta" class="glow-box"></div>
+          <a href="#" id="btnAberturaCompleta" class="btn bp" onclick="handleMenuSelection(event, 'Abertura Completa', true)">
+            <div class="bl"><span class="dot"></span>ABERTURA COMPLETA
+              <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
+            </div>
+            <div class="bs">ÁUDIO EXCLUSIVO + VÍDEO PROFISSIONAL ULTRA HD</div>
+          </a>
+        </div>
         
-        <a href="#" class="btn gradual-item" style="animation-delay: 3.8s;" onclick="handleMenuSelection(event, 'Abertura em Áudio', true)">
-          <div class="bl"><span class="dot"></span>Abertura em Áudio
-            <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
-          </div>
-          <div class="bs">Locução + produção de trilha sonora e efeitos exclusivos</div>
-        </a>
+        <!-- Botão 2: Recebe a classe com delay e pisca logo em sequência -->
+        <div class="btn-container gradual-item" style="animation-delay: 3.8s;">
+          <div id="glowAberturaAudio" class="glow-box delay-flash"></div>
+          <a href="#" id="btnAberturaAudio" class="btn" onclick="handleMenuSelection(event, 'Abertura em Áudio', true)">
+            <div class="bl"><span class="dot"></span>ABERTURA EM ÁUDIO
+              <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
+            </div>
+            <div class="bs">LOCUÇÃO + PRODUÇÃO DE TRILHA SONORA E EFEITOS EXCLUSIVOS</div>
+          </a>
+        </div>
         
         <button onclick="toggleRemix()" class="rtog gradual-item" style="animation-delay: 4.1s;">
           <div class="btn bz">
-            <div class="bl"><span class="dot"></span>Remix Profissional
+            <div class="bl"><span class="dot"></span>REMIX PROFISSIONAL
               <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
             </div>
-            <div class="bs">Alavancar minha carreira</div>
+            <div class="bs">ALAVANCAR MINHA CARREIRA</div>
           </div>
         </button>
         <div class="rsub" id="rs">
-          <a href="#" class="rsb" onclick="handleMenuSelection(event, 'Remix Profissional - Já sei a música', false)">↳ Já sei qual música quero remixar</a>
-          <a href="#" class="rsb" onclick="handleMenuSelection(event, 'Remix Profissional - Preciso de ideia', false)">↳ Preciso de ideia de música</a>
+          <a href="#" class="rsb" onclick="handleMenuSelection(event, 'Remix Profissional - Já sei a música', false)">↳ JÁ SEI QUAL MÚSICA QUERO REMIXAR</a>
+          <a href="#" class="rsb" onclick="handleMenuSelection(event, 'Remix Profissional - Preciso de ideia', false)">↳ PRECISO DE IDEIA DE MÚSICA</a>
         </div>
         
-        <p class="sl2 gradual-item" style="animation-delay: 4.4s;">Marketing & Crescimento</p>
-        <a href="#" class="btn by gradual-item" style="animation-delay: 4.6s;" onclick="handleMenuSelection(event, 'Lotar Minha Agenda', false)">
-          <div class="bl"><span class="dot"></span>Lotar Minha Agenda
+        <p class="sl2 gradual-item" style="animation-delay: 4.4s;">MARKETING & CRESCIMENTO</p>
+        <a href="#" class="btn by" onclick="handleMenuSelection(event, 'Lotar Minha Agenda', false)">
+          <div class="bl"><span class="dot"></span>LOTAR MINHA AGENDA
             <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
           </div>
-          <div class="bs">Ads e presença digital para artistas</div>
+          <div class="bs">ADS E PRESENÇA DIGITAL PARA ARTISTAS</div>
         </a>
-        <a href="#" class="btn by gradual-item" style="animation-delay: 4.8s;" onclick="handleMenuSelection(event, 'Vender Mais Ingressos', false)">
-          <div class="bl"><span class="dot"></span>Vender Mais Ingressos
+        <a href="#" class="btn by" onclick="handleMenuSelection(event, 'Vender Mais Ingressos', false)">
+          <div class="bl"><span class="dot"></span>VENDER MAIS INGRESSOS
             <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
           </div>
-          <div class="bs">Ads e funil para festas</div>
+          <div class="bs">ADS E FUNIL PARA FESTAS</div>
         </a>
-        <a href="#" class="btn gradual-item" style="animation-delay: 5.0s;" onclick="handleMenuSelection(event, 'Patentear Minha Marca', false)">
-          <div class="bl"><span class="dot"></span>Patentear Minha Marca
+        <a href="#" class="btn" onclick="handleMenuSelection(event, 'Patentear Minha Marca', false)">
+          <div class="bl"><span class="dot"></span>PATENTEAR MINHA MARCA
             <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
           </div>
-          <div class="bs">Nome artístico e acompanhamento</div>
+          <div class="bs">NOME ARTÍSTICO E ACOMPANHAMENTO</div>
         </a>
       </div>
 
       <div id="quizSection">
         <div class="quiz-step active" id="step1">
           <p class="quiz-title" id="title1"></p>
-          <button class="quiz-opt" onclick="nextStep(1, 'Sim')">✅ Sim, responder rápido</button>
-          <button class="quiz-opt" onclick="bypassToFinal()">❌ Não. Prefiro que demore mais o atendimento</button>
-          <button class="quiz-reset-full" onclick="resetToMainMenu()">🏠 Voltar para o Início</button>
+          <button class="quiz-opt" onclick="nextStep(1, 'Sim')">✅ SIM, RESPONDER RÁPIDO</button>
+          <button class="quiz-opt" onclick="bypassToFinal()">❌ NÃO. PREFIRO QUE DEMORE MAIS O ATENDIMENTO</button>
+          <button class="quiz-reset-full" onclick="resetToMainMenu()">🏠 VOLTAR PARA O INÍCIO</button>
         </div>
         
         <div class="quiz-step" id="step2">
           <p class="quiz-title" id="title2"></p>
-          <button class="quiz-opt" onclick="nextStep(2, 'Sim, trabalho com eventos')">🎤 Sim, trabalho profissionalmente com eventos</button>
-          <button class="quiz-opt" onclick="nextStep(2, 'Sim, mas estou começando')">🎧 Sim, mas ainda estou começando a engrenar</button>
-          <button class="quiz-opt" onclick="nextStep(2, 'Ainda não sou DJ')">🚫 Ainda não sou DJ / Apenas Hobby</button>
-          <button class="quiz-back" onclick="prevStep(2)">← Voltar</button>
-          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 Início</button>
+          <button class="quiz-opt" onclick="nextStep(2, 'Sim, trabalho com eventos')">🎤 SIM, TRABALHO PROFISSIONALMENTE COM EVENTOS</button>
+          <button class="quiz-opt" onclick="nextStep(2, 'Sim, mas estou começando')">🎧 SIM, MAS AINDA ESTOU COMEÇANDO A ENGRENAR</button>
+          <button class="quiz-opt" onclick="nextStep(2, 'Ainda não sou DJ')">🚫 AINDA NÃO SOU DJ / APENAS HOBBY</button>
+          <button class="quiz-back" onclick="prevStep(2)">← VOLTAR</button>
+          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 INÍCIO</button>
         </div>
         
         <div class="quiz-step" id="step3">
           <p class="quiz-title" id="title3"></p>
-          <button class="quiz-opt" onclick="nextStep(3, 'Sim, acompanho')">📺 Sim, acompanho!</button>
-          <button class="quiz-opt" onclick="nextStep(3, 'Não, conheci agora!')">🤩 Não, conheci agora!</button>
-          <button class="quiz-opt" onclick="nextStep(3, 'Acompanho há muitos anos')">👑 Acompanho há muitos anos!</button>
-          <button class="quiz-back" onclick="prevStep(3)">← Voltar</button>
-          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 Início</button>
+          <button class="quiz-opt" onclick="nextStep(3, 'Sim, acompanho')">📺 SIM, ACOMPANHO!</button>
+          <button class="quiz-opt" onclick="nextStep(3, 'Não, conheci agora!')">🤩 NÃO, CONHECI AGORA!</button>
+          <button class="quiz-opt" onclick="nextStep(3, 'Acompanho há muitos anos')">👑 ACOMPANHO HÁ MUITOS ANOS!</button>
+          <button class="quiz-back" onclick="prevStep(3)">← VOLTAR</button>
+          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 INÍCIO</button>
         </div>
         
         <div class="quiz-step" id="step4">
           <p class="quiz-title" id="title4"></p>
-          <button class="quiz-opt" onclick="nextStep(4, 'Sim, profissional')">🔥 Sim, já utilizo uma abertura de alto nível</button>
-          <button class="quiz-opt" onclick="nextStep(4, 'Sim, mas simples')">⚡ Sim, mas é um material básico e antigo</button>
-          <button class="quiz-opt" onclick="nextStep(4, 'Não utilizo')">❌ Não utilizo nenhuma abertura no momento</button>
-          <button class="quiz-back" onclick="prevStep(4)">← Voltar</button>
-          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 Início</button>
+          <button class="quiz-opt" onclick="nextStep(4, 'Sim, profissional')">🔥 SIM, JÁ UTILIZO UMA ABERTURA DE ALTO NÍVEL</button>
+          <button class="quiz-opt" onclick="nextStep(4, 'Sim, mas simples')">⚡ SIM, MAS É UM MATERIAL BÁSICO E ANTIGO</button>
+          <button class="quiz-opt" onclick="nextStep(4, 'Não utilizo')">❌ NÃO UTILIZO NENHUMA ABERTURA NO MOMENTO</button>
+          <button class="quiz-back" onclick="prevStep(4)">← VOLTAR</button>
+          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 INÍCIO</button>
         </div>
         
         <div class="quiz-step" id="step5">
           <p class="quiz-title" id="title5"></p>
-          <button class="quiz-opt" onclick="nextStep(5, '1 minuto')">⏱️ 1 Minuto</button>
-          <button class="quiz-opt" onclick="nextStep(5, '1 minuto e meio')">⏱️ 1 Minuto e Meio (1:30)</button>
-          <button class="quiz-opt" onclick="nextStep(5, '2 minutos')">⏱️ 2 Minutos</button>
-          <button class="quiz-opt" onclick="nextStep(5, '2 minutos e meio')">⏱️ 2 Minutos e Meio (2:30)</button>
-          <button class="quiz-opt" onclick="nextStep(5, '3 minutos')">⏱️ 3 Minutos</button>
-          <button class="quiz-back" onclick="prevStep(5)">← Voltar</button>
-          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 Início</button>
+          <button class="quiz-opt" onclick="nextStep(5, '1 minuto')">⏱️ 1 MINUTO</button>
+          <button class="quiz-opt" onclick="nextStep(5, '1 minuto e meio')">⏱️ 1 MINUTO E MEIO (1:30)</button>
+          <button class="quiz-opt" onclick="nextStep(5, '2 minutos')">⏱️ 2 MINUTOS</button>
+          <button class="quiz-opt" onclick="nextStep(5, '2 minutos e meio')">⏱️ 2 MINUTOS E MEIO (2:30)</button>
+          <button class="quiz-opt" onclick="nextStep(5, '3 minutos')">⏱️ 3 MINUTOS</button>
+          <button class="quiz-back" onclick="prevStep(5)">← VOLTAR</button>
+          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 INÍCIO</button>
         </div>
         
         <div class="quiz-step" id="step6">
           <p class="quiz-title" id="title6"></p>
-          <button class="quiz-opt" onclick="nextStep(6, 'Sim, quero investir pois já tenho um evento para usar')">💎 Sim, quero investir pois já tenho um evento para usar</button>
-          <button class="quiz-opt" onclick="nextStep(6, 'Está ainda no campo das ideias')">📈 Está ainda no campo das ideias</button>
-          <button class="quiz-opt" onclick="nextStep(6, 'No momento estou apenas pesquisando opções e valores')">🔍 No momento estou apenas pesquisando opções e valores</button>
-          <button class="quiz-back" onclick="prevStep(6)">← Voltar</button>
-          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 Início</button>
+          <button class="quiz-opt" onclick="nextStep(6, 'Sim, quero investir pois já tenho um evento para usar')">💎 SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR</button>
+          <button class="quiz-opt" onclick="nextStep(6, 'Está ainda no campo das ideias')">📈 ESTÁ AINDA NO CAMPO DAS IDEIAS</button>
+          <button class="quiz-opt" onclick="nextStep(6, 'No momento estou apenas pesquisando opções e valores')">🔍 NO MOMENTO ESTOU APENAS PESQUISANDO OPÇÕES E VALORES</button>
+          <button class="quiz-back" onclick="prevStep(6)">← VOLTAR</button>
+          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 INÍCIO</button>
         </div>
         
         <div class="quiz-step" id="step7">
           <p class="quiz-title" id="title7"></p>
           <div class="input-date-container">
-            <label class="input-date-label" for="datePickerInput">Selecione o Dia Limite:</label>
+            <label class="input-date-label" for="datePickerInput">SELECIONE O DIA LIMITE:</label>
             <input type="date" class="quiz-input-date" id="datePickerInput">
           </div>
-          <button class="quiz-opt" style="text-align:center; background:rgba(34,197,94,0.15);" onclick="captureDateAndProceed()">Confirmar Data de Entrega</button>
-          <button class="quiz-back" onclick="prevStep(7)">← Voltar</button>
-          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 Início</button>
+          <button class="quiz-opt" style="text-align:center; background:rgba(34,197,94,0.15);" onclick="captureDateAndProceed()">CONFIRMAR DATA DE ENTREGA</button>
+          <button class="quiz-back" onclick="prevStep(7)">← VOLTAR</button>
+          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 INÍCIO</button>
         </div>
         
         <div class="quiz-step" id="stepFinal">
-          <h2 class="ttl" style="margin-bottom:12px;"><span>Entendido!</span></h2>
-          <p class="sub" style="font-size:16px; color:#fff; line-height:1.4;" id="finalText">Perfeito! Com base nas suas respostas, seu atendimento será bem mais rápido.</p>
+          <h2 class="ttl" style="margin-bottom:12px;"><span>ENTENDIDO!</span></h2>
+          <p class="sub" style="font-size:16px; color:#fff; line-height:1.4;" id="finalText">PERFEITO! COM BASE NAS SUAS RESPOSTAS, SEU ATENDIMENTO SERÁ BEM MAIS RÁPIDO.</p>
           <div class="dv" style="margin-bottom:24px;"></div>
-          <a href="#" class="btn-wp-final" onclick="executeFinalRedirect(event)">Avançar para o WhatsApp</a>
-          <button class="quiz-back" style="margin-top:20px;" onclick="prevStep('Final')">← Modificar Respostas</button>
-          <button class="quiz-reset-full" style="margin-top:10px;" onclick="resetToMainMenu()">🏠 Voltar para o Início</button>
+          <a href="#" class="btn-wp-final" onclick="executeFinalRedirect(event)">AVANÇAR PARA O WHATSAPP</a>
+          <button class="quiz-back" style="margin-top:20px;" onclick="prevStep('Final')">← MODIFICAR RESPOSTAS</button>
+          <button class="quiz-reset-full" style="margin-top:10px;" onclick="resetToMainMenu()">🏠 VOLTAR PARA O INÍCIO</button>
         </div>
       </div>
     </div>
@@ -361,16 +427,17 @@
 </div>
 
 <script>
-let userAnswers = { serviçoEscolhido: "", autorizacao: "", atuacao: "", conheceCanal: "", aberturaAtual: "", duracaoDesejada: "", intencaoInvestimento: "", dataLimiteEntrega: "Não informada / Sem data prevista" };
+let userAnswers = { serviçoEscolhido: "", autorizacao: "", atuacao: "", conheceCanal: "", aberturaAtual: "", duracaoDesejada: "", intencaoInvestimento: "", dataLimiteEntrega: "NÃO INFORMADA / SEM DATA PREVISTA" };
 const WHATSAPP_NUMBER = "556191073673"; 
+
 const quizTexts = { 
-  1: "Estamos com alto volume de atendimentos.\n\nPosso fazer algumas perguntas rápidas para te passar um orçamento mais rápido?", 
-  2: "Você já trabalha e atua ativamente como DJ?", 
-  3: "Você já conhecia o canal Abertura para DJ antes?", 
-  4: "Você já possui alguma abertura estruturada para seus shows?", 
-  5: "Qual é a duração estimada que você deseja para a sua abertura?", 
-  6: "Pretende investir por agora? Ou:", 
-  7: "Para qual data limite você precisa desse projeto pronto e entregue?" 
+  1: "ESTAMOS COM ALTO VOLUME DE ATENDIMENTOS.\n\nPOSSO FAZER ALGUMAS PERGUNTAS RÁPIDAS PARA TE PASSAR UM ORÇAMENTO MAIS RÁPIDO?", 
+  2: "VOCÊ JÁ TRABALHA E ATUA ATIVAMENTE COMO DJ?", 
+  3: "VOCÊ JÁ CONHECIA O CANAL ABERTURA PARA DJ ANTES?", 
+  4: "VOCÊ JÁ POSSUI ALGUMA ABERTURA ESTRUTURADA PARA SEUS SHOWS?", 
+  5: "QUAL É A DURAÇÃO ESTIMADA QUE VOCÊ DESEJA PARA A SUA ABERTURA?", 
+  6: "PRETENDE INVESTIR POR AGORA? OU:", 
+  7: "PARA QUAL DATA LIMITE VOCÊ PRECISA DESSE PROJETO PRONTO E ENTREGUE?" 
 };
 
 function animateCounters(){
@@ -380,13 +447,56 @@ function animateCounters(){
     const tm=setInterval(()=>{
       currentVal+=inc;if(currentVal>=targetVal){currentVal=targetVal;clearInterval(tm);}
       const d=targetVal>=1000?Math.round(currentVal).toLocaleString('pt-BR'):Math.round(currentVal);
-      el.textContent=pre+d+suf;
+      el.textContent=(pre+d+suf).toUpperCase();
     },33);
   });
 }
 
+/* ==========================================================================
+   MECÂNICA DE SCROLL TRAVADA + FLASH DE BACKLIGHT SEQUENCIAL COM ATRAZO
+   ========================================================================== */
+let introRan = false;
+
+function runIntroGuidance() {
+  if(introRan) return;
+  
+  const area = document.getElementById('scrollArea');
+  const glow1 = document.getElementById('glowAberturaCompleta');
+  const glow2 = document.getElementById('glowAberturaAudio');
+  
+  if (!area || !glow1 || !glow2) return;
+
+  // Aguarda as cascatas iniciais e desce fixando nas opções de botões
+  setTimeout(() => {
+    introRan = true;
+    area.scrollTo({ top: 375, behavior: 'smooth' });
+    
+    let scrollEndTimer;
+    const checkScrollEnd = () => {
+      clearTimeout(scrollEndTimer);
+      scrollEndTimer = setTimeout(() => {
+        area.removeEventListener('scroll', checkScrollEnd);
+        
+        // Fixa permanentemente a rolagem na viewport das opções
+        area.style.scrollBehavior = 'auto';
+        area.scrollTop = 375;
+        area.style.scrollBehavior = 'smooth';
+        
+        // Aciona o flash sequencial (o segundo possui delay via CSS)
+        glow1.classList.add('flash-active');
+        glow2.classList.add('flash-active');
+        
+      }, 100);
+    };
+    
+    area.addEventListener('scroll', checkScrollEnd);
+
+  }, 3500);
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   setTimeout(animateCounters, 1200);
+  setTimeout(runIntroGuidance, 100);
 });
 
 function toggleRemix(){ document.getElementById('rs').classList.toggle('open'); }
@@ -533,7 +643,7 @@ document.addEventListener('click', initAudio, { once: true });
    ========================================================================== */
 function handleMenuSelection(event, nomeServico, requereQuiz) {
   event.preventDefault();
-  userAnswers.serviçoEscolhido = nomeServico; 
+  userAnswers.serviçoEscolhido = nomeServico.toUpperCase(); 
   if(requereQuiz) {
     document.getElementById('headerBrandSection').style.display = 'none';
     document.getElementById('mainMenuSection').style.display = 'none';
@@ -545,7 +655,7 @@ function handleMenuSelection(event, nomeServico, requereQuiz) {
 }
 
 function resetToMainMenu() {
-  userAnswers = { serviçoEscolhido: "", autorizacao: "", atuacao: "", conheceCanal: "", aberturaAtual: "", duracaoDesejada: "", intencaoInvestimento: "", dataLimiteEntrega: "Não informada / Sem data prevista" };
+  userAnswers = { serviçoEscolhido: "", autorizacao: "", atuacao: "", conheceCanal: "", aberturaAtual: "", duracaoDesejada: "", intencaoInvestimento: "", dataLimiteEntrega: "NÃO INFORMADA / SEM DATA PREVISTA" };
   document.querySelectorAll('.quiz-step').forEach(step => {
     step.classList.remove('active');
   });
@@ -558,26 +668,27 @@ function resetToMainMenu() {
 }
 
 function bypassToFinal() {
-    userAnswers.autorizacao = "Não"; 
+    userAnswers.autorizacao = "NÃO"; 
     document.getElementById('step1').classList.remove('active');
     document.getElementById('stepFinal').classList.add('active');
-    document.getElementById('finalText').textContent = "Sem problemas! O atendimento será feito no seu tempo. Clique abaixo para iniciar a conversa.";
+    document.getElementById('finalText').textContent = "SEM PROBLEMAS! O ATENDIMENTO SERÁ FEITO NO SEU TEMPO. CLIQUE ABAIXO PARA INICIAR A CONVERSA.";
 }
 
 function nextStep(current, value) {
-  if(current === 1) userAnswers.autorizacao = value;
-  if(current === 2) userAnswers.atuacao = value;
-  if(current === 3) userAnswers.conheceCanal = value;
-  if(current === 4) userAnswers.aberturaAtual = value;
-  if(current === 5) userAnswers.duracaoDesejada = value;
-  if(current === 6) userAnswers.intencaoInvestimento = value;
+  const upperVal = value.toUpperCase();
+  if(current === 1) userAnswers.autorizacao = upperVal;
+  if(current === 2) userAnswers.atuacao = upperVal;
+  if(current === 3) userAnswers.conheceCanal = upperVal;
+  if(current === 4) userAnswers.aberturaAtual = upperVal;
+  if(current === 5) userAnswers.duracaoDesejada = upperVal;
+  if(current === 6) userAnswers.intencaoInvestimento = upperVal;
   
   document.getElementById(`step${current}`).classList.remove('active');
   let nextTarget = current + 1;
   
   if(current === 6) {
-    const djReal = (userAnswers.atuacao === "Sim, trabalho com eventos" || userAnswers.atuacao === "Sim, mas estou começando");
-    const intencaoReal = (userAnswers.intencaoInvestimento === "Sim, quero investir pois já tenho um evento para usar" || userAnswers.intencaoInvestimento === "Está ainda no campo das ideias");
+    const djReal = (userAnswers.atuacao === "SIM, TRABALHO COM EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
+    const intencaoReal = (userAnswers.intencaoInvestimento === "SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR" || userAnswers.intencaoInvestimento === "ESTÁ AINDA NO CAMPO DAS IDEIAS");
     nextTarget = (djReal && intencaoReal) ? 7 : 'Final'; 
   }
   
@@ -588,9 +699,9 @@ function nextStep(current, value) {
 function prevStep(current) {
   if(current === 'Final') {
     document.getElementById('stepFinal').classList.remove('active');
-    if(userAnswers.autorizacao === "Sim") {
-        const djReal = (userAnswers.atuacao === "Sim, trabalho com eventos" || userAnswers.atuacao === "Sim, mas estou começando");
-        const intencaoReal = (userAnswers.intencaoInvestimento === "Sim, quero investir pois já tenho um evento para usar" || userAnswers.intencaoInvestimento === "Está ainda no campo das ideias");
+    if(userAnswers.autorizacao === "SIM") {
+        const djReal = (userAnswers.atuacao === "SIM, TRABALHO COM EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
+        const intencaoReal = (userAnswers.intencaoInvestimento === "SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR" || userAnswers.intencaoInvestimento === "ESTÁ AINDA NO CAMPO DAS IDEIAS");
         if(djReal && intencaoReal) { document.getElementById('step7').classList.add('active'); runTypewriterQuestion(7); } else { document.getElementById('step6').classList.add('active'); runTypewriterQuestion(6); }
     } else {
         document.getElementById('step1').classList.add('active');
@@ -617,7 +728,7 @@ function runTypewriterQuestion(stepId) {
 function executeDirectBypassRedirect(nomeServico) {
   const loader = document.getElementById('loadingScreen');
   loader.classList.add('active');
-  const wpUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent('Olá! Tudo bem? Vi seus serviços e fiquei interessado na produção de ' + nomeServico)}`;
+  const wpUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent('OLÁ! TUDO BEM? VI SEUS SERVIÇOS E FIQUEI INTERESSADO NA PRODUÇÃO DE ' + nomeServico.toUpperCase())}`;
   setTimeout(() => { window.location.href = wpUrl; }, 2000);
 }
 
@@ -627,10 +738,10 @@ function executeFinalRedirect(event) {
   loader.classList.add('active');
   
   let msg;
-  if(userAnswers.autorizacao === "Sim") {
-      msg = `Olá! Quero um orçamento para: ${userAnswers.serviçoEscolhido}\nAtuação: ${userAnswers.atuacao}\nJá conhece o canal: ${userAnswers.conheceCanal}\nAbertura atual: ${userAnswers.aberturaAtual}\nDuração: ${userAnswers.duracaoDesejada}\nEntrega: ${userAnswers.dataLimiteEntrega}`;
+  if(userAnswers.autorizacao === "SIM") {
+      msg = `OLÁ! QUERO UM ORÇAMENTO PARA: ${userAnswers.serviçoEscolhido}\nATUAÇÃO: ${userAnswers.atuacao}\nJÁ CONHECE O CANAL: ${userAnswers.conheceCanal}\nABERTURA ATUAL: ${userAnswers.aberturaAtual}\nDURAÇÃO: ${userAnswers.duracaoDesejada}\nENTREGA: ${userAnswers.dataLimiteEntrega}`;
   } else {
-      msg = `Olá! Tudo bem? Vi seus serviços e fiquei interessado na produção de ${userAnswers.serviçoEscolhido}`;
+      msg = `OLÁ! TUDO BEM? VI SEUS SERVIÇOS E FIQUEI INTERESSADO NA PRODUÇÃO DE ${userAnswers.serviçoEscolhido}`;
   }
   
   const wpUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`;
@@ -639,7 +750,7 @@ function executeFinalRedirect(event) {
 
 function captureDateAndProceed() {
   const dateInput = document.getElementById('datePickerInput').value;
-  userAnswers.dataLimiteEntrega = dateInput ? dateInput : "Não informada / Sem data prevista";
+  userAnswers.dataLimiteEntrega = dateInput ? dateInput : "NÃO INFORMADA / SEM DATA PREVISTA";
   document.getElementById('step7').classList.remove('active');
   document.getElementById('stepFinal').classList.add('active');
 }
