@@ -9,16 +9,16 @@
   .pw{font-family:'Space Grotesk',sans-serif;background:#020d07;min-height:100vh;position:relative;overflow:hidden;}
   .gbg{position:fixed;inset:0;background-image:linear-gradient(rgba(34,197,94,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(34,197,94,0.07) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
   .gtop{position:fixed;top:-80px;left:50%;transform:translateX(-50%);width:400px;height:200px;background:radial-gradient(ellipse,rgba(250,204,21,0.14) 0%,rgba(34,197,94,0.09) 50%,transparent 70%);pointer-events:none;z-index:0;}
-  .scan{position:fixed;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(250,204,21,0.4) 50%,transparent 100%);animation:sd 5s linear infinite;pointer-events:none;z-index:1;}
+  .scan{position:fixed;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(250,204,21,0.4) 50%,transparent 100%);animation:sd 5s linear infinite;pointer-events:none;z-index:2;}
   @keyframes sd{0%{top:0;opacity:0;}5%{opacity:1;}95%{opacity:1;}100%{top:100%;opacity:0;}}
-  
+   
   .sa{position:relative;z-index:5;padding:28px 20px 140px;overflow-y:auto;height:100vh;scrollbar-width:none;}
   .sa::-webkit-scrollbar{display:none;}
   .ct{text-align:center;max-width:680px;margin:0 auto;}
-  
+   
   .logo-wrap{margin:0 auto 18px;width:290px;height:95px;display:flex;align-items:center;justify-content:center;}
   .logo-wrap img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
-  
+   
   .tag{color:rgba(134,239,172,0.7);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin:0 0 4px;}
   .badge{display:inline-block;border:1px solid rgba(250,204,21,0.6);color:#fde047;font-size:11px;letter-spacing:2px;padding:4px 14px;border-radius:100px;margin-bottom:16px;text-transform:uppercase;}
   .ttl{color:#fff;font-size:clamp(26px,6vw,38px);font-weight:700;line-height:1.1;margin:0 0 6px;}
@@ -32,7 +32,7 @@
   .sw{grid-column:1/-1;background:rgba(250,204,21,0.07);border-color:rgba(250,204,21,0.25);}
   .sw .sn{color:#fde047;font-size:clamp(13px,3vw,15px);font-weight:500;letter-spacing:0.5px;}
   .dv2{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,0.4),rgba(34,197,94,0.4),transparent);margin-bottom:18px;}
-  
+   
   .btn{display:block;width:100%;border-radius:14px;padding:18px 20px;margin-bottom:12px;cursor:pointer;text-decoration:none;border:1px solid rgba(34,197,94,0.3);background:rgba(20,83,45,0.25);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);position:relative;overflow:hidden;transition:border-color .2s,background .2s;}
   .btn:hover{border-color:rgba(34,197,94,0.7);background:rgba(34,197,94,0.16);}
   .bp{border-color:rgba(34,197,94,0.55);background:rgba(34,197,94,0.14);}
@@ -40,50 +40,75 @@
   .bl .dot{width:9px;height:9px;border-radius:50%;background:#4ade80;flex-shrink:0;}
   .wp-icon{width:20px;height:20px;fill:#4ade80;margin-left:auto;}
   .bs{color:rgba(134,239,172,0.6);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;padding-left:19px;text-align:left;line-height:1.4;}
-  
+   
   .by{border-color:rgba(250,204,21,0.3);background:rgba(250,204,21,0.07);}
   .by:hover{border-color:rgba(250,204,21,0.65);background:rgba(250,204,21,0.13);}
   .by .dot{background:#fde047;}
   .by .wp-icon{fill:#fde047;}
   .by .bs{color:rgba(253,224,71,0.6);}
-  
+   
   .bz{border-color:rgba(59,130,246,0.3);background:rgba(30,64,175,0.08);}
   .bz:hover{border-color:rgba(59,130,246,0.6);background:rgba(30,64,175,0.14);}
   .bz .dot{background:#60a5fa;}
   .bz .wp-icon{fill:#60a5fa;}
   .bz .bs{color:rgba(96,165,250,0.6);}
-  
+   
   .sl2{color:rgba(250,204,21,0.4);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin:18px 0 10px;text-align:center;}
   .rtog{display:block;width:100%;background:none;border:none;padding:0;cursor:pointer;text-align:left;}
   .rsub{margin-top:2px;margin-bottom:12px;padding-left:12px;border-left:1px solid rgba(59,130,246,0.25);display:none;}
   .rsub.open{display:block;}
   .rsb{display:block;width:100%;border-radius:10px;padding:14px 16px;margin-bottom:8px;text-decoration:none;border:1px solid rgba(59,130,246,0.22);background:rgba(30,64,175,0.07);color:#93c5fd;font-size:14px;font-weight:500;position:relative;transition:border-color .2s,background .2s;}
   .rsb:hover{border-color:rgba(59,130,246,0.55);background:rgba(30,64,175,0.14);}
-  
+   
   #quizSection{display:none;margin-top:15px;}
   .quiz-step{display:none;}
   .quiz-step.active{display:block;}
   .quiz-title{color:#fff;font-size:22px;font-weight:700;margin-bottom:24px;line-height:1.4;text-align:center;min-height:62px;}
   .quiz-opt{display:block;width:100%;border-radius:12px;padding:18px 20px;margin-bottom:12px;cursor:pointer;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:500;text-align:left;transition:all 0.2s ease;}
   .quiz-opt:hover{background:rgba(34,197,94,0.15);border-color:#4ade80;}
-  
-  .quiz-back{display:block;width:100%;border-radius:12px;padding:12px 20px;margin-top:8px;cursor:pointer;background:transparent;border:1px dashed rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;transition:all 0.2s ease;}
+   
+  .quiz-back{display:inline-block;width:calc(50% - 6px);border-radius:12px;padding:12px 10px;margin-top:8px;margin-right:12px;cursor:pointer;background:transparent;border:1px dashed rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;transition:all 0.2s ease;}
   .quiz-back:hover{border-color:rgba(250,204,21,0.5);color:#fde047;background:rgba(250,204,21,0.03);}
-  
+   
+  .quiz-reset{display:inline-block;width:calc(50% - 6px);border-radius:12px;padding:12px 10px;margin-top:8px;cursor:pointer;background:transparent;border:1px dashed rgba(239,68,68,0.3);color:rgba(239,68,68,0.6);font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;transition:all 0.2s ease;}
+  .quiz-reset:hover{border-color:rgba(239,68,68,0.7);color:#ef4444;background:rgba(239,68,68,0.05);}
+   
+  .quiz-reset-full{display:block;width:100%;border-radius:12px;padding:12px 20px;margin-top:8px;cursor:pointer;background:transparent;border:1px dashed rgba(239,68,68,0.3);color:rgba(239,68,68,0.6);font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;transition:all 0.2s ease;}
+  .quiz-reset-full:hover{border-color:rgba(239,68,68,0.7);color:#ef4444;background:rgba(239,68,68,0.05);}
+
   .input-date-container {width:100%;margin-bottom:18px;text-align:left;}
   .input-date-label {color:rgba(134,239,172,0.8);font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;display:block;}
   .quiz-input-date {width:100%;padding:18px 20px;background:rgba(2,13,7,0.6);border:1px solid rgba(34,197,94,0.3);border-radius:12px;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:500;outline:none;transition:border-color 0.2s;}
   .quiz-input-date:focus {border-color:#4ade80;}
-  
+   
   .btn-wp-final{display:flex;align-items:center;justify-content:center;gap:12px;background:#16a34a;border:1px solid #22c55e;box-shadow:0 4px 15px rgba(22,163,74,0.4);padding:18px 24px;border-radius:14px;color:#fff;font-size:18px;font-weight:700;text-decoration:none;width:100%;margin-top:15px;transition:background 0.2s;text-transform:uppercase;letter-spacing:0.5px;}
   .btn-wp-final:hover{background:#15803d;}
   .btn-wp-final svg{width:22px;height:22px;fill:#fff;}
 
-  .vinyl-fixed{position:fixed;bottom:20%;right:0;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;touch-action:none;transform:translateX(50%);pointer-events:auto;}
-  .vinyl-svg{display:block;width:320px;height:320px;cursor:grab;filter:drop-shadow(-12px 8px 24px rgba(0,0,0,0.9));}
-  .vinyl-svg:active{cursor:grabbing;}
-  .vinyl-arrows{transform:translateX(-85px);font-family:'Space Grotesk',sans-serif;white-space:nowrap;text-shadow:0 2px 5px rgba(0,0,0,0.95);font-size:16px;color:#4ade80;letter-spacing:2px;font-weight:700;}
-  .sound-badge{transform:translateX(-85px);font-family:'Space Grotesk',sans-serif;white-space:nowrap;text-shadow:0 2px 5px rgba(0,0,0,0.95);font-size:10px;letter-spacing:0.5px;color:#4ade80;background:rgba(2,13,7,0.95);padding:4px 10px;border-radius:20px;border:1px solid rgba(74,222,128,0.3);box-shadow:0 4px 12px rgba(0,0,0,0.65);}
+  /* CONFIGURAÇÃO DO VINIL */
+  .vinyl-fixed{position:fixed;bottom:20%;right:0;z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;touch-action:none;transform:translateX(50%);pointer-events:none;}
+  .vinyl-svg{display:block;width:320px;height:320px;filter:drop-shadow(-12px 8px 24px rgba(0,0,0,0.9));will-change:transform;transition:transform 0.05s linear;}
+
+  /* ==========================================================================
+     OLHOS DE GATO NO BACKGROUND (ESTILO CINEMATOGRÁFICO ESQUERDA DO DISCO)
+     ========================================================================== */
+  .cat-eyes-bg {
+    position: fixed;
+    bottom: 35%;
+    right: 22%;
+    z-index: 1;
+    width: 220px;
+    height: auto;
+    pointer-events: none;
+    filter: drop-shadow(0 0 15px rgba(250,204,21,0.35)) blur(1.8px);
+    opacity: 0.65; 
+  }
+  .eye-lid {
+    transition: transform 0.05s ease-out;
+    will-change: transform;
+  }
+  #leftEye { transform-origin: 26px 48px; }
+  #rightEye { transform-origin: 70px 48px; }
 
   .ld-screen{position:fixed;inset:0;background:rgba(2,13,7,0.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:999;display:none;align-items:center;justify-content:center;padding:24px;}
   .ld-screen.active{display:flex;}
@@ -102,6 +127,20 @@
 <div class="pw">
   <div class="gbg"></div>
   <div class="gtop"></div>
+  
+  <svg class="cat-eyes-bg" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+    <g id="leftEye" class="eye-lid">
+      <path d="M 12 48 C 16 34, 36 34, 40 48 C 36 62, 16 62, 12 48 Z" fill="#fde047"/>
+      <path d="M 24 40 C 27 40, 27 56, 24 56 C 21 56, 21 40, 24 40 Z" fill="#111"/>
+      <path d="M 18 42 Q 22 40 22 44 Q 22 46 18 44 Z" fill="#fff" opacity="0.7"/>
+    </g>
+    <g id="rightEye" class="eye-lid">
+      <path d="M 56 48 C 60 34, 80 34, 84 48 C 80 62, 60 62, 56 48 Z" fill="#fde047"/>
+      <path d="M 68 40 C 71 40, 71 56, 68 56 C 65 56, 65 40, 68 40 Z" fill="#111"/>
+      <path d="M 62 42 Q 66 40 66 44 Q 66 46 62 44 Z" fill="#fff" opacity="0.7"/>
+    </g>
+  </svg>
+
   <div class="scan"></div>
 
   <div class="ld-screen" id="loadingScreen">
@@ -162,8 +201,8 @@
           </div>
         </button>
         <div class="rsub" id="rs">
-          <a href="#" class="rsb" onclick="handleMenuSelection(event, 'Remix Profissional', false)">↳ Já sei qual música quero remixar</a>
-          <a href="#" class="rsb" onclick="handleMenuSelection(event, 'Remix Profissional', false)">↳ Preciso de ideia de música</a>
+          <a href="#" class="rsb" onclick="handleMenuSelection(event, 'Remix Profissional - Já sei a música', false)">↳ Já sei qual música quero remixar</a>
+          <a href="#" class="rsb" onclick="handleMenuSelection(event, 'Remix Profissional - Preciso de ideia', false)">↳ Preciso de ideia de música</a>
         </div>
         
         <p class="sl2">Marketing & Crescimento</p>
@@ -192,28 +231,36 @@
           <p class="quiz-title" id="title1"></p>
           <button class="quiz-opt" onclick="nextStep(1, 'Sim')">✅ Sim, responder rápido</button>
           <button class="quiz-opt" onclick="bypassToFinal()">❌ Não. Prefiro que demore mais o atendimento</button>
+          <button class="quiz-reset-full" onclick="resetToMainMenu()">🏠 Voltar para o Início</button>
         </div>
+        
         <div class="quiz-step" id="step2">
           <p class="quiz-title" id="title2"></p>
           <button class="quiz-opt" onclick="nextStep(2, 'Sim, trabalho com eventos')">🎤 Sim, trabalho profissionalmente com eventos</button>
           <button class="quiz-opt" onclick="nextStep(2, 'Sim, mas estou começando')">🎧 Sim, mas ainda estou começando a engrenar</button>
           <button class="quiz-opt" onclick="nextStep(2, 'Ainda não sou DJ')">🚫 Ainda não sou DJ / Apenas Hobby</button>
-          <button class="quiz-back" onclick="prevStep(2)">← Corrigir Pergunta Anterior</button>
+          <button class="quiz-back" onclick="prevStep(2)">← Voltar</button>
+          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 Início</button>
         </div>
+        
         <div class="quiz-step" id="step3">
           <p class="quiz-title" id="title3"></p>
           <button class="quiz-opt" onclick="nextStep(3, 'Sim, acompanho')">📺 Sim, acompanho!</button>
           <button class="quiz-opt" onclick="nextStep(3, 'Não, conheci agora!')">🤩 Não, conheci agora!</button>
           <button class="quiz-opt" onclick="nextStep(3, 'Acompanho há muitos anos')">👑 Acompanho há muitos anos!</button>
-          <button class="quiz-back" onclick="prevStep(3)">← Corrigir Pergunta Anterior</button>
+          <button class="quiz-back" onclick="prevStep(3)">← Voltar</button>
+          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 Início</button>
         </div>
+        
         <div class="quiz-step" id="step4">
           <p class="quiz-title" id="title4"></p>
           <button class="quiz-opt" onclick="nextStep(4, 'Sim, profissional')">🔥 Sim, já utilizo uma abertura de alto nível</button>
           <button class="quiz-opt" onclick="nextStep(4, 'Sim, mas simples')">⚡ Sim, mas é um material básico e antigo</button>
           <button class="quiz-opt" onclick="nextStep(4, 'Não utilizo')">❌ Não utilizo nenhuma abertura no momento</button>
-          <button class="quiz-back" onclick="prevStep(4)">← Corrigir Pergunta Anterior</button>
+          <button class="quiz-back" onclick="prevStep(4)">← Voltar</button>
+          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 Início</button>
         </div>
+        
         <div class="quiz-step" id="step5">
           <p class="quiz-title" id="title5"></p>
           <button class="quiz-opt" onclick="nextStep(5, '1 minuto')">⏱️ 1 Minuto</button>
@@ -221,15 +268,19 @@
           <button class="quiz-opt" onclick="nextStep(5, '2 minutos')">⏱️ 2 Minutos</button>
           <button class="quiz-opt" onclick="nextStep(5, '2 minutos e meio')">⏱️ 2 Minutos e Meio (2:30)</button>
           <button class="quiz-opt" onclick="nextStep(5, '3 minutos')">⏱️ 3 Minutos</button>
-          <button class="quiz-back" onclick="prevStep(5)">← Corrigir Pergunta Anterior</button>
+          <button class="quiz-back" onclick="prevStep(5)">← Voltar</button>
+          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 Início</button>
         </div>
+        
         <div class="quiz-step" id="step6">
           <p class="quiz-title" id="title6"></p>
           <button class="quiz-opt" onclick="nextStep(6, 'Sim, quero investir pois já tenho um evento para usar')">💎 Sim, quero investir pois já tenho um evento para usar</button>
           <button class="quiz-opt" onclick="nextStep(6, 'Está ainda no campo das ideias')">📈 Está ainda no campo das ideias</button>
           <button class="quiz-opt" onclick="nextStep(6, 'No momento estou apenas pesquisando opções e valores')">🔍 No momento estou apenas pesquisando opções e valores</button>
-          <button class="quiz-back" onclick="prevStep(6)">← Corrigir Pergunta Anterior</button>
+          <button class="quiz-back" onclick="prevStep(6)">← Voltar</button>
+          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 Início</button>
         </div>
+        
         <div class="quiz-step" id="step7">
           <p class="quiz-title" id="title7"></p>
           <div class="input-date-container">
@@ -237,28 +288,45 @@
             <input type="date" class="quiz-input-date" id="datePickerInput">
           </div>
           <button class="quiz-opt" style="text-align:center; background:rgba(34,197,94,0.15);" onclick="captureDateAndProceed()">Confirmar Data de Entrega</button>
-          <button class="quiz-back" onclick="prevStep(7)">← Corrigir Pergunta Anterior</button>
+          <button class="quiz-back" onclick="prevStep(7)">← Voltar</button>
+          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 Início</button>
         </div>
+        
         <div class="quiz-step" id="stepFinal">
           <h2 class="ttl" style="margin-bottom:12px;"><span>Entendido!</span></h2>
           <p class="sub" style="font-size:16px; color:#fff; line-height:1.4;" id="finalText">Perfeito! Com base nas suas respostas, seu atendimento será bem mais rápido.</p>
           <div class="dv" style="margin-bottom:24px;"></div>
           <a href="#" class="btn-wp-final" onclick="executeFinalRedirect(event)">Avançar para o WhatsApp</a>
           <button class="quiz-back" style="margin-top:20px;" onclick="prevStep('Final')">← Modificar Respostas</button>
+          <button class="quiz-reset-full" style="margin-top:10px;" onclick="resetToMainMenu()">🏠 Voltar para o Início</button>
         </div>
       </div>
     </div>
   </div>
 
   <div class="vinyl-fixed" id="vinylWrap">
-    <div class="vinyl-arrows">↑ ↓</div>
-    <div class="sound-badge" id="soundStatus">Aguardando Scroll...</div>
     <svg class="vinyl-svg" id="vinylSvg" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
-      <defs><radialGradient id="vg" cx="42%" cy="38%" r="60%"><stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#080808"/></radialGradient></defs>
-      <circle cx="48" cy="48" r="46" fill="#111" stroke="#333" stroke-width="1.5"/>
-      <circle cx="48" cy="48" r="44" fill="url(#vg)"/>
-      <g stroke="#fde047" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.75"><path d="M 72 32 A 28 28 0 0 1 78 54" /><polyline points="75,52 78,55 81,50" transform="rotate(2, 78, 54)"/><path d="M 24 64 A 28 28 0 0 1 18 42" /><polyline points="21,44 18,41 15,46" transform="rotate(2, 18, 42)"/></g>
-      <circle cx="48" cy="48" r="20" fill="#fde047"/><circle cx="48" cy="48" r="19.5" fill="none" stroke="#ca8a04" stroke-width="0.8"/>
+      <defs>
+        <radialGradient id="vg" cx="42%" cy="38%" r="60%">
+          <stop offset="0%" stop-color="#1a1a1a"/>
+          <stop offset="100%" stop-color="#080808"/>
+        </radialGradient>
+        <filter id="matrixBlur">
+          <feGaussianBlur stdDeviation="1.5" />
+        </filter>
+      </defs>
+      <g filter="url(#matrixBlur)">
+        <circle cx="48" cy="48" r="46" fill="#111" stroke="#333" stroke-width="1.5"/>
+        <circle cx="48" cy="48" r="44" fill="url(#vg)"/>
+        <g stroke="#fde047" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.75">
+          <path d="M 72 32 A 28 28 0 0 1 78 54" />
+          <polyline points="75,52 78,55 81,50" transform="rotate(2, 78, 54)"/>
+          <path d="M 24 64 A 28 28 0 0 1 18 42" />
+          <polyline points="21,44 18,41 15,46" transform="rotate(2, 18, 42)"/>
+        </g>
+        <circle cx="48" cy="48" r="20" fill="#fde047"/>
+        <circle cx="48" cy="48" r="19.5" fill="none" stroke="#ca8a04" stroke-width="0.8"/>
+      </g>
     </svg>
   </div>
 </div>
@@ -294,9 +362,9 @@ if(st) ob.observe(st);
 function toggleRemix(){ document.getElementById('rs').classList.toggle('open'); }
 
 /* ==========================================================================
-   MÓDULO DE ÁUDIO INTERATIVO (WEB AUDIO API - SCRATCH RELATIVO AO GITHUB)
+   MÓDULO DE ÁUDIO INTERATIVO, MECÂNICA DE GIRO E ANIMAÇÃO DOS OLHOS
    ========================================================================== */
-const AUDIO_URL = 'scratch.mp3'; // Puxa direto da raiz do repositório no GitHub Pages
+const AUDIO_URL = 'scratch.mp3'; 
 
 let audioCtx = null;
 let audioBuffer = null;
@@ -304,47 +372,26 @@ let sourceNode = null;
 let lastScrollTop = 0;
 let scrollTimeout = null;
 let isAudioLoaded = false;
-const soundStatus = document.getElementById('soundStatus');
+let currentRotation = 0;
 
 function initAudio() {
   if (audioCtx && audioCtx.state !== 'suspended' && isAudioLoaded) return;
-  
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
-
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
   if (isAudioLoaded) return;
   
-  soundStatus.textContent = "Carregando som...";
-  
   fetch(AUDIO_URL)
-    .then(response => {
-      if (!response.ok) throw new Error("Erro ao encontrar o arquivo scratch.mp3");
-      return response.arrayBuffer();
-    })
+    .then(response => { if (!response.ok) throw new Error("Erro ao encontrar scratch.mp3"); return response.arrayBuffer(); })
     .then(data => audioCtx.decodeAudioData(data))
-    .then(buffer => {
-      audioBuffer = buffer;
-      isAudioLoaded = true;
-      soundStatus.textContent = "Som Carregado!";
-    })
-    .catch(err => {
-      console.error("Erro no carregamento:", err);
-      soundStatus.textContent = "Erro ao carregar som";
-    });
+    .then(buffer => { audioBuffer = buffer; isAudioLoaded = true; })
+    .catch(err => console.error("Erro no carregamento:", err));
 }
 
 function playBuffer() {
   if (!audioCtx || !audioBuffer || sourceNode) return;
-
   sourceNode = audioCtx.createBufferSource();
   sourceNode.buffer = audioBuffer;
   sourceNode.loop = true;
-  
   sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
   sourceNode.connect(audioCtx.destination);
   sourceNode.start(0);
@@ -352,51 +399,57 @@ function playBuffer() {
 
 const scrollArea = document.getElementById('scrollArea');
 const vinylSvg = document.getElementById('vinylSvg');
+const leftEye = document.getElementById('leftEye');
+const rightEye = document.getElementById('rightEye');
 
 scrollArea.addEventListener('scroll', () => {
-  if (!audioCtx) {
-    initAudio();
-    return;
-  }
-  if (!isAudioLoaded) return;
-  
-  playBuffer();
-
+  if (!audioCtx) { initAudio(); return; }
   let currentScroll = scrollArea.scrollTop;
-  let rotation = currentScroll * 0.5; 
-  vinylSvg.style.transform = `rotate(${rotation}deg)`;
+  let delta = currentScroll - lastScrollTop;
+  if (Math.abs(delta) > 150) delta = 0;
 
-  if (currentScroll > lastScrollTop) {
-    // Rolar para baixo -> Toca normal acelerado (Forward)
-    if (sourceNode) sourceNode.playbackRate.setValueAtTime(1.2, audioCtx.currentTime);
-    soundStatus.textContent = "🔊 PLAY >>>";
-  } else if (currentScroll < lastScrollTop) {
-    // Rolar para cima -> Toca invertido (Reverse)
-    if (sourceNode) sourceNode.playbackRate.setValueAtTime(-1.2, audioCtx.currentTime);
-    soundStatus.textContent = "⏪ REVERSE";
+  // 1. Giro do Vinil
+  currentRotation += delta * 0.4;
+  vinylSvg.style.transform = `rotate(${currentRotation}deg)`;
+
+  // 2. Animação dos Olhos (Abrem e fecham baseados na velocidade do scroll)
+  let speed = Math.abs(delta);
+  let eyeScale = 1 - Math.min(speed * 0.04, 0.85); 
+  
+  if (leftEye && rightEye) {
+    leftEye.style.transform = `scaleY(${eyeScale})`;
+    rightEye.style.transform = `scaleY(${eyeScale})`;
   }
 
-  lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-
+  // 3. Mecânica do Áudio (Scratch)
+  if (isAudioLoaded) {
+    playBuffer();
+    if (delta > 0 && sourceNode) sourceNode.playbackRate.setValueAtTime(1.4, audioCtx.currentTime);
+    else if (delta < 0 && sourceNode) sourceNode.playbackRate.setValueAtTime(-1.4, audioCtx.currentTime);
+  }
+  
+  lastScrollTop = currentScroll;
+  
+  // 4. Parada do Scroll (Reseta o áudio e força abertura total dos olhos)
   clearTimeout(scrollTimeout);
   scrollTimeout = setTimeout(() => {
-    if (sourceNode) {
-      sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
-      soundStatus.textContent = "⏸️ PAUSADO";
+    if (sourceNode && isAudioLoaded) sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
+    
+    if (leftEye && rightEye) {
+      leftEye.style.transform = 'scaleY(1)';
+      rightEye.style.transform = 'scaleY(1)';
     }
-  }, 80); 
+  }, 90); 
 });
 
-// Desbloqueia o contexto de áudio com o toque/clique inicial do usuário
 document.addEventListener('click', initAudio, { once: true });
 
-
 /* ==========================================================================
-   LÓGICA DOS MENUS E QUIZ (PRESERVADA)
+   LÓGICA DOS MENUS E QUIZ
    ========================================================================== */
 function handleMenuSelection(event, nomeServico, requereQuiz) {
   event.preventDefault();
-  userAnswers.serviçoEscolhido = nomeServico;
+  userAnswers.serviçoEscolhido = nomeServico; 
   if(requereQuiz) {
     document.getElementById('headerBrandSection').style.display = 'none';
     document.getElementById('mainMenuSection').style.display = 'none';
@@ -407,7 +460,21 @@ function handleMenuSelection(event, nomeServico, requereQuiz) {
   }
 }
 
+function resetToMainMenu() {
+  userAnswers = { serviçoEscolhido: "", autorizacao: "", atuacao: "", conheceCanal: "", aberturaAtual: "", duracaoDesejada: "", intencaoInvestimento: "", dataLimiteEntrega: "Não informada / Sem data prevista" };
+  document.querySelectorAll('.quiz-step').forEach(step => {
+    step.classList.remove('active');
+  });
+  document.getElementById('quizSection').style.display = 'none';
+  document.getElementById('headerBrandSection').style.display = 'block';
+  document.getElementById('mainMenuSection').style.display = 'block';
+  document.getElementById('step1').classList.add('active');
+  const dateInput = document.getElementById('datePickerInput');
+  if (dateInput) dateInput.value = '';
+}
+
 function bypassToFinal() {
+    userAnswers.autorizacao = "Não"; 
     document.getElementById('step1').classList.remove('active');
     document.getElementById('stepFinal').classList.add('active');
     document.getElementById('finalText').textContent = "Sem problemas! O atendimento será feito no seu tempo. Clique abaixo para iniciar a conversa.";
@@ -487,7 +554,8 @@ function executeFinalRedirect(event) {
 }
 
 function captureDateAndProceed() {
-  userAnswers.dataLimiteEntrega = document.getElementById('datePickerInput').value;
+  const dateInput = document.getElementById('datePickerInput').value;
+  userAnswers.dataLimiteEntrega = dateInput ? dateInput : "Não informada / Sem data prevista";
   document.getElementById('step7').classList.remove('active');
   document.getElementById('stepFinal').classList.add('active');
 }
