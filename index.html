@@ -21,7 +21,7 @@
    
   .tag{color:rgba(134,239,172,0.7);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin:0 0 4px;}
   .badge{display:inline-block;border:1px solid rgba(250,204,21,0.6);color:#fde047;font-size:11px;letter-spacing:2px;padding:4px 14px;border-radius:100px;margin-bottom:16px;text-transform:uppercase;}
-  .ttl{color:#fff;font-size:clamp(26px,6vw,38px);font-weight:700;line-height:1.1;margin:0 0 6px;}
+  .ttl{color:#fff;font-size:clamp(26px,5vw,38px);font-weight:700;line-height:1.1;margin:0 0 6px;}
   .ttl span{background:linear-gradient(90deg,#fde047,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
   .sub{color:rgba(134,239,172,0.5);font-size:13px;margin:0 0 18px;letter-spacing:1px;}
   .dv{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,0.5),rgba(34,197,94,0.5),transparent);margin-top:8px;margin-bottom:18px;}
@@ -63,7 +63,7 @@
   #quizSection{display:none;margin-top:15px;}
   .quiz-step{display:none;}
   .quiz-step.active{display:block;}
-  .quiz-title{color:#fff;font-size:22px;font-weight:700;margin-bottom:24px;line-height:1.4;text-align:center;min-height:62px;}
+  .quiz-title{color:#fff;font-size:22px;font-weight:700;margin-bottom:24px;line-height:1.4;text-align:center;min-height:62px;white-space:pre-wrap;}
   .quiz-opt{display:block;width:100%;border-radius:12px;padding:18px 20px;margin-bottom:12px;cursor:pointer;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:500;text-align:left;transition:all 0.2s ease;}
   .quiz-opt:hover{background:rgba(34,197,94,0.15);border-color:#4ade80;}
    
@@ -89,9 +89,7 @@
   .vinyl-fixed{position:fixed;bottom:20%;right:0;z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;touch-action:none;transform:translateX(50%);pointer-events:none;}
   .vinyl-svg{display:block;width:320px;height:320px;filter:drop-shadow(-12px 8px 24px rgba(0,0,0,0.9));will-change:transform;transition:transform 0.05s linear;}
 
-  /* ==========================================================================
-     OLHOS DE GATO NO BACKGROUND (ESTILO CINEMATOGRÁFICO ESQUERDA DO DISCO)
-     ========================================================================== */
+  /* OLHOS DE GATO NO BACKGROUND */
   .cat-eyes-bg {
     position: fixed;
     bottom: 35%;
@@ -132,6 +130,21 @@
     pointer-events: none;
     filter: blur(1.5px);
   }
+
+  /* SISTEMA DE ANIMAÇÃO MAIS LENTA */
+  .gradual-item {
+    opacity: 0;
+    transform: translateY(15px);
+    will-change: opacity, transform;
+    animation: fadeInCascataLenta 0.9s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+
+  @keyframes fadeInCascataLenta {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 </style>
 </head>
 <body>
@@ -166,45 +179,46 @@
   <div class="sa" id="scrollArea">
     <div class="ct">
       <div id="headerBrandSection">
-        <div class="logo-wrap">
+        <div class="logo-wrap gradual-item" style="animation-delay: 0.1s;">
           <img src="unnamed.png" alt="Abertura Para DJ" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
           <div style="display:none;flex-direction:column;align-items:center;">
             <span style="color:#4ade80;font-size:22px;font-weight:700;letter-spacing:2px;">ABERTURA</span>
             <span style="color:#fde047;font-size:14px;letter-spacing:3px;">PARA DJ</span>
           </div>
         </div>
-        <p class="tag">Voz dos maiores festivals Brasil afora</p>
-        <div class="badge">Orçamento sem compromisso</div>
+        <p class="tag gradual-item" style="animation-delay: 0.3s;">Voz dos maiores festivals Brasil afora</p>
+        <div class="badge gradual-item" style="animation-delay: 0.5s;">Orçamento sem compromisso</div>
+        
         <div class="stats">
-          <div class="stat"><div class="sn" data-target="7000" data-prefix="+" data-suffix="">0</div><div class="sl">Aberturas produzidas</div></div>
-          <div class="stat"><div class="sn" data-target="10" data-prefix="+" data-suffix=" países">0</div><div class="sl">Países atendidos</div></div>
-          <div class="stat"><div class="sn" data-target="3" data-prefix="+" data-suffix="M views">0</div><div class="sl">Views no YouTube</div></div>
-          <div class="stat"><div class="sn" data-target="600" data-prefix="+" data-suffix="">0</div><div class="sl">Produções publicadas</div></div>
-          <div class="stat sw"><div class="sn">🏆 Maior portfólio público de aberturas para shows no Mundo</div></div>
+          <div class="stat gradual-item" style="animation-delay: 0.8s;"><div class="sn" data-target="7000" data-prefix="+DE " data-suffix="">0</div><div class="sl">Aberturas produzidas</div></div>
+          <div class="stat gradual-item" style="animation-delay: 1.1s;"><div class="sn" data-target="10" data-prefix="+DE " data-suffix=" países">0</div><div class="sl">Países atendidos</div></div>
+          <div class="stat gradual-item" style="animation-delay: 1.4s;"><div class="sn" data-target="3" data-prefix="+DE " data-suffix="M views">0</div><div class="sl">Views no YouTube</div></div>
+          <div class="stat gradual-item" style="animation-delay: 1.7s;"><div class="sn" data-target="600" data-prefix="+DE " data-suffix="">0</div><div class="sl">Produções publicadas</div></div>
+          <div class="stat sw gradual-item" style="animation-delay: 2.0s;"><div class="sn">🏆 Maior portfólio público de aberturas para shows no Mundo</div></div>
         </div>
-        <div class="dv2"></div>
+        <div class="dv2 gradual-item" style="animation-delay: 2.3s;"></div>
       </div>
 
       <div id="mainMenuSection">
-        <h1 class="ttl">O que <span>deseja?</span></h1>
-        <p class="sub">Selecione o serviço abaixo</p>
-        <div class="dv"></div>
+        <h1 class="ttl gradual-item" style="animation-delay: 2.6s;">O que <span>deseja?</span></h1>
+        <p class="sub gradual-item" style="animation-delay: 2.9s;">Selecione o serviço abaixo</p>
+        <div class="dv gradual-item" style="animation-delay: 3.2s;"></div>
         
-        <a href="#" class="btn bp" onclick="handleMenuSelection(event, 'Abertura Completa', true)">
+        <a href="#" class="btn bp gradual-item" style="animation-delay: 3.5s;" onclick="handleMenuSelection(event, 'Abertura Completa', true)">
           <div class="bl"><span class="dot"></span>Abertura Completa
             <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
           </div>
           <div class="bs">Áudio exclusivo + vídeo profissional Ultra HD</div>
         </a>
         
-        <a href="#" class="btn" onclick="handleMenuSelection(event, 'Abertura em Áudio', true)">
+        <a href="#" class="btn gradual-item" style="animation-delay: 3.8s;" onclick="handleMenuSelection(event, 'Abertura em Áudio', true)">
           <div class="bl"><span class="dot"></span>Abertura em Áudio
             <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
           </div>
           <div class="bs">Locução + produção de trilha sonora e efeitos exclusivos</div>
         </a>
         
-        <button onclick="toggleRemix()" class="rtog">
+        <button onclick="toggleRemix()" class="rtog gradual-item" style="animation-delay: 4.1s;">
           <div class="btn bz">
             <div class="bl"><span class="dot"></span>Remix Profissional
               <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
@@ -217,20 +231,20 @@
           <a href="#" class="rsb" onclick="handleMenuSelection(event, 'Remix Profissional - Preciso de ideia', false)">↳ Preciso de ideia de música</a>
         </div>
         
-        <p class="sl2">Marketing & Crescimento</p>
-        <a href="#" class="btn by" onclick="handleMenuSelection(event, 'Lotar Minha Agenda', false)">
+        <p class="sl2 gradual-item" style="animation-delay: 4.4s;">Marketing & Crescimento</p>
+        <a href="#" class="btn by gradual-item" style="animation-delay: 4.6s;" onclick="handleMenuSelection(event, 'Lotar Minha Agenda', false)">
           <div class="bl"><span class="dot"></span>Lotar Minha Agenda
             <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
           </div>
           <div class="bs">Ads e presença digital para artistas</div>
         </a>
-        <a href="#" class="btn by" onclick="handleMenuSelection(event, 'Vender Mais Ingressos', false)">
+        <a href="#" class="btn by gradual-item" style="animation-delay: 4.8s;" onclick="handleMenuSelection(event, 'Vender Mais Ingressos', false)">
           <div class="bl"><span class="dot"></span>Vender Mais Ingressos
             <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
           </div>
           <div class="bs">Ads e funil para festas</div>
         </a>
-        <a href="#" class="btn" onclick="handleMenuSelection(event, 'Patentear Minha Marca', false)">
+        <a href="#" class="btn gradual-item" style="animation-delay: 5.0s;" onclick="handleMenuSelection(event, 'Patentear Minha Marca', false)">
           <div class="bl"><span class="dot"></span>Patentear Minha Marca
             <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
           </div>
@@ -342,6 +356,7 @@
     </svg>
   </div>
 
+  <!-- CANVAS DO AUDIO SPECTRUM -->
   <canvas class="audio-spectrum-canvas" id="spectrumCanvas"></canvas>
 </div>
 
@@ -349,7 +364,7 @@
 let userAnswers = { serviçoEscolhido: "", autorizacao: "", atuacao: "", conheceCanal: "", aberturaAtual: "", duracaoDesejada: "", intencaoInvestimento: "", dataLimiteEntrega: "Não informada / Sem data prevista" };
 const WHATSAPP_NUMBER = "556191073673"; 
 const quizTexts = { 
-  1: "Estamos com alto volume de atendimentos. Posso fazer algumas perguntas rápidas para te passar um orçamento mais rápido?", 
+  1: "Estamos com alto volume de atendimentos.\n\nPosso fazer algumas perguntas rápidas para te passar um orçamento mais rápido?", 
   2: "Você já trabalha e atua ativamente como DJ?", 
   3: "Você já conhecia o canal Abertura para DJ antes?", 
   4: "Você já possui alguma abertura estruturada para seus shows?", 
@@ -369,9 +384,10 @@ function animateCounters(){
     },33);
   });
 }
-const ob=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){animateCounters();ob.disconnect();}});},{threshold:0.3});
-const st = document.querySelector('.stats');
-if(st) ob.observe(st);
+
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(animateCounters, 1200);
+});
 
 function toggleRemix(){ document.getElementById('rs').classList.toggle('open'); }
 
@@ -388,12 +404,11 @@ let scrollTimeout = null;
 let isAudioLoaded = false;
 let currentRotation = 0;
 
-// Configurações do Canvas Spectrum
 const canvas = document.getElementById('spectrumCanvas');
 const ctx = canvas.getContext('2d');
 let scrollVelocity = 0;
 let barHeights = [];
-const numBars = 45; // Quantidade de barras no rodapé
+const numBars = 45;
 
 function resizeCanvas() {
   canvas.width = window.innerWidth;
@@ -402,7 +417,6 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// Inicializa as barras com altura zero
 for (let i = 0; i < numBars; i++) {
   barHeights.push(0);
 }
@@ -430,7 +444,6 @@ function playBuffer() {
   sourceNode.start(0);
 }
 
-// Render loop contínuo para o Spectrum (suaviza a subida e descida)
 function drawSpectrum() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   
@@ -438,24 +451,20 @@ function drawSpectrum() {
   const spacing = 3;
   
   for (let i = 0; i < numBars; i++) {
-    // Alvo dinâmico baseado na velocidade de rolagem atual + uma variação aleatória simulando frequências
     let targetHeight = 0;
     if (scrollVelocity > 0) {
-      const waveFactor = Math.sin(i * 0.3) * 0.4 + 0.6; // Cria um desenho de onda senoidal
-      const noise = Math.random() * 0.4 + 0.8; // Ruído orgânico de áudio
+      const waveFactor = Math.sin(i * 0.3) * 0.4 + 0.6;
+      const noise = Math.random() * 0.4 + 0.8;
       targetHeight = Math.min(scrollVelocity * 2.5 * waveFactor * noise, canvas.height - 10);
     }
     
-    // Interpolação suave (Esaing)
     barHeights[i] += (targetHeight - barHeights[i]) * 0.22;
     
-    // Desenho físico da barra inferior
     const x = i * barWidth;
     const y = canvas.height - barHeights[i];
     const w = barWidth - spacing;
     const h = barHeights[i];
     
-    // Estilização Amarela com opacidade gradual
     ctx.fillStyle = `rgba(253, 224, 71, ${Math.min(0.2 + (h / canvas.height), 0.75)})`;
     ctx.beginPath();
     if(ctx.roundRect) {
@@ -466,7 +475,6 @@ function drawSpectrum() {
     ctx.fill();
   }
   
-  // Reduz gradualmente a velocidade global
   if (scrollVelocity > 0) {
     scrollVelocity *= 0.92;
     if (scrollVelocity < 0.1) scrollVelocity = 0;
@@ -488,15 +496,11 @@ scrollArea.addEventListener('scroll', () => {
   if (Math.abs(delta) > 150) delta = 0;
 
   let speed = Math.abs(delta);
-  
-  // Alimenta a velocidade do Audio Spectrum baseado no movimento do Scroll
   scrollVelocity = Math.max(speed, scrollVelocity);
 
-  // 1. Giro do Vinil
   currentRotation += delta * 0.4;
   vinylSvg.style.transform = `rotate(${currentRotation}deg)`;
 
-  // 2. Animação dos Olhos
   let eyeScale = 1 - Math.min(speed * 0.04, 0.85); 
   
   if (leftEye && rightEye) {
@@ -504,7 +508,6 @@ scrollArea.addEventListener('scroll', () => {
     rightEye.style.transform = `scaleY(${eyeScale})`;
   }
 
-  // 3. Mecânica do Áudio (Scratch)
   if (isAudioLoaded) {
     playBuffer();
     if (delta > 0 && sourceNode) sourceNode.playbackRate.setValueAtTime(1.4, audioCtx.currentTime);
@@ -513,11 +516,9 @@ scrollArea.addEventListener('scroll', () => {
   
   lastScrollTop = currentScroll;
   
-  // 4. Parada do Scroll
   clearTimeout(scrollTimeout);
   scrollTimeout = setTimeout(() => {
     if (sourceNode && isAudioLoaded) sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
-    
     if (leftEye && rightEye) {
       leftEye.style.transform = 'scaleY(1)';
       rightEye.style.transform = 'scaleY(1)';
