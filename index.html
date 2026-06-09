@@ -507,7 +507,8 @@ function toggleRemix(){ document.getElementById('rs').classList.toggle('open'); 
 const AUDIO_URL = 'scratch.mp3'; 
 
 let audioCtx = null;
-let audioBuffer = null;
+let audioBufferNormal = null;
+let audioBufferReverse = null; // Buffer espelhado contendo o áudio de trás pra frente
 let sourceNode = null;
 let lastScrollTop = 0;
 let scrollTimeout = null;
@@ -531,6 +532,20 @@ for (let i = 0; i < numBars; i++) {
   barHeights.push(0);
 }
 
+// Inverte a matriz de áudio criando o buffer reverso na memória
+function createReverseBuffer(buffer) {
+  let numChannels = buffer.numberOfChannels;
+  let reverseBuffer = audioCtx.createBuffer(numChannels, buffer.length, buffer.sampleRate);
+  for (let c = 0; c < numChannels; c++) {
+    let channelData = buffer.getChannelData(c);
+    let reverseData = reverseBuffer.getChannelData(c);
+    for (let i = 0, j = buffer.length - 1; i < buffer.length; i++, j--) {
+      reverseData[i] = channelData[j];
+    }
+  }
+  return reverseBuffer;
+}
+
 function initAudio() {
   if (audioCtx && audioCtx.state !== 'suspended' && isAudioLoaded) return;
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -540,16 +555,26 @@ function initAudio() {
   fetch(AUDIO_URL)
     .then(response => { if (!response.ok) throw new Error("Erro ao encontrar scratch.mp3"); return response.arrayBuffer(); })
     .then(data => audioCtx.decodeAudioData(data))
-    .then(buffer => { audioBuffer = buffer; isAudioLoaded = true; })
+    .then(buffer => { 
+      audioBufferNormal = buffer; 
+      audioBufferReverse = createReverseBuffer(buffer);
+      isAudioLoaded = true; 
+    })
     .catch(err => console.error("Erro no carregamento:", err));
 }
 
-function playBuffer() {
-  if (!audioCtx || !audioBuffer || sourceNode) return;
+// Inicia um novo source de áudio passando o buffer correto (Normal ou Invertido)
+function playBuffer(reverse = false) {
+  if (!audioCtx || !isAudioLoaded) return;
+  
+  if (sourceNode) {
+    sourceNode.stop();
+    sourceNode.disconnect();
+  }
+  
   sourceNode = audioCtx.createBufferSource();
-  sourceNode.buffer = audioBuffer;
+  sourceNode.buffer = reverse ? audioBufferReverse : audioBufferNormal;
   sourceNode.loop = true;
-  sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
   sourceNode.connect(audioCtx.destination);
   sourceNode.start(0);
 }
@@ -599,6 +624,9 @@ const vinylSvg = document.getElementById('vinylSvg');
 const leftEye = document.getElementById('leftEye');
 const rightEye = document.getElementById('rightEye');
 
+// Variável de controle para não re-triggar o buffer se o sentido do scroll continuar o mesmo
+let lastDirection = 0; 
+
 scrollArea.addEventListener('scroll', () => {
   if (!audioCtx) { initAudio(); return; }
   let currentScroll = scrollArea.scrollTop;
@@ -618,17 +646,29 @@ scrollArea.addEventListener('scroll', () => {
     rightEye.style.transform = `scaleY(${eyeScale})`;
   }
 
-  if (isAudioLoaded) {
-    playBuffer();
-    if (delta > 0 && sourceNode) sourceNode.playbackRate.setValueAtTime(1.4, audioCtx.currentTime);
-    else if (delta < 0 && sourceNode) sourceNode.playbackRate.setValueAtTime(-1.4, audioCtx.currentTime);
+  if (isAudioLoaded && speed > 0) {
+    let currentDirection = delta > 0 ? 1 : -1;
+    
+    // Altera o buffer dinamicamente apenas quando muda a direção do dedo
+    if (currentDirection !== lastDirection) {
+      lastDirection = currentDirection;
+      playBuffer(currentDirection === -1);
+    }
+    
+    // Seta a velocidade baseada no ritmo do scroll
+    if (sourceNode) {
+      sourceNode.playbackRate.setValueAtTime(Math.min(speed * 0.08, 2.2), audioCtx.currentTime);
+    }
   }
   
   lastScrollTop = currentScroll;
   
   clearTimeout(scrollTimeout);
   scrollTimeout = setTimeout(() => {
-    if (sourceNode && isAudioLoaded) sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
+    if (sourceNode && isAudioLoaded) {
+      sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
+    }
+    lastDirection = 0; // Reseta direção quando o scroll para
     if (leftEye && rightEye) {
       leftEye.style.transform = 'scaleY(1)';
       rightEye.style.transform = 'scaleY(1)';
