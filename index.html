@@ -122,7 +122,7 @@
             <span style="color:#fde047;font-size:14px;letter-spacing:3px;">PARA DJ</span>
           </div>
         </div>
-        <p class="tag">Voz dos maiores festivais Brasil afora</p>
+        <p class="tag">Voz dos maiores festivals Brasil afora</p>
         <div class="badge">Orçamento sem compromisso</div>
         <div class="stats">
           <div class="stat"><div class="sn" data-target="7000" data-prefix="+" data-suffix="">0</div><div class="sl">Aberturas produzidas</div></div>
@@ -202,35 +202,42 @@
         </div>
         <div class="quiz-step" id="step3">
           <p class="quiz-title" id="title3"></p>
-          <button class="quiz-opt" onclick="nextStep(3, 'Sim, profissional')">🔥 Sim, já utilizo uma abertura de alto nível</button>
-          <button class="quiz-opt" onclick="nextStep(3, 'Sim, mas simples')">⚡ Sim, mas é um material básico e antigo</button>
-          <button class="quiz-opt" onclick="nextStep(3, 'Não utilizo')">❌ Não utilizo nenhuma abertura no momento</button>
+          <button class="quiz-opt" onclick="nextStep(3, 'Sim, acompanho')">📺 Sim, acompanho!</button>
+          <button class="quiz-opt" onclick="nextStep(3, 'Não, conheci agora!')">🤩 Não, conheci agora!</button>
+          <button class="quiz-opt" onclick="nextStep(3, 'Acompanho há muitos anos')">👑 Acompanho há muitos anos!</button>
           <button class="quiz-back" onclick="prevStep(3)">← Corrigir Pergunta Anterior</button>
         </div>
         <div class="quiz-step" id="step4">
           <p class="quiz-title" id="title4"></p>
-          <button class="quiz-opt" onclick="nextStep(4, '1 minuto')">⏱️ 1 Minuto</button>
-          <button class="quiz-opt" onclick="nextStep(4, '1 minuto e meio')">⏱️ 1 Minuto e Meio (1:30)</button>
-          <button class="quiz-opt" onclick="nextStep(4, '2 minutos')">⏱️ 2 Minutos</button>
-          <button class="quiz-opt" onclick="nextStep(4, '2 minutos e meio')">⏱️ 2 Minutos e Meio (2:30)</button>
-          <button class="quiz-opt" onclick="nextStep(4, '3 minutos')">⏱️ 3 Minutos</button>
+          <button class="quiz-opt" onclick="nextStep(4, 'Sim, profissional')">🔥 Sim, já utilizo uma abertura de alto nível</button>
+          <button class="quiz-opt" onclick="nextStep(4, 'Sim, mas simples')">⚡ Sim, mas é um material básico e antigo</button>
+          <button class="quiz-opt" onclick="nextStep(4, 'Não utilizo')">❌ Não utilizo nenhuma abertura no momento</button>
           <button class="quiz-back" onclick="prevStep(4)">← Corrigir Pergunta Anterior</button>
         </div>
         <div class="quiz-step" id="step5">
           <p class="quiz-title" id="title5"></p>
-          <button class="quiz-opt" onclick="nextStep(5, 'Sim, quero investir pois já tenho um evento para usar')">💎 Sim, quero investir pois já tenho um evento para usar</button>
-          <button class="quiz-opt" onclick="nextStep(5, 'Está ainda no campo das ideias')">📈 Está ainda no campo das ideias</button>
-          <button class="quiz-opt" onclick="nextStep(5, 'No momento estou apenas pesquisando opções e valores')">🔍 No momento estou apenas pesquisando opções e valores</button>
+          <button class="quiz-opt" onclick="nextStep(5, '1 minuto')">⏱️ 1 Minuto</button>
+          <button class="quiz-opt" onclick="nextStep(5, '1 minuto e meio')">⏱️ 1 Minuto e Meio (1:30)</button>
+          <button class="quiz-opt" onclick="nextStep(5, '2 minutos')">⏱️ 2 Minutos</button>
+          <button class="quiz-opt" onclick="nextStep(5, '2 minutos e meio')">⏱️ 2 Minutos e Meio (2:30)</button>
+          <button class="quiz-opt" onclick="nextStep(5, '3 minutos')">⏱️ 3 Minutos</button>
           <button class="quiz-back" onclick="prevStep(5)">← Corrigir Pergunta Anterior</button>
         </div>
         <div class="quiz-step" id="step6">
           <p class="quiz-title" id="title6"></p>
+          <button class="quiz-opt" onclick="nextStep(6, 'Sim, quero investir pois já tenho um evento para usar')">💎 Sim, quero investir pois já tenho um evento para usar</button>
+          <button class="quiz-opt" onclick="nextStep(6, 'Está ainda no campo das ideias')">📈 Está ainda no campo das ideias</button>
+          <button class="quiz-opt" onclick="nextStep(6, 'No momento estou apenas pesquisando opções e valores')">🔍 No momento estou apenas pesquisando opções e valores</button>
+          <button class="quiz-back" onclick="prevStep(6)">← Corrigir Pergunta Anterior</button>
+        </div>
+        <div class="quiz-step" id="step7">
+          <p class="quiz-title" id="title7"></p>
           <div class="input-date-container">
             <label class="input-date-label" for="datePickerInput">Selecione o Dia Limite:</label>
             <input type="date" class="quiz-input-date" id="datePickerInput">
           </div>
           <button class="quiz-opt" style="text-align:center; background:rgba(34,197,94,0.15);" onclick="captureDateAndProceed()">Confirmar Data de Entrega</button>
-          <button class="quiz-back" onclick="prevStep(6)">← Corrigir Pergunta Anterior</button>
+          <button class="quiz-back" onclick="prevStep(7)">← Corrigir Pergunta Anterior</button>
         </div>
         <div class="quiz-step" id="stepFinal">
           <h2 class="ttl" style="margin-bottom:12px;"><span>Entendido!</span></h2>
@@ -245,6 +252,7 @@
 
   <div class="vinyl-fixed" id="vinylWrap">
     <div class="vinyl-arrows">↑ ↓</div>
+    <div class="sound-badge" id="soundStatus">Aguardando Scroll...</div>
     <svg class="vinyl-svg" id="vinylSvg" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
       <defs><radialGradient id="vg" cx="42%" cy="38%" r="60%"><stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#080808"/></radialGradient></defs>
       <circle cx="48" cy="48" r="46" fill="#111" stroke="#333" stroke-width="1.5"/>
@@ -256,9 +264,17 @@
 </div>
 
 <script>
-let userAnswers = { serviçoEscolhido: "", autorizacao: "", atuacao: "", aberturaAtual: "", duracaoDesejada: "", intencaoInvestimento: "", dataLimiteEntrega: "Não informada / Perfil Pesquisador" };
+let userAnswers = { serviçoEscolhido: "", autorizacao: "", atuacao: "", conheceCanal: "", aberturaAtual: "", duracaoDesejada: "", intencaoInvestimento: "", dataLimiteEntrega: "Não informada / Sem data prevista" };
 const WHATSAPP_NUMBER = "556191073673"; 
-const quizTexts = { 1: "Estamos com alto volume de atendimentos. Posso fazer 3 perguntas rápidas para te passar um orçamento mais rápido?", 2: "Você já trabalha e atua ativamente como DJ?", 3: "Você já possui alguma abertura estruturada para seus shows?", 4: "Qual é a duração estimada que você deseja para a sua abertura?", 5: "Pretende investir por agora? Ou:", 6: "Para qual data limite você precisa desse projeto pronto e entregue?" };
+const quizTexts = { 
+  1: "Estamos com alto volume de atendimentos. Posso fazer algumas perguntas rápidas para te passar um orçamento mais rápido?", 
+  2: "Você já trabalha e atua ativamente como DJ?", 
+  3: "Você já conhecia o canal Abertura para DJ antes?", 
+  4: "Você já possui alguma abertura estruturada para seus shows?", 
+  5: "Qual é a duração estimada que você deseja para a sua abertura?", 
+  6: "Pretende investir por agora? Ou:", 
+  7: "Para qual data limite você precisa desse projeto pronto e entregue?" 
+};
 
 function animateCounters(){
   document.querySelectorAll('[data-target]').forEach(el=>{
@@ -277,13 +293,107 @@ if(st) ob.observe(st);
 
 function toggleRemix(){ document.getElementById('rs').classList.toggle('open'); }
 
+/* ==========================================================================
+   MÓDULO DE ÁUDIO INTERATIVO (WEB AUDIO API - SCRATCH RELATIVO AO GITHUB)
+   ========================================================================== */
+const AUDIO_URL = 'scratch.mp3'; // Puxa direto da raiz do repositório no GitHub Pages
+
+let audioCtx = null;
+let audioBuffer = null;
+let sourceNode = null;
+let lastScrollTop = 0;
+let scrollTimeout = null;
+let isAudioLoaded = false;
+const soundStatus = document.getElementById('soundStatus');
+
+function initAudio() {
+  if (audioCtx && audioCtx.state !== 'suspended' && isAudioLoaded) return;
+  
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+
+  if (isAudioLoaded) return;
+  
+  soundStatus.textContent = "Carregando som...";
+  
+  fetch(AUDIO_URL)
+    .then(response => {
+      if (!response.ok) throw new Error("Erro ao encontrar o arquivo scratch.mp3");
+      return response.arrayBuffer();
+    })
+    .then(data => audioCtx.decodeAudioData(data))
+    .then(buffer => {
+      audioBuffer = buffer;
+      isAudioLoaded = true;
+      soundStatus.textContent = "Som Carregado!";
+    })
+    .catch(err => {
+      console.error("Erro no carregamento:", err);
+      soundStatus.textContent = "Erro ao carregar som";
+    });
+}
+
+function playBuffer() {
+  if (!audioCtx || !audioBuffer || sourceNode) return;
+
+  sourceNode = audioCtx.createBufferSource();
+  sourceNode.buffer = audioBuffer;
+  sourceNode.loop = true;
+  
+  sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
+  sourceNode.connect(audioCtx.destination);
+  sourceNode.start(0);
+}
+
 const scrollArea = document.getElementById('scrollArea');
 const vinylSvg = document.getElementById('vinylSvg');
+
 scrollArea.addEventListener('scroll', () => {
-    let rotation = scrollArea.scrollTop * 0.5; 
-    vinylSvg.style.transform = `rotate(${rotation}deg)`;
+  if (!audioCtx) {
+    initAudio();
+    return;
+  }
+  if (!isAudioLoaded) return;
+  
+  playBuffer();
+
+  let currentScroll = scrollArea.scrollTop;
+  let rotation = currentScroll * 0.5; 
+  vinylSvg.style.transform = `rotate(${rotation}deg)`;
+
+  if (currentScroll > lastScrollTop) {
+    // Rolar para baixo -> Toca normal acelerado (Forward)
+    if (sourceNode) sourceNode.playbackRate.setValueAtTime(1.2, audioCtx.currentTime);
+    soundStatus.textContent = "🔊 PLAY >>>";
+  } else if (currentScroll < lastScrollTop) {
+    // Rolar para cima -> Toca invertido (Reverse)
+    if (sourceNode) sourceNode.playbackRate.setValueAtTime(-1.2, audioCtx.currentTime);
+    soundStatus.textContent = "⏪ REVERSE";
+  }
+
+  lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    if (sourceNode) {
+      sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
+      soundStatus.textContent = "⏸️ PAUSADO";
+    }
+  }, 80); 
 });
 
+// Desbloqueia o contexto de áudio com o toque/clique inicial do usuário
+document.addEventListener('click', initAudio, { once: true });
+
+
+/* ==========================================================================
+   LÓGICA DOS MENUS E QUIZ (PRESERVADA)
+   ========================================================================== */
 function handleMenuSelection(event, nomeServico, requereQuiz) {
   event.preventDefault();
   userAnswers.serviçoEscolhido = nomeServico;
@@ -306,16 +416,20 @@ function bypassToFinal() {
 function nextStep(current, value) {
   if(current === 1) userAnswers.autorizacao = value;
   if(current === 2) userAnswers.atuacao = value;
-  if(current === 3) userAnswers.aberturaAtual = value;
-  if(current === 4) userAnswers.duracaoDesejada = value;
-  if(current === 5) userAnswers.intencaoInvestimento = value;
+  if(current === 3) userAnswers.conheceCanal = value;
+  if(current === 4) userAnswers.aberturaAtual = value;
+  if(current === 5) userAnswers.duracaoDesejada = value;
+  if(current === 6) userAnswers.intencaoInvestimento = value;
+  
   document.getElementById(`step${current}`).classList.remove('active');
   let nextTarget = current + 1;
-  if(current === 5) {
+  
+  if(current === 6) {
     const djReal = (userAnswers.atuacao === "Sim, trabalho com eventos" || userAnswers.atuacao === "Sim, mas estou começando");
     const intencaoReal = (userAnswers.intencaoInvestimento === "Sim, quero investir pois já tenho um evento para usar" || userAnswers.intencaoInvestimento === "Está ainda no campo das ideias");
-    nextTarget = (djReal && intencaoReal) ? 6 : 'Final'; 
+    nextTarget = (djReal && intencaoReal) ? 7 : 'Final'; 
   }
+  
   let nextEl = document.getElementById(`step${nextTarget}`);
   if(nextEl) { nextEl.classList.add('active'); runTypewriterQuestion(nextTarget); } else { document.getElementById('stepFinal').classList.add('active'); }
 }
@@ -326,7 +440,7 @@ function prevStep(current) {
     if(userAnswers.autorizacao === "Sim") {
         const djReal = (userAnswers.atuacao === "Sim, trabalho com eventos" || userAnswers.atuacao === "Sim, mas estou começando");
         const intencaoReal = (userAnswers.intencaoInvestimento === "Sim, quero investir pois já tenho um evento para usar" || userAnswers.intencaoInvestimento === "Está ainda no campo das ideias");
-        if(djReal && intencaoReal) { document.getElementById('step6').classList.add('active'); runTypewriterQuestion(6); } else { document.getElementById('step5').classList.add('active'); runTypewriterQuestion(5); }
+        if(djReal && intencaoReal) { document.getElementById('step7').classList.add('active'); runTypewriterQuestion(7); } else { document.getElementById('step6').classList.add('active'); runTypewriterQuestion(6); }
     } else {
         document.getElementById('step1').classList.add('active');
         runTypewriterQuestion(1);
@@ -363,7 +477,7 @@ function executeFinalRedirect(event) {
   
   let msg;
   if(userAnswers.autorizacao === "Sim") {
-      msg = `Olá! Quero um orçamento para: ${userAnswers.serviçoEscolhido}\nAtuação: ${userAnswers.atuacao}\nAbertura atual: ${userAnswers.aberturaAtual}\nDuração: ${userAnswers.duracaoDesejada}\nEntrega: ${userAnswers.dataLimiteEntrega}`;
+      msg = `Olá! Quero um orçamento para: ${userAnswers.serviçoEscolhido}\nAtuação: ${userAnswers.atuacao}\nJá conhece o canal: ${userAnswers.conheceCanal}\nAbertura atual: ${userAnswers.aberturaAtual}\nDuração: ${userAnswers.duracaoDesejada}\nEntrega: ${userAnswers.dataLimiteEntrega}`;
   } else {
       msg = `Olá! Tudo bem? Vi seus serviços e fiquei interessado na produção de ${userAnswers.serviçoEscolhido}`;
   }
@@ -374,7 +488,7 @@ function executeFinalRedirect(event) {
 
 function captureDateAndProceed() {
   userAnswers.dataLimiteEntrega = document.getElementById('datePickerInput').value;
-  document.getElementById('step6').classList.remove('active');
+  document.getElementById('step7').classList.remove('active');
   document.getElementById('stepFinal').classList.add('active');
 }
 </script>
