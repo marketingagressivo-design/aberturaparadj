@@ -193,6 +193,28 @@
       transform: translateY(0);
     }
   }
+
+  /* CONTAINER RESPONSIVO PARA EMBUTIR O VIDEO DO YOUTUBE */
+  .video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* Proporção de Tela 16:9 */
+    height: 0;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.15);
+    margin-bottom: 24px;
+    background: #000;
+  }
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Inibe cliques diretos na logo do YouTube / Pause */
+  }
 </style>
 </head>
 <body>
@@ -224,29 +246,33 @@
     </div>
   </div>
 
-  <div class="sa" id="scrollArea">
-    <div class="ct">
-      
-      <!-- PERGUNTA DE FINALIDADE INICIAL -->
-      <div id="purposeSection">
-     <h1 class="ttl gradual-item" style="animation-delay: 0.2s;">PARA QUAL <span>FINALIDADE</span><br>É A SUA ABERTURA?</h1>
-<!-- PROPRIEDADE "color: #fff;" ADICIONADA ABAIXO -->
-<p class="sub gradual-item" style="animation-delay: 0.4s; color: #fff;">SELECIONE UMA OPÇÃO PARA CONTINUAR</p>
-<div class="dv gradual-item" style="animation-delay: 0.6s;"></div>
+<div class="video-container gradual-item" style="animation-delay: 0.1s;">
+  <iframe 
+    src="https://www.youtube.com/embed/Lo4kJW8SOc4?autoplay=1&mute=1&loop=1&playlist=Lo4kJW8SOc4&controls=0&rel=0" 
+    title="Abertura para Shows" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen>
+  </iframe>
+</div>
+
+        <h1 class="ttl gradual-item" style="animation-delay: 0.3s;">PARA QUAL <span>FINALIDADE</span><br>É A SUA ABERTURA?</h1>
+        <p class="sub gradual-item" style="animation-delay: 0.5s; color: #fff;">SELECIONE UMA OPÇÃO PARA CONTINUAR</p>
+        <div class="dv gradual-item" style="animation-delay: 0.7s;"></div>
         
-        <div class="gradual-item" style="animation-delay: 0.8s; margin-bottom: 12px;">
+        <div class="gradual-item" style="animation-delay: 0.9s; margin-bottom: 12px;">
           <button class="quiz-opt" style="margin-bottom:0;" onclick="selectPurpose('CANTOR')">🎤 CANTOR / BANDA</button>
         </div>
-        <div class="gradual-item" style="animation-delay: 1.0s; margin-bottom: 12px;">
+        <div class="gradual-item" style="animation-delay: 1.1s; margin-bottom: 12px;">
           <button class="quiz-opt" style="margin-bottom:0;" onclick="selectPurpose('DJ')">🎧 DJ</button>
         </div>
-        <div class="gradual-item" style="animation-delay: 1.2s; margin-bottom: 12px;">
+        <div class="gradual-item" style="animation-delay: 1.3s; margin-bottom: 12px;">
           <button class="quiz-opt" style="margin-bottom:0;" onclick="selectPurpose('MC')">🔥 MC</button>
         </div>
-        <div class="gradual-item" style="animation-delay: 1.4s; margin-bottom: 12px;">
+        <div class="gradual-item" style="animation-delay: 1.5s; margin-bottom: 12px;">
           <button class="quiz-opt" style="margin-bottom:0;" onclick="selectPurpose('FESTIVAL')">🎪 FESTIVAL / EVENTO</button>
         </div>
-        <div class="gradual-item" style="animation-delay: 1.6s; margin-bottom: 12px;">
+        <div class="gradual-item" style="animation-delay: 1.7s; margin-bottom: 12px;">
           <button class="quiz-opt" style="margin-bottom:0;" onclick="selectPurpose('OUTRO')">🚀 OUTRO</button>
         </div>
       </div>
@@ -277,7 +303,6 @@
         <p class="sub gradual-item" style="animation-delay: 2.9s;">SELECIONE O SERVIÇO ABAIXO</p>
         <div class="dv gradual-item" style="animation-delay: 3.2s;"></div>
         
-        <!-- Botão 1 -->
         <div class="btn-container gradual-item" style="animation-delay: 3.5s;">
           <div id="glowAberturaCompleta" class="glow-box"></div>
           <a href="#" id="btnAberturaCompleta" class="btn bp" onclick="handleMenuSelection(event, 'Abertura Completa', true)">
@@ -288,7 +313,6 @@
           </a>
         </div>
         
-        <!-- Botão 2 -->
         <div class="btn-container gradual-item" style="animation-delay: 3.8s;">
           <div id="glowAberturaAudio" class="glow-box delay-flash"></div>
           <a href="#" id="btnAberturaAudio" class="btn" onclick="handleMenuSelection(event, 'Abertura em Áudio', true)">
@@ -343,7 +367,7 @@
         
         <div class="quiz-step" id="step2">
           <p class="quiz-title" id="title2"></p>
-          <button class="quiz-opt" onclick="nextStep(2, 'Sim, trabalho com eventos')">🎤 SIM, TRABALHO PROFISSIONALMENTE COM SHOWS/EVENTOS</button>
+          <button class="quiz-opt" onclick="nextStep(2, 'Sim, trabalho com eventos')">🎤 SIM, TRABALHO PROFISSIONALMENTE WITH SHOWS/EVENTOS</button>
           <button class="quiz-opt" onclick="nextStep(2, 'Sim, mas estou começando')">🎧 SIM, MAS AINDA ESTOU COMEÇANDO NA CARREIRA</button>
           <button class="quiz-opt" onclick="nextStep(2, 'Ainda não sou profissional')">🚫 APENAS HOBBY / NÃO ATUO EM EVENTOS</button>
           <button class="quiz-back" onclick="prevStep(2)">← VOLTAR</button>
@@ -437,7 +461,6 @@
     </svg>
   </div>
 
-  <!-- CANVAS DO AUDIO SPECTRUM -->
   <canvas class="audio-spectrum-canvas" id="spectrumCanvas"></canvas>
 </div>
 
@@ -806,7 +829,6 @@ function nextStep(current, value) {
   
   if(current === 6) {
     const artistaReal = (userAnswers.atuacao === "SIM, TRABALHO COM EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
-    // TRAVA REQUISITADA: Só vai para o passo 7 (Data Limite) se tiver evento real confirmado para usar.
     const temEventoReal = (userAnswers.intencaoInvestimento === "SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR");
     nextTarget = (artistaReal && temEventoReal) ? 7 : 'Final'; 
   }
