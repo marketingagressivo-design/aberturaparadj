@@ -39,21 +39,21 @@
   .sw .sn{color:#fde047;font-size:clamp(13px,3vw,15px);font-weight:500;letter-spacing:0.5px;text-transform:uppercase;}
   .dv2{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,0.4),rgba(34,197,94,0.4),transparent);margin-bottom:18px;}
    
-  /* Controle de exibição inicial para a Finalidade */
+  /* Controle de exibição inicial obrigatório */
   #headerBrandSection, #mainMenuSection { display: none; }
-  #purposeSection, #videoSection { display: block; }
+  #purposeSection, #videoSection { display: block !important; }
 
-  /* Container do Vídeo Responsivo */
+  /* Container do Vídeo Responsivo Forçado */
   .video-container {
     position: relative;
     width: 100%;
     padding-bottom: 56.25%; /* Proporção 16:9 */
     height: 0;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
     border-radius: 14px;
     overflow: hidden;
     border: 1px solid rgba(34,197,94,0.3);
-    background: rgba(2, 13, 7, 0.5);
+    background: #000;
   }
   .video-container iframe {
     position: absolute;
@@ -62,6 +62,7 @@
     width: 100%;
     height: 100%;
     border: 0;
+    display: block;
   }
 
   /* Container relativo para suportar as luzes absolutas atrás */
@@ -246,18 +247,18 @@
   </div>
 
   <div class="sa" id="scrollArea">
-
-   <div id="videoSection" class="gradual-item" style="animation-delay: 0.1s;">
-  <div class="video-container">
-    <iframe 
-      src="https://www.youtube.com/embed/Lo4kJW8SOc4?autoplay=0&rel=0&showinfo=0&enablejsapi=1" 
-      title="YouTube video player" 
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-      referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen>
-    </iframe>
-  </div>
-</div>
+    <div class="ct">
+      
+      <div id="videoSection" class="gradual-item" style="animation-delay: 0.1s;">
+        <div class="video-container">
+          <iframe 
+            src="https://www.youtube.com/embed/Lo4kJW8SOc4" 
+            title="YouTube video player" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
       
       <div id="purposeSection">
         <h1 class="ttl gradual-item" style="animation-delay: 0.3s;">PARA QUAL <span>FINALIDADE</span><br>É A SUA ABERTURA?</h1>
@@ -349,7 +350,7 @@
         </a>
         <a href="#" class="btn by" onclick="handleMenuSelection(event, 'Vender Mais Ingressos', false)">
           <div class="bl"><span class="dot"></span>VENDER MAIS INGRESSOS
-            <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
+            <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8 7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
           </div>
           <div class="bs">ADS E FUNIL PARA FESTAS</div>
         </a>
@@ -497,7 +498,7 @@ function animateCounters(){
 function selectPurpose(purpose) {
   userAnswers.finalidade = purpose;
   document.getElementById('purposeSection').style.display = 'none';
-  document.getElementById('videoSection').style.display = 'none'; // Oculta o vídeo ao avançar
+  // CORREÇÃO CRUCIAL: O vídeo agora não some quando o usuário clica nas opções
   document.getElementById('headerBrandSection').style.display = 'block';
   document.getElementById('mainMenuSection').style.display = 'block';
 }
@@ -833,8 +834,7 @@ function nextStep(current, value) {
   let nextTarget = current + 1;
   
   if(current === 6) {
-    const artistaReal = (userAnswers.atuacao === "SIM, TRABALHO COM EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
-    // TRAVA REQUISITADA: Só vai para o passo 7 (Data Limite) se tiver evento real confirmado para usar.
+    const artistaReal = (userAnswers.atuacao === "SIM, TRABALHO WITH EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
     const temEventoReal = (userAnswers.intencaoInvestimento === "SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR");
     nextTarget = (artistaReal && temEventoReal) ? 7 : 'Final'; 
   }
