@@ -192,20 +192,6 @@
       transform: translateY(0);
     }
   }
-
-  /* Estilização para o Carrossel de Depoimentos */
-  .testimonial-carousel {
-    margin: 20px 0;
-    overflow: hidden;
-    white-space: nowrap;
-    padding: 10px 0;
-  }
-  .testimonial-carousel img {
-    height: 150px;
-    margin: 0 10px;
-    border-radius: 8px;
-    display: inline-block;
-  }
 </style>
 </head>
 <body>
@@ -242,11 +228,6 @@
       
       <div id="purposeSection">
         <h1 class="ttl gradual-item" style="animation-delay: 0.2s;">PARA QUAL <span>FINALIDADE</span><br>É A SUA ABERTURA?</h1>
-        
-        <div class="gradual-item" style="animation-delay: 0.3s; margin-bottom: 20px;">
-           <iframe width="100%" height="315" src="https://www.youtube.com/embed/Lo4kJW8SOc4?autoplay=1&mute=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-
         <p class="sub gradual-item" style="animation-delay: 0.4s;">SELECIONE UMA OPÇÃO PARA CONTINUAR</p>
         <div class="dv gradual-item" style="animation-delay: 0.6s;"></div>
         
@@ -265,19 +246,6 @@
         <div class="gradual-item" style="animation-delay: 1.6s; margin-bottom: 12px;">
           <button class="quiz-opt" style="margin-bottom:0;" onclick="selectPurpose('OUTRO')">🚀 OUTRO</button>
         </div>
-      </div>
-
-      <div class="testimonial-carousel gradual-item" style="animation-delay: 1.8s;">
-        <img src="depoimento 01.png" alt="Depoimento 1">
-        <img src="depoimento 02.png" alt="Depoimento 2">
-        <img src="depoimento 03.png" alt="Depoimento 3">
-        <img src="depoimento 04.png" alt="Depoimento 4">
-        <img src="depoimento 05.png" alt="Depoimento 5">
-        <img src="depoimento 06.png" alt="Depoimento 6">
-        <img src="depoimento 07.png" alt="Depoimento 7">
-        <img src="depoimento 08.png" alt="Depoimento 8">
-        <img src="depoimento 09.png" alt="Depoimento 9">
-        <img src="depoimento 10.png" alt="Depoimento 10">
       </div>
 
       <div id="headerBrandSection">
@@ -493,16 +461,21 @@ function animateCounters(){
   });
 }
 
+/* NOVA FUNÇÃO: Trata a escolha do segmento inicial e exibe o menu principal */
 function selectPurpose(purpose) {
   userAnswers.finalidade = purpose;
   document.getElementById('purposeSection').style.display = 'none';
   document.getElementById('headerBrandSection').style.display = 'block';
   document.getElementById('mainMenuSection').style.display = 'block';
   
+  // Executa os contadores e os efeitos de brilho do layout original
   setTimeout(animateCounters, 100);
   runIntroGuidance();
 }
 
+/* ==========================================================================
+   MECÂNICA DE SCROLL TRAVADA + FLASH DE BACKLIGHT SEQUENCIAL COM ATRAZO
+   ========================================================================== */
 let introRan = false;
 
 function runIntroGuidance() {
@@ -536,11 +509,18 @@ function runIntroGuidance() {
     
     area.addEventListener('scroll', checkScrollEnd);
 
-  }, 1000);
+  }, 1000); // Reduzido o delay para sincronizar melhor após o clique da finalidade
 }
+
+window.addEventListener('DOMContentLoaded', () => {
+  // Removidos os gatilhos automáticos para que rodem apenas após escolher a finalidade.
+});
 
 function toggleRemix(){ document.getElementById('rs').classList.toggle('open'); }
 
+/* ==========================================================================
+   MÓDULO DE ÁUDIO INTERATIVO - CORREÇÃO DE SCRATCH COM AGULHA CONTÍNUA
+   ========================================================================== */
 const AUDIO_URL = 'scratch.mp3'; 
 
 let audioCtx = null;
@@ -552,8 +532,8 @@ let scrollTimeout = null;
 let isAudioLoaded = false;
 let currentRotation = 0;
 
-let startTime = 0;       
-let lastOffset = 0;      
+let startTime = 0;      
+let lastOffset = 0;     
 let isPlaying = false;  
 
 const canvas = document.getElementById('spectrumCanvas');
@@ -739,6 +719,9 @@ scrollArea.addEventListener('scroll', () => {
 
 document.addEventListener('click', initAudio, { once: true });
 
+/* ------------------------------------------------------------------
+   MOBILE — touch events com sincronia direta de agulha
+------------------------------------------------------------------ */
 let touchLastY = 0;
 
 scrollArea.addEventListener('touchstart', (e) => {
@@ -770,6 +753,9 @@ scrollArea.addEventListener('touchend', () => {
   }
 }, { passive: true });
 
+/* ==========================================================================
+   LÓGICA DOS MENUS E QUIZ
+   ========================================================================== */
 function handleMenuSelection(event, nomeServico, requereQuiz) {
   event.preventDefault();
   userAnswers.serviçoEscolhido = nomeServico.toUpperCase(); 
