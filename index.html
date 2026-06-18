@@ -4,12 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <style>
-  /* Importação de fontes parecidas com Bank Gothic (Orbitron) e Agency FB (Saira Semi Condensed) */
   @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Saira+Semi+Condensed:wght@400;500;700;800&display=swap');
   
   *{box-sizing:border-box;margin:0;padding:0;}
   
-  /* Definição das novas fontes no projeto */
   .pw{font-family:'Orbitron',sans-serif;background:#020d07;min-height:100vh;position:relative;overflow:hidden;}
   
   .gbg{position:fixed;inset:0;background-image:linear-gradient(rgba(34,197,94,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(34,197,94,0.07) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
@@ -33,21 +31,18 @@
   .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
   .stat{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:12px;padding:14px 12px;text-align:center;}
   .sn{color:#4ade80;font-size:clamp(20px,5vw,28px);font-weight:700;line-height:1;}
-  .sl覆{color:rgba(134,239,172,0.5);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-top:5px;line-height:1.3;}
   .sl{color:rgba(134,239,172,0.5);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-top:5px;line-height:1.3;}
   .sw{grid-column:1/-1;background:rgba(250,204,21,0.07);border-color:rgba(250,204,21,0.25);}
   .sw .sn{color:#fde047;font-size:clamp(13px,3vw,15px);font-weight:500;letter-spacing:0.5px;text-transform:uppercase;}
   .dv2{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,0.4),rgba(34,197,94,0.4),transparent);margin-bottom:18px;}
    
-  /* Controle de exibição inicial obrigatório */
   #headerBrandSection, #mainMenuSection { display: none; }
   #purposeSection, #videoSection { display: block !important; }
 
-  /* Container do Vídeo Responsivo Forçado */
   .video-container {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%; /* Proporção 16:9 */
+    padding-bottom: 56.25%;
     height: 0;
     margin-bottom: 28px;
     border-radius: 14px;
@@ -65,14 +60,12 @@
     display: block;
   }
 
-  /* Container relativo para suportar as luzes absolutas atrás */
   .btn-container {
     position: relative;
     width: 100%;
     margin-bottom: 12px;
   }
 
-  /* Botões principais usando a Saira Semi Condensed (Estilo Agency FB) */
   .btn{font-family: 'Saira Semi Condensed', sans-serif;display:block;width:100%;border-radius:14px;padding:18px 20px;margin-bottom:0;cursor:pointer;text-decoration:none;border:1px solid rgba(34,197,94,0.3);background:rgba(20,83,45,0.25);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);position:relative;z-index:2;overflow:hidden;transition:border-color .2s,background .2s;}
   .btn:hover{border-color:rgba(34,197,94,0.7);background:rgba(34,197,94,0.16);}
   .bp{border-color:rgba(34,197,94,0.55);background:rgba(34,197,94,0.14);}
@@ -81,7 +74,6 @@
   .wp-icon{width:20px;height:20px;fill:#4ade80;margin-left:auto;}
   .bs{color:rgba(134,239,172,0.6);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;padding-left:19px;text-align:left;line-height:1.4;}
    
-  /* Camada de efeito de iluminação absoluta desfocada por trás dos botões */
   .glow-box {
     position: absolute;
     inset: -4px;
@@ -93,12 +85,10 @@
     pointer-events: none;
   }
 
-  /* Animação que faz a luz desfocada dar um flash rápido e sumir completamente */
   .flash-active {
     animation: triggerBacklightFlash 1.2s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
   }
 
-  /* Delay específico adicionado para o segundo botão piscar logo após o primeiro */
   .delay-flash {
     animation-delay: 0.4s;
   }
@@ -155,11 +145,9 @@
   .btn-wp-final:hover{background:#15803d;}
   .btn-wp-final svg{width:22px;height:22px;fill:#fff;}
 
-  /* CONFIGURAÇÃO DO VINIL */
   .vinyl-fixed{position:fixed;bottom:20%;right:0;z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;touch-action:none;transform:translateX(50%);pointer-events:none;}
   .vinyl-svg{display:block;width:320px;height:320px;filter:drop-shadow(-12px 8px 24px rgba(0,0,0,0.9));will-change:transform;transition:transform 0.05s linear;}
 
-  /* OLHOS DE GATO NO BACKGROUND */
   .cat-eyes-bg {
     position: fixed;
     bottom: 35%;
@@ -189,7 +177,6 @@
   @keyframes blinkCursor{from,to{background:transparent;}50%{background:#4ade80;}}
   .ld-timer{font-size:14px;color:rgba(134,239,172,0.5);letter-spacing:2px;text-transform:uppercase;font-weight:700;}
 
-  /* CONFIGURAÇÃO DO CANVAS DO AUDIO SPECTRUM */
   .audio-spectrum-canvas {
     position: fixed;
     bottom: 0;
@@ -201,7 +188,6 @@
     filter: blur(1.5px);
   }
 
-  /* SISTEMA DE ANIMAÇÃO MAIS LENTA */
   .gradual-item {
     opacity: 0;
     transform: translateY(15px);
@@ -252,13 +238,13 @@
      <div id="videoSection" class="gradual-item" style="animation-delay: 0.1s;">
         <div class="video-container">
           <iframe 
-            src="https://www.youtube.com/embed/Lo4kJW8SOc4?autoplay=1&mute=1&rel=0&showinfo=0" 
+            src="https://www.youtube.com/embed/Lo4kJW8SOc4?autoplay=1&mute=0&rel=0&showinfo=0" 
             title="YouTube video player" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
             allowfullscreen>
           </iframe>
         </div>
-      </div>
+     </div>
       
       <div id="purposeSection">
         <h1 class="ttl gradual-item" style="animation-delay: 0.3s;">PARA QUAL <span>FINALIDADE</span><br>É A SUA ABERTURA?</h1>
@@ -350,7 +336,7 @@
         </a>
         <a href="#" class="btn by" onclick="handleMenuSelection(event, 'Vender Mais Ingressos', false)">
           <div class="bl"><span class="dot"></span>VENDER MAIS INGRESSOS
-            <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8 7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
+            <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
           </div>
           <div class="bs">ADS E FUNIL PARA FESTAS</div>
         </a>
@@ -498,49 +484,19 @@ function animateCounters(){
 function selectPurpose(purpose) {
   userAnswers.finalidade = purpose;
   document.getElementById('purposeSection').style.display = 'none';
-  // CORREÇÃO CRUCIAL: O vídeo agora não some quando o usuário clica nas opções
   document.getElementById('headerBrandSection').style.display = 'block';
   document.getElementById('mainMenuSection').style.display = 'block';
 }
 
-/* ==========================================================================
-   MECÂNICA DE SCROLL TRAVADA + FLASH DE BACKLIGHT SEQUENCIAL COM ATRASO ORIGINAL
-   ========================================================================== */
-let introRan = false;
-
+/* Modificação: Removido o scroll automático da função abaixo */
 function runIntroGuidance() {
-  if(introRan) return;
-  
-  const area = document.getElementById('scrollArea');
   const glow1 = document.getElementById('glowAberturaCompleta');
   const glow2 = document.getElementById('glowAberturaAudio');
-  
-  if (!area || !glow1 || !glow2) return;
-
-  // Aguarda as cascatas iniciais originais de 3.5 segundos e desce fixando nas opções
+  if (!glow1 || !glow2) return;
   setTimeout(() => {
-    introRan = true;
-    area.scrollTo({ top: 375, behavior: 'smooth' });
-    
-    let scrollEndTimer;
-    const checkScrollEnd = () => {
-      clearTimeout(scrollEndTimer);
-      scrollEndTimer = setTimeout(() => {
-        area.removeEventListener('scroll', checkScrollEnd);
-        
-        area.style.scrollBehavior = 'auto';
-        area.scrollTop = 375;
-        area.style.scrollBehavior = 'smooth';
-        
-        glow1.classList.add('flash-active');
-        glow2.classList.add('flash-active');
-        
-      }, 100);
-    };
-    
-    area.addEventListener('scroll', checkScrollEnd);
-
-  }, 3500); // Mantido o tempo original de 3.5s do seu primeiro código
+    glow1.classList.add('flash-active');
+    glow2.classList.add('flash-active');
+  }, 3500);
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -550,11 +506,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function toggleRemix(){ document.getElementById('rs').classList.toggle('open'); }
 
-/* ==========================================================================
-   MÓDULO DE ÁUDIO INTERATIVO - CORREÇÃO DE SCRATCH COM AGULHA CONTÍNUA
-   ========================================================================== */
 const AUDIO_URL = 'scratch.mp3'; 
-
 let audioCtx = null;
 let audioBufferNormal = null;
 let audioBufferReverse = null; 
@@ -563,9 +515,8 @@ let lastScrollTop = 0;
 let scrollTimeout = null;
 let isAudioLoaded = false;
 let currentRotation = 0;
-
-let startTime = 0;      
-let lastOffset = 0;     
+let startTime = 0;       
+let lastOffset = 0;      
 let isPlaying = false;  
 
 const canvas = document.getElementById('spectrumCanvas');
@@ -581,9 +532,7 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-for (let i = 0; i < numBars; i++) {
-  barHeights.push(0);
-}
+for (let i = 0; i < numBars; i++) barHeights.push(0);
 
 function createReverseBuffer(buffer) {
   let numChannels = buffer.numberOfChannels;
@@ -603,16 +552,15 @@ function initAudio() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   if (audioCtx.state === 'suspended') audioCtx.resume();
   if (isAudioLoaded) return;
-  
   fetch(AUDIO_URL)
-    .then(response => { if (!response.ok) throw new Error("Erro ao encontrar scratch.mp3"); return response.arrayBuffer(); })
+    .then(response => { if (!response.ok) throw new Error(); return response.arrayBuffer(); })
     .then(data => audioCtx.decodeAudioData(data))
     .then(buffer => { 
       audioBufferNormal = buffer; 
       audioBufferReverse = createReverseBuffer(buffer);
       isAudioLoaded = true; 
     })
-    .catch(err => console.error("Erro no carregamento:", err));
+    .catch(err => console.log("Áudio opcional desativado"));
 }
 
 function updateOffset() {
@@ -626,16 +574,9 @@ function updateOffset() {
 
 function playBuffer(reverse = false) {
   if (!audioCtx || !isAudioLoaded) return;
-  
   updateOffset();
-  
-  if (sourceNode) {
-    try { sourceNode.stop(); } catch(e){}
-    sourceNode.disconnect();
-  }
-  
+  if (sourceNode) { try { sourceNode.stop(); } catch(e){} sourceNode.disconnect(); }
   sourceNode = audioCtx.createBufferSource();
-  
   if (reverse) {
     sourceNode.buffer = audioBufferReverse;
     sourceNode.offsetTarget = audioBufferNormal.duration - lastOffset;
@@ -643,10 +584,8 @@ function playBuffer(reverse = false) {
     sourceNode.buffer = audioBufferNormal;
     sourceNode.offsetTarget = lastOffset;
   }
-  
   sourceNode.loop = true;
   sourceNode.connect(audioCtx.destination);
-  
   startTime = audioCtx.currentTime;
   sourceNode.start(0, sourceNode.offsetTarget);
   isPlaying = true;
@@ -656,7 +595,6 @@ function drawSpectrum() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   const barWidth = canvas.width / numBars;
   const spacing = 3;
-  
   for (let i = 0; i < numBars; i++) {
     let targetHeight = 0;
     if (scrollVelocity > 0) {
@@ -664,27 +602,17 @@ function drawSpectrum() {
       const noise = Math.random() * 0.4 + 0.8;
       targetHeight = Math.min(scrollVelocity * 2.5 * waveFactor * noise, canvas.height - 10);
     }
-    
     barHeights[i] += (targetHeight - barHeights[i]) * 0.22;
     const x = i * barWidth;
     const y = canvas.height - barHeights[i];
     const w = barWidth - spacing;
     const h = barHeights[i];
-    
     ctx.fillStyle = `rgba(253, 224, 71, ${Math.min(0.2 + (h / canvas.height), 0.75)})`;
     ctx.beginPath();
-    if(ctx.roundRect) {
-      ctx.roundRect(x, y, w, h, [4, 4, 0, 0]);
-    } else {
-      ctx.rect(x, y, w, h);
-    }
+    if(ctx.roundRect) ctx.roundRect(x, y, w, h, [4, 4, 0, 0]); else ctx.rect(x, y, w, h);
     ctx.fill();
   }
-  
-  if (scrollVelocity > 0) {
-    scrollVelocity *= 0.92;
-    if (scrollVelocity < 0.1) scrollVelocity = 0;
-  }
+  if (scrollVelocity > 0) scrollVelocity *= 0.92;
   requestAnimationFrame(drawSpectrum);
 }
 requestAnimationFrame(drawSpectrum);
@@ -693,49 +621,28 @@ const scrollArea = document.getElementById('scrollArea');
 const vinylSvg = document.getElementById('vinylSvg');
 const leftEye = document.getElementById('leftEye');
 const rightEye = document.getElementById('rightEye');
-
 let lastDirection = 0; 
 
 function handleScratchMovement(delta) {
   if (Math.abs(delta) < 1) return;
-
   let speed = Math.abs(delta);
   scrollVelocity = Math.max(speed, scrollVelocity);
-
   currentRotation += delta * 0.4;
   vinylSvg.style.transform = `rotate(${currentRotation}deg)`;
-
   let eyeScale = 1 - Math.min(speed * 0.04, 0.85); 
-  if (leftEye && rightEye) {
-    leftEye.style.transform = `scaleY(${eyeScale})`;
-    rightEye.style.transform = `scaleY(${eyeScale})`;
-  }
-
+  if (leftEye && rightEye) { leftEye.style.transform = `scaleY(${eyeScale})`; rightEye.style.transform = `scaleY(${eyeScale})`; }
   if (isAudioLoaded && speed > 0) {
     let currentDirection = delta > 0 ? 1 : -1;
-    
-    if (currentDirection !== lastDirection) {
-      lastDirection = currentDirection;
-      playBuffer(currentDirection === -1);
-    }
-    
-    if (sourceNode) {
-      sourceNode.playbackRate.setValueAtTime(Math.min(speed * 0.08, 2.2), audioCtx.currentTime);
-    }
+    if (currentDirection !== lastDirection) { lastDirection = currentDirection; playBuffer(currentDirection === -1); }
+    if (sourceNode) sourceNode.playbackRate.setValueAtTime(Math.min(speed * 0.08, 2.2), audioCtx.currentTime);
   }
-  
   clearTimeout(scrollTimeout);
   scrollTimeout = setTimeout(() => {
     updateOffset();
-    if (sourceNode && isAudioLoaded) {
-      sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
-    }
+    if (sourceNode && isAudioLoaded) sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
     lastDirection = 0; 
     isPlaying = false;
-    if (leftEye && rightEye) {
-      leftEye.style.transform = 'scaleY(1)';
-      rightEye.style.transform = 'scaleY(1)';
-    }
+    if (leftEye && rightEye) { leftEye.style.transform = 'scaleY(1)'; rightEye.style.transform = 'scaleY(1)'; }
   }, 90);
 }
 
@@ -744,50 +651,31 @@ scrollArea.addEventListener('scroll', () => {
   let currentScroll = scrollArea.scrollTop;
   let delta = currentScroll - lastScrollTop;
   if (Math.abs(delta) > 150) delta = 0;
-  
   handleScratchMovement(delta);
   lastScrollTop = currentScroll;
 });
 
 document.addEventListener('click', initAudio, { once: true });
-
-/* ------------------------------------------------------------------
-   MOBILE — touch events com sincronia direta de agulha
------------------------------------------------------------------- */
 let touchLastY = 0;
-
 scrollArea.addEventListener('touchstart', (e) => {
   if (!audioCtx) initAudio();
   else if (audioCtx.state === 'suspended') audioCtx.resume();
   touchLastY = e.touches[0].clientY;
 }, { passive: true });
-
 scrollArea.addEventListener('touchmove', (e) => {
   if (!audioCtx || !isAudioLoaded) return;
   const currentY = e.touches[0].clientY;
   const delta = -(currentY - touchLastY);
   touchLastY = currentY;
-
   handleScratchMovement(delta);
 }, { passive: true });
-
 scrollArea.addEventListener('touchend', () => {
   updateOffset();
-  if (sourceNode && isAudioLoaded) {
-    sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
-  }
-  lastDirection = 0;
-  scrollVelocity = 0;
-  isPlaying = false;
-  if (leftEye && rightEye) {
-    leftEye.style.transform = 'scaleY(1)';
-    rightEye.style.transform = 'scaleY(1)';
-  }
+  if (sourceNode && isAudioLoaded) sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
+  lastDirection = 0; scrollVelocity = 0; isPlaying = false;
+  if (leftEye && rightEye) { leftEye.style.transform = 'scaleY(1)'; rightEye.style.transform = 'scaleY(1)'; }
 }, { passive: true });
 
-/* ==========================================================================
-   LÓGICA DOS MENUS E QUIZ
-   ========================================================================== */
 function handleMenuSelection(event, nomeServico, requereQuiz) {
   event.preventDefault();
   userAnswers.serviçoEscolhido = nomeServico.toUpperCase(); 
@@ -803,9 +691,7 @@ function handleMenuSelection(event, nomeServico, requereQuiz) {
 
 function resetToMainMenu() {
   userAnswers = { finalidade: userAnswers.finalidade, serviçoEscolhido: "", autorizacao: "", atuacao: "", conheceCanal: "", aberturaAtual: "", duracaoDesejada: "", intencaoInvestimento: "", dataLimiteEntrega: "NÃO INFORMADA / SEM DATA PREVISTA" };
-  document.querySelectorAll('.quiz-step').forEach(step => {
-    step.classList.remove('active');
-  });
+  document.querySelectorAll('.quiz-step').forEach(step => step.classList.remove('active'));
   document.getElementById('quizSection').style.display = 'none';
   document.getElementById('headerBrandSection').style.display = 'block';
   document.getElementById('mainMenuSection').style.display = 'block';
@@ -829,16 +715,13 @@ function nextStep(current, value) {
   if(current === 4) userAnswers.aberturaAtual = upperVal;
   if(current === 5) userAnswers.duracaoDesejada = upperVal;
   if(current === 6) userAnswers.intencaoInvestimento = upperVal;
-  
   document.getElementById(`step${current}`).classList.remove('active');
   let nextTarget = current + 1;
-  
   if(current === 6) {
-    const artistaReal = (userAnswers.atuacao === "SIM, TRABALHO WITH EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
+    const artistaReal = (userAnswers.atuacao === "SIM, TRABALHO COM EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
     const temEventoReal = (userAnswers.intencaoInvestimento === "SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR");
     nextTarget = (artistaReal && temEventoReal) ? 7 : 'Final'; 
   }
-  
   let nextEl = document.getElementById(`step${nextTarget}`);
   if(nextEl) { nextEl.classList.add('active'); runTypewriterQuestion(nextTarget); } else { document.getElementById('stepFinal').classList.add('active'); }
 }
@@ -850,10 +733,7 @@ function prevStep(current) {
         const artistaReal = (userAnswers.atuacao === "SIM, TRABALHO COM EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
         const temEventoReal = (userAnswers.intencaoInvestimento === "SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR");
         if(artistaReal && temEventoReal) { document.getElementById('step7').classList.add('active'); runTypewriterQuestion(7); } else { document.getElementById('step6').classList.add('active'); runTypewriterQuestion(6); }
-    } else {
-        document.getElementById('step1').classList.add('active');
-        runTypewriterQuestion(1);
-    }
+    } else { document.getElementById('step1').classList.add('active'); runTypewriterQuestion(1); }
     return;
   }
   document.getElementById(`step${current}`).classList.remove('active');
@@ -884,14 +764,12 @@ function executeFinalRedirect(event) {
   event.preventDefault();
   const loader = document.getElementById('loadingScreen');
   loader.classList.add('active');
-  
   let msg;
   if(userAnswers.autorizacao === "SIM") {
       msg = `OLÁ! QUERO UM ORÇAMENTO PARA: ${userAnswers.serviçoEscolhido}\nFINALIDADE: ${userAnswers.finalidade}\nATUAÇÃO: ${userAnswers.atuacao}\nJÁ CONHECE O CANAL: ${userAnswers.conheceCanal}\nABERTURA ATUAL: ${userAnswers.aberturaAtual}\nDURAÇÃO: ${userAnswers.duracaoDesejada}\nENTREGA: ${userAnswers.dataLimiteEntrega}`;
   } else {
       msg = `OLÁ! TUDO BEM? VI SEUS SERVIÇOS E FIQUEI INTERESSADO NA PRODUÇÃO DE ${userAnswers.serviçoEscolhido}\nFINALIDADE: ${userAnswers.finalidade}`;
   }
-  
   const wpUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`;
   setTimeout(() => { window.location.href = wpUrl; }, 2000);
 }
