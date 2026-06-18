@@ -11,15 +11,6 @@
   
   /* Definição das novas fontes no projeto */
   .pw{font-family:'Orbitron',sans-serif;background:#020d07;min-height:100vh;position:relative;overflow:hidden;}
-
-  /* Ajuste para o carrossel sumir por padrão */
-.testimonial-carousel {
-  margin: 20px 0;
-  overflow: hidden;
-  white-space: nowrap;
-  padding: 10px 0;
-  display: block; /* Garante que aparece inicialmente */
-}
   
   .gbg{position:fixed;inset:0;background-image:linear-gradient(rgba(34,197,94,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(34,197,94,0.07) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
   .gtop{position:fixed;top:-80px;left:50%;transform:translateX(-50%);width:400px;height:200px;background:radial-gradient(ellipse,rgba(250,204,21,0.14) 0%,rgba(34,197,94,0.09) 50%,transparent 70%);pointer-events:none;z-index:0;}
@@ -253,16 +244,9 @@
         <h1 class="ttl gradual-item" style="animation-delay: 0.2s;">PARA QUAL <span>FINALIDADE</span><br>É A SUA ABERTURA?</h1>
         
         <div class="gradual-item" style="animation-delay: 0.3s; margin-bottom: 20px;">
-      
-<iframe 
-  width="100%" 
-  height="315" 
-  src="https://www.youtube.com/embed/Lo4kJW8SOc4?autoplay=1&mute=1&loop=1&playlist=Lo4kJW8SOc4" 
-  frameborder="0" 
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-  allowfullscreen>
-</iframe>
-        
+           <iframe width="100%" height="315" src="https://www.youtube.com/embed/Lo4kJW8SOc4?autoplay=1&mute=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+
         <p class="sub gradual-item" style="animation-delay: 0.4s;">SELECIONE UMA OPÇÃO PARA CONTINUAR</p>
         <div class="dv gradual-item" style="animation-delay: 0.6s;"></div>
         
@@ -511,23 +495,15 @@ function animateCounters(){
 
 function selectPurpose(purpose) {
   userAnswers.finalidade = purpose;
-  
-  // 1. Esconde a tela de seleção inicial
   document.getElementById('purposeSection').style.display = 'none';
-  
-  // 2. ESCONDE O CARROSSEL (Isso fará ele sumir permanentemente após a escolha)
-  const carousel = document.querySelector('.testimonial-carousel');
-  if (carousel) {
-      carousel.style.display = 'none';
-  }
-  
-  // 3. Mostra as seções seguintes
   document.getElementById('headerBrandSection').style.display = 'block';
   document.getElementById('mainMenuSection').style.display = 'block';
   
   setTimeout(animateCounters, 100);
   runIntroGuidance();
 }
+
+let introRan = false;
 
 function runIntroGuidance() {
   if(introRan) return;
