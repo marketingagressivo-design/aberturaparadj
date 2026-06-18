@@ -503,14 +503,17 @@ function animateCounters(){
 function selectPurpose(purpose) {
   userAnswers.finalidade = purpose;
   document.getElementById('purposeSection').style.display = 'none';
+  
+  // --- ADICIONE ESTA LINHA ABAIXO ---
+  document.querySelector('.testimonial-carousel').style.display = 'none';
+  // ----------------------------------
+  
   document.getElementById('headerBrandSection').style.display = 'block';
   document.getElementById('mainMenuSection').style.display = 'block';
   
   setTimeout(animateCounters, 100);
   runIntroGuidance();
 }
-
-let introRan = false;
 
 function runIntroGuidance() {
   if(introRan) return;
