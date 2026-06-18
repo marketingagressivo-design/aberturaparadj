@@ -41,7 +41,28 @@
    
   /* Controle de exibição inicial para a Finalidade */
   #headerBrandSection, #mainMenuSection { display: none; }
-  #purposeSection { display: block; }
+  #purposeSection, #videoSection { display: block; }
+
+  /* Container do Vídeo Responsivo */
+  .video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* Proporção 16:9 */
+    height: 0;
+    margin-bottom: 24px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(34,197,94,0.3);
+    background: rgba(2, 13, 7, 0.5);
+  }
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
 
   /* Container relativo para suportar as luzes absolutas atrás */
   .btn-container {
@@ -193,28 +214,6 @@
       transform: translateY(0);
     }
   }
-
-  /* CONTAINER RESPONSIVO PARA EMBUTIR O VIDEO DO YOUTUBE */
-  .video-container {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%; /* Proporção de Tela 16:9 */
-    height: 0;
-    overflow: hidden;
-    border-radius: 14px;
-    border: 1px solid rgba(34, 197, 94, 0.35);
-    box-shadow: 0 0 20px rgba(34, 197, 94, 0.15);
-    margin-bottom: 24px;
-    background: #000;
-  }
-  .video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; /* Inibe cliques diretos na logo do YouTube / Pause */
-  }
 </style>
 </head>
 <body>
@@ -246,16 +245,21 @@
     </div>
   </div>
 
-<div class="video-container gradual-item" style="animation-delay: 0.1s;">
-  <iframe 
-    src="https://www.youtube.com/embed/Lo4kJW8SOc4?autoplay=1&mute=1&loop=1&playlist=Lo4kJW8SOc4&controls=0&rel=0" 
-    title="Abertura para Shows" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</div>
+  <div class="sa" id="scrollArea">
 
+   <div id="videoSection" class="gradual-item" style="animation-delay: 0.1s;">
+  <div class="video-container">
+    <iframe 
+      src="https://www.youtube.com/embed/Lo4kJW8SOc4?autoplay=0&rel=0&showinfo=0&enablejsapi=1" 
+      title="YouTube video player" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>
+      
+      <div id="purposeSection">
         <h1 class="ttl gradual-item" style="animation-delay: 0.3s;">PARA QUAL <span>FINALIDADE</span><br>É A SUA ABERTURA?</h1>
         <p class="sub gradual-item" style="animation-delay: 0.5s; color: #fff;">SELECIONE UMA OPÇÃO PARA CONTINUAR</p>
         <div class="dv gradual-item" style="animation-delay: 0.7s;"></div>
@@ -367,7 +371,7 @@
         
         <div class="quiz-step" id="step2">
           <p class="quiz-title" id="title2"></p>
-          <button class="quiz-opt" onclick="nextStep(2, 'Sim, trabalho com eventos')">🎤 SIM, TRABALHO PROFISSIONALMENTE WITH SHOWS/EVENTOS</button>
+          <button class="quiz-opt" onclick="nextStep(2, 'Sim, trabalho com eventos')">🎤 SIM, TRABALHO PROFISSIONALMENTE COM SHOWS/EVENTOS</button>
           <button class="quiz-opt" onclick="nextStep(2, 'Sim, mas estou começando')">🎧 SIM, MAS AINDA ESTOU COMEÇANDO NA CARREIRA</button>
           <button class="quiz-opt" onclick="nextStep(2, 'Ainda não sou profissional')">🚫 APENAS HOBBY / NÃO ATUO EM EVENTOS</button>
           <button class="quiz-back" onclick="prevStep(2)">← VOLTAR</button>
@@ -493,6 +497,7 @@ function animateCounters(){
 function selectPurpose(purpose) {
   userAnswers.finalidade = purpose;
   document.getElementById('purposeSection').style.display = 'none';
+  document.getElementById('videoSection').style.display = 'none'; // Oculta o vídeo ao avançar
   document.getElementById('headerBrandSection').style.display = 'block';
   document.getElementById('mainMenuSection').style.display = 'block';
 }
@@ -829,6 +834,7 @@ function nextStep(current, value) {
   
   if(current === 6) {
     const artistaReal = (userAnswers.atuacao === "SIM, TRABALHO COM EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
+    // TRAVA REQUISITADA: Só vai para o passo 7 (Data Limite) se tiver evento real confirmado para usar.
     const temEventoReal = (userAnswers.intencaoInvestimento === "SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR");
     nextTarget = (artistaReal && temEventoReal) ? 7 : 'Final'; 
   }
