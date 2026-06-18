@@ -33,11 +33,16 @@
   .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
   .stat{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:12px;padding:14px 12px;text-align:center;}
   .sn{color:#4ade80;font-size:clamp(20px,5vw,28px);font-weight:700;line-height:1;}
+  .sl覆{color:rgba(134,239,172,0.5);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-top:5px;line-height:1.3;}
   .sl{color:rgba(134,239,172,0.5);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-top:5px;line-height:1.3;}
   .sw{grid-column:1/-1;background:rgba(250,204,21,0.07);border-color:rgba(250,204,21,0.25);}
   .sw .sn{color:#fde047;font-size:clamp(13px,3vw,15px);font-weight:500;letter-spacing:0.5px;text-transform:uppercase;}
   .dv2{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,0.4),rgba(34,197,94,0.4),transparent);margin-bottom:18px;}
    
+  /* Controle de exibição inicial para a Finalidade */
+  #headerBrandSection, #mainMenuSection { display: none; }
+  #purposeSection { display: block; }
+
   /* Container relativo para suportar as luzes absolutas atrás */
   .btn-container {
     position: relative;
@@ -77,26 +82,11 @@
   }
 
   @keyframes triggerBacklightFlash {
-    0% {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    30% {
-      opacity: 0.85;
-      transform: scale(1.02);
-    }
-    50% {
-      opacity: 0.30;
-      transform: scale(1.0);
-    }
-    70% {
-      opacity: 0.75;
-      transform: scale(1.01);
-    }
-    100% {
-      opacity: 0;
-      transform: scale(0.98);
-    }
+    0% { top:0; opacity: 0; transform: scale(0.95); }
+    30% { opacity: 0.85; transform: scale(1.02); }
+    50% { opacity: 0.30; transform: scale(1.0); }
+    70% { opacity: 0.75; transform: scale(1.01); }
+    100% { opacity: 0; transform: scale(0.98); }
   }
 
   .by{border-color:rgba(250,204,21,0.3);background:rgba(250,204,21,0.07);margin-bottom:12px;}
@@ -236,6 +226,31 @@
 
   <div class="sa" id="scrollArea">
     <div class="ct">
+      
+      <!-- PERGUNTA DE FINALIDADE INICIAL -->
+      <div id="purposeSection">
+     <h1 class="ttl gradual-item" style="animation-delay: 0.2s;">PARA QUAL <span>FINALIDADE</span><br>É A SUA ABERTURA?</h1>
+<!-- PROPRIEDADE "color: #fff;" ADICIONADA ABAIXO -->
+<p class="sub gradual-item" style="animation-delay: 0.4s; color: #fff;">SELECIONE UMA OPÇÃO PARA CONTINUAR</p>
+<div class="dv gradual-item" style="animation-delay: 0.6s;"></div>
+        
+        <div class="gradual-item" style="animation-delay: 0.8s; margin-bottom: 12px;">
+          <button class="quiz-opt" style="margin-bottom:0;" onclick="selectPurpose('CANTOR')">🎤 CANTOR / BANDA</button>
+        </div>
+        <div class="gradual-item" style="animation-delay: 1.0s; margin-bottom: 12px;">
+          <button class="quiz-opt" style="margin-bottom:0;" onclick="selectPurpose('DJ')">🎧 DJ</button>
+        </div>
+        <div class="gradual-item" style="animation-delay: 1.2s; margin-bottom: 12px;">
+          <button class="quiz-opt" style="margin-bottom:0;" onclick="selectPurpose('MC')">🔥 MC</button>
+        </div>
+        <div class="gradual-item" style="animation-delay: 1.4s; margin-bottom: 12px;">
+          <button class="quiz-opt" style="margin-bottom:0;" onclick="selectPurpose('FESTIVAL')">🎪 FESTIVAL / EVENTO</button>
+        </div>
+        <div class="gradual-item" style="animation-delay: 1.6s; margin-bottom: 12px;">
+          <button class="quiz-opt" style="margin-bottom:0;" onclick="selectPurpose('OUTRO')">🚀 OUTRO</button>
+        </div>
+      </div>
+
       <div id="headerBrandSection">
         <div class="logo-wrap gradual-item" style="animation-delay: 0.1s;">
           <img src="unnamed.png" alt="Abertura Profissional" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
@@ -262,7 +277,7 @@
         <p class="sub gradual-item" style="animation-delay: 2.9s;">SELECIONE O SERVIÇO ABAIXO</p>
         <div class="dv gradual-item" style="animation-delay: 3.2s;"></div>
         
-        <!-- Botão 1: Pisca primeiro -->
+        <!-- Botão 1 -->
         <div class="btn-container gradual-item" style="animation-delay: 3.5s;">
           <div id="glowAberturaCompleta" class="glow-box"></div>
           <a href="#" id="btnAberturaCompleta" class="btn bp" onclick="handleMenuSelection(event, 'Abertura Completa', true)">
@@ -273,7 +288,7 @@
           </a>
         </div>
         
-        <!-- Botão 2: Recebe a classe com delay e pisca logo em sequência -->
+        <!-- Botão 2 -->
         <div class="btn-container gradual-item" style="animation-delay: 3.8s;">
           <div id="glowAberturaAudio" class="glow-box delay-flash"></div>
           <a href="#" id="btnAberturaAudio" class="btn" onclick="handleMenuSelection(event, 'Abertura em Áudio', true)">
@@ -427,7 +442,7 @@
 </div>
 
 <script>
-let userAnswers = { serviçoEscolhido: "", autorizacao: "", atuacao: "", conheceCanal: "", aberturaAtual: "", duracaoDesejada: "", intencaoInvestimento: "", dataLimiteEntrega: "NÃO INFORMADA / SEM DATA PREVISTA" };
+let userAnswers = { finalidade: "", serviçoEscolhido: "", autorizacao: "", atuacao: "", conheceCanal: "", aberturaAtual: "", duracaoDesejada: "", intencaoInvestimento: "", dataLimiteEntrega: "NÃO INFORMADA / SEM DATA PREVISTA" };
 const WHATSAPP_NUMBER = "556191073673"; 
 
 const quizTexts = { 
@@ -452,8 +467,15 @@ function animateCounters(){
   });
 }
 
+function selectPurpose(purpose) {
+  userAnswers.finalidade = purpose;
+  document.getElementById('purposeSection').style.display = 'none';
+  document.getElementById('headerBrandSection').style.display = 'block';
+  document.getElementById('mainMenuSection').style.display = 'block';
+}
+
 /* ==========================================================================
-   MECÂNICA DE SCROLL TRAVADA + FLASH DE BACKLIGHT SEQUENCIAL COM ATRAZO
+   MECÂNICA DE SCROLL TRAVADA + FLASH DE BACKLIGHT SEQUENCIAL COM ATRASO ORIGINAL
    ========================================================================== */
 let introRan = false;
 
@@ -466,7 +488,7 @@ function runIntroGuidance() {
   
   if (!area || !glow1 || !glow2) return;
 
-  // Aguarda as cascatas iniciais e desce fixando nas opções de botões
+  // Aguarda as cascatas iniciais originais de 3.5 segundos e desce fixando nas opções
   setTimeout(() => {
     introRan = true;
     area.scrollTo({ top: 375, behavior: 'smooth' });
@@ -477,12 +499,10 @@ function runIntroGuidance() {
       scrollEndTimer = setTimeout(() => {
         area.removeEventListener('scroll', checkScrollEnd);
         
-        // Fixa permanentemente a rolagem na viewport das opções
         area.style.scrollBehavior = 'auto';
         area.scrollTop = 375;
         area.style.scrollBehavior = 'smooth';
         
-        // Aciona o flash sequencial (o segundo possui delay via CSS)
         glow1.classList.add('flash-active');
         glow2.classList.add('flash-active');
         
@@ -491,7 +511,7 @@ function runIntroGuidance() {
     
     area.addEventListener('scroll', checkScrollEnd);
 
-  }, 3500);
+  }, 3500); // Mantido o tempo original de 3.5s do seu primeiro código
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -515,7 +535,6 @@ let scrollTimeout = null;
 let isAudioLoaded = false;
 let currentRotation = 0;
 
-// Variáveis de controle de agulha contínua
 let startTime = 0;      
 let lastOffset = 0;     
 let isPlaying = false;  
@@ -537,7 +556,6 @@ for (let i = 0; i < numBars; i++) {
   barHeights.push(0);
 }
 
-// Inverte a matriz de canais para gerar o buffer reverso na memória ram
 function createReverseBuffer(buffer) {
   let numChannels = buffer.numberOfChannels;
   let reverseBuffer = audioCtx.createBuffer(numChannels, buffer.length, buffer.sampleRate);
@@ -568,7 +586,6 @@ function initAudio() {
     .catch(err => console.error("Erro no carregamento:", err));
 }
 
-// Atualiza a posição da agulha dinamicamente baseada na velocidade do pitch anterior
 function updateOffset() {
   if (isPlaying && audioCtx && sourceNode) {
     let playedTime = audioCtx.currentTime - startTime;
@@ -581,7 +598,6 @@ function updateOffset() {
 function playBuffer(reverse = false) {
   if (!audioCtx || !isAudioLoaded) return;
   
-  // Salva a agulha atual antes de tombar o nó de áudio
   updateOffset();
   
   if (sourceNode) {
@@ -593,7 +609,6 @@ function playBuffer(reverse = false) {
   
   if (reverse) {
     sourceNode.buffer = audioBufferReverse;
-    // O offset no buffer invertido é calculado de trás para frente
     sourceNode.offsetTarget = audioBufferNormal.duration - lastOffset;
   } else {
     sourceNode.buffer = audioBufferNormal;
@@ -670,7 +685,6 @@ function handleScratchMovement(delta) {
   if (isAudioLoaded && speed > 0) {
     let currentDirection = delta > 0 ? 1 : -1;
     
-    // Altera o buffer de direção com sincronismo contínuo
     if (currentDirection !== lastDirection) {
       lastDirection = currentDirection;
       playBuffer(currentDirection === -1);
@@ -683,7 +697,7 @@ function handleScratchMovement(delta) {
   
   clearTimeout(scrollTimeout);
   scrollTimeout = setTimeout(() => {
-    updateOffset(); // Congela o offset da agulha antes de parar
+    updateOffset();
     if (sourceNode && isAudioLoaded) {
       sourceNode.playbackRate.setValueAtTime(0, audioCtx.currentTime);
     }
@@ -759,7 +773,7 @@ function handleMenuSelection(event, nomeServico, requereQuiz) {
 }
 
 function resetToMainMenu() {
-  userAnswers = { serviçoEscolhido: "", autorizacao: "", atuacao: "", conheceCanal: "", aberturaAtual: "", duracaoDesejada: "", intencaoInvestimento: "", dataLimiteEntrega: "NÃO INFORMADA / SEM DATA PREVISTA" };
+  userAnswers = { finalidade: userAnswers.finalidade, serviçoEscolhido: "", autorizacao: "", atuacao: "", conheceCanal: "", aberturaAtual: "", duracaoDesejada: "", intencaoInvestimento: "", dataLimiteEntrega: "NÃO INFORMADA / SEM DATA PREVISTA" };
   document.querySelectorAll('.quiz-step').forEach(step => {
     step.classList.remove('active');
   });
@@ -792,8 +806,9 @@ function nextStep(current, value) {
   
   if(current === 6) {
     const artistaReal = (userAnswers.atuacao === "SIM, TRABALHO COM EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
-    const intencaoReal = (userAnswers.intencaoInvestimento === "SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR" || userAnswers.intencaoInvestimento === "ESTÁ AINDA NO CAMPO DAS IDEIAS");
-    nextTarget = (artistaReal && intencaoReal) ? 7 : 'Final'; 
+    // TRAVA REQUISITADA: Só vai para o passo 7 (Data Limite) se tiver evento real confirmado para usar.
+    const temEventoReal = (userAnswers.intencaoInvestimento === "SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR");
+    nextTarget = (artistaReal && temEventoReal) ? 7 : 'Final'; 
   }
   
   let nextEl = document.getElementById(`step${nextTarget}`);
@@ -805,8 +820,8 @@ function prevStep(current) {
     document.getElementById('stepFinal').classList.remove('active');
     if(userAnswers.autorizacao === "SIM") {
         const artistaReal = (userAnswers.atuacao === "SIM, TRABALHO COM EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
-        const intencaoReal = (userAnswers.intencaoInvestimento === "SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR" || userAnswers.intencaoInvestimento === "ESTÁ AINDA NO CAMPO DAS IDEIAS");
-        if(artistaReal && intencaoReal) { document.getElementById('step7').classList.add('active'); runTypewriterQuestion(7); } else { document.getElementById('step6').classList.add('active'); runTypewriterQuestion(6); }
+        const temEventoReal = (userAnswers.intencaoInvestimento === "SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR");
+        if(artistaReal && temEventoReal) { document.getElementById('step7').classList.add('active'); runTypewriterQuestion(7); } else { document.getElementById('step6').classList.add('active'); runTypewriterQuestion(6); }
     } else {
         document.getElementById('step1').classList.add('active');
         runTypewriterQuestion(1);
@@ -832,7 +847,8 @@ function runTypewriterQuestion(stepId) {
 function executeDirectBypassRedirect(nomeServico) {
   const loader = document.getElementById('loadingScreen');
   loader.classList.add('active');
-  const wpUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent('OLÁ! TUDO BEM? VI SEUS SERVIÇOS E FIQUEI INTERESSADO NA PRODUÇÃO DE ' + nomeServico.toUpperCase())}`;
+  const msg = `OLÁ! TUDO BEM? VI SEUS SERVIÇOS E FIQUEI INTERESSADO NA PRODUÇÃO DE ${nomeServico.toUpperCase()}\nFINALIDADE: ${userAnswers.finalidade}`;
+  const wpUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`;
   setTimeout(() => { window.location.href = wpUrl; }, 2000);
 }
 
@@ -843,9 +859,9 @@ function executeFinalRedirect(event) {
   
   let msg;
   if(userAnswers.autorizacao === "SIM") {
-      msg = `OLÁ! QUERO UM ORÇAMENTO PARA: ${userAnswers.serviçoEscolhido}\nATUAÇÃO: ${userAnswers.atuacao}\nJÁ CONHECE O CANAL: ${userAnswers.conheceCanal}\nABERTURA ATUAL: ${userAnswers.aberturaAtual}\nDURAÇÃO: ${userAnswers.duracaoDesejada}\nENTREGA: ${userAnswers.dataLimiteEntrega}`;
+      msg = `OLÁ! QUERO UM ORÇAMENTO PARA: ${userAnswers.serviçoEscolhido}\nFINALIDADE: ${userAnswers.finalidade}\nATUAÇÃO: ${userAnswers.atuacao}\nJÁ CONHECE O CANAL: ${userAnswers.conheceCanal}\nABERTURA ATUAL: ${userAnswers.aberturaAtual}\nDURAÇÃO: ${userAnswers.duracaoDesejada}\nENTREGA: ${userAnswers.dataLimiteEntrega}`;
   } else {
-      msg = `OLÁ! TUDO BEM? VI SEUS SERVIÇOS E FIQUEI INTERESSADO NA PRODUÇÃO DE ${userAnswers.serviçoEscolhido}`;
+      msg = `OLÁ! TUDO BEM? VI SEUS SERVIÇOS E FIQUEI INTERESSADO NA PRODUÇÃO DE ${userAnswers.serviçoEscolhido}\nFINALIDADE: ${userAnswers.finalidade}`;
   }
   
   const wpUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`;
