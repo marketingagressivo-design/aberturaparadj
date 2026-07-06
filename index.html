@@ -12,8 +12,8 @@
   /* Definição das novas fontes no projeto */
   .pw{font-family:'Orbitron',sans-serif;background:#020d07;min-height:100vh;position:relative;overflow:hidden;}
   
-  .gbg{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.07) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
-  .gtop{position:fixed;top:-80px;left:50%;transform:translateX(-50%);width:400px;height:200px;background:radial-gradient(ellipse,rgba(255,255,255,0.07) 0%,rgba(34,197,94,0.09) 50%,transparent 70%);pointer-events:none;z-index:0;}
+  .gbg{position:fixed;inset:0;background-image:linear-gradient(rgba(34,197,94,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(34,197,94,0.07) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0;}
+  .gtop{position:fixed;top:-80px;left:50%;transform:translateX(-50%);width:400px;height:200px;background:radial-gradient(ellipse,rgba(250,204,21,0.14) 0%,rgba(34,197,94,0.09) 50%,transparent 70%);pointer-events:none;z-index:0;}
   .scan{position:fixed;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(250,204,21,0.4) 50%,transparent 100%);animation:sd 5s linear infinite;pointer-events:none;z-index:2;}
   @keyframes sd{0%{top:0;opacity:0;}5%{opacity:1;}95%{opacity:1;}100%{top:100%;opacity:0;}}
    
@@ -24,19 +24,19 @@
   .logo-wrap{margin:0 auto 18px;width:290px;height:95px;display:flex;align-items:center;justify-content:center;}
   .logo-wrap img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
    
-  .tag{color:rgba(134,239,172,0.7);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin:0 0 4px;}
-  .badge{display:inline-block;border:1px solid rgba(250,204,21,0.6);color:#ffffff;font-size:11px;letter-spacing:2px;padding:4px 14px;border-radius:100px;margin-bottom:16px;text-transform:uppercase;}
+  .tag{color:rgba(255,255,255,0.7);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin:0 0 4px;}
+  .badge{display:inline-block;border:1px solid rgba(255,255,255,0.6);color:#ffffff;font-size:11px;letter-spacing:2px;padding:4px 14px;border-radius:100px;margin-bottom:16px;text-transform:uppercase;}
   .ttl{color:#fff;font-size:clamp(26px,5vw,38px);font-weight:700;line-height:1.1;margin:0 0 6px;text-transform:uppercase;}
   .ttl span{background:linear-gradient(90deg,#ffffff,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-  .sub{color:rgba(134,239,172,0.5);font-size:13px;margin:0 0 18px;letter-spacing:1px;text-transform:uppercase;}
-  .dv{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,0.5),rgba(34,197,94,0.5),transparent);margin-top:8px;margin-bottom:18px;}
+  .sub{color:rgba(255,255,255,0.5);font-size:13px;margin:0 0 18px;letter-spacing:1px;text-transform:uppercase;}
+  .dv{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.5),rgba(255,255,255,0.5),transparent);margin-top:8px;margin-bottom:18px;}
   .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
-  .stat{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:12px;padding:14px 12px;text-align:center;}
+  .stat{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);border-radius:12px;padding:14px 12px;text-align:center;}
   .sn{color:#ffffff;font-size:clamp(20px,5vw,28px);font-weight:700;line-height:1;}
-  .sl{color:rgba(134,239,172,0.5);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-top:5px;line-height:1.3;}
-  .sw{grid-column:1/-1;background:rgba(250,204,21,0.07);border-color:rgba(250,204,21,0.25);}
+  .sl{color:rgba(255,255,255,0.5);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-top:5px;line-height:1.3;}
+  .sw{grid-column:1/-1;background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.25);}
   .sw .sn{color:#ffffff;font-size:clamp(13px,3vw,15px);font-weight:500;letter-spacing:0.5px;text-transform:uppercase;}
-  .dv2{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,0.4),rgba(34,197,94,0.4),transparent);margin-bottom:18px;}
+  .dv2{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4),rgba(255,255,255,0.4),transparent);margin-bottom:18px;}
    
   /* Seções dinâmicas de exibição */
   #headerBrandSection, #mainMenuSection { display: none; }
@@ -50,13 +50,13 @@
   }
 
   /* Botões principais usando a Saira Semi Condensed (Estilo Agency FB) */
-  .btn{font-family: 'Saira Semi Condensed', sans-serif;display:block;width:100%;border-radius:14px;padding:18px 20px;margin-bottom:0;cursor:pointer;text-decoration:none;border:1px solid rgba(34,197,94,0.3);background:rgba(20,83,45,0.25);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);position:relative;z-index:2;overflow:hidden;transition:border-color .2s,background .2s;}
-  .btn:hover{border-color:rgba(34,197,94,0.7);background:rgba(34,197,94,0.16);}
-  .bp{border-color:rgba(34,197,94,0.55);background:rgba(34,197,94,0.14);}
+  .btn{font-family: 'Saira Semi Condensed', sans-serif;display:block;width:100%;border-radius:14px;padding:18px 20px;margin-bottom:0;cursor:pointer;text-decoration:none;border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.08);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);position:relative;z-index:2;overflow:hidden;transition:border-color .2s,background .2s;}
+  .btn:hover{border-color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.16);}
+  .bp{border-color:rgba(255,255,255,0.55);background:rgba(255,255,255,0.14);}
   .bl{color:#fff;font-size:clamp(17px,4vw,22px);font-weight:700;display:flex;align-items:center;gap:10px;text-align:left;text-transform:uppercase;}
   .bl .dot{width:9px;height:9px;border-radius:50%;background:#ffffff;flex-shrink:0;}
   .wp-icon{width:20px;height:20px;fill:#ffffff;margin-left:auto;}
-  .bs{color:rgba(134,239,172,0.6);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;padding-left:19px;text-align:left;line-height:1.4;}
+  .bs{color:rgba(255,255,255,0.6);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;padding-left:19px;text-align:left;line-height:1.4;}
    
   /* Camada de efeito de iluminação absoluta desfocada por trás dos botões */
   .glow-box {
@@ -88,11 +88,11 @@
     100% { opacity: 0; transform: scale(0.98); }
   }
 
-  .by{border-color:rgba(250,204,21,0.3);background:rgba(250,204,21,0.07);margin-bottom:12px;}
-  .by:hover{border-color:rgba(250,204,21,0.65);background:rgba(250,204,21,0.13);}
+  .by{border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.07);margin-bottom:12px;}
+  .by:hover{border-color:rgba(255,255,255,0.65);background:rgba(255,255,255,0.13);}
   .by .dot{background:#ffffff;}
   .by .wp-icon{fill:#ffffff;}
-  .by .bs{color:rgba(253,224,71,0.6);}
+  .by .bs{color:rgba(255,255,255,0.6);}
    
   .bz{border-color:rgba(59,130,246,0.3);background:rgba(30,64,175,0.08);margin-bottom:12px;}
   .bz:hover{border-color:rgba(59,130,246,0.6);background:rgba(30,64,175,0.14);}
@@ -100,7 +100,7 @@
   .bz .wp-icon{fill:#60a5fa;}
   .bz .bs{color:rgba(96,165,250,0.6);}
    
-  .sl2{color:rgba(250,204,21,0.4);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin:18px 0 10px;text-align:center;}
+  .sl2{color:rgba(255,255,255,0.4);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin:18px 0 10px;text-align:center;}
   .rtog{display:block;width:100%;background:none;border:none;padding:0;cursor:pointer;text-align:left;}
   .rsub{margin-top:2px;margin-bottom:12px;padding-left:12px;border-left:1px solid rgba(59,130,246,0.25);display:none;}
   .rsub.open{display:block;}
@@ -111,11 +111,11 @@
   .quiz-step{display:none;}
   .quiz-step.active{display:block;}
   .quiz-title{color:#fff;font-size:22px;font-weight:700;margin-bottom:24px;line-height:1.4;text-align:center;min-height:62px;white-space:pre-wrap;text-transform:uppercase;}
-  .quiz-opt{font-family: 'Saira Semi Condensed', sans-serif;display:block;width:100%;border-radius:12px;padding:18px 20px;margin-bottom:12px;cursor:pointer;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);color:#fff;font-size:16px;font-weight:500;text-align:left;transition:all 0.2s ease;text-transform:uppercase;}
-  .quiz-opt:hover{background:rgba(34,197,94,0.15);border-color:#ffffff;}
+  .quiz-opt{font-family: 'Saira Semi Condensed', sans-serif;display:block;width:100%;border-radius:12px;padding:18px 20px;margin-bottom:12px;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:16px;font-weight:500;text-align:left;transition:all 0.2s ease;text-transform:uppercase;}
+  .quiz-opt:hover{background:rgba(255,255,255,0.15);border-color:#ffffff;}
    
   .quiz-back{font-family: 'Saira Semi Condensed', sans-serif;display:inline-block;width:calc(50% - 6px);border-radius:12px;padding:12px 10px;margin-top:8px;margin-right:12px;cursor:pointer;background:transparent;border:1px dashed rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;transition:all 0.2s ease;}
-  .quiz-back:hover{border-color:rgba(250,204,21,0.5);color:#ffffff;background:rgba(250,204,21,0.03);}
+  .quiz-back:hover{border-color:rgba(255,255,255,0.5);color:#ffffff;background:rgba(255,255,255,0.03);}
    
   .quiz-reset{font-family: 'Saira Semi Condensed', sans-serif;display:inline-block;width:calc(50% - 6px);border-radius:12px;padding:12px 10px;margin-top:8px;cursor:pointer;background:transparent;border:1px dashed rgba(239,68,68,0.3);color:rgba(239,68,68,0.6);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;transition:all 0.2s ease;}
   .quiz-reset:hover{border-color:rgba(239,68,68,0.7);color:#ef4444;background:rgba(239,68,68,0.05);}
@@ -124,13 +124,13 @@
   .quiz-reset-full:hover{border-color:rgba(239,68,68,0.7);color:#ef4444;background:rgba(239,68,68,0.05);}
 
   .input-date-container {width:100%;margin-bottom:18px;text-align:left;}
-  .input-date-label {color:rgba(134,239,172,0.8);font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;display:block;}
-  .quiz-input-date {font-family: 'Saira Semi Condensed', sans-serif;width:100%;padding:18px 20px;background:rgba(2,13,7,0.6);border:1px solid rgba(34,197,94,0.3);border-radius:12px;color:#fff;font-size:16px;font-weight:500;outline:none;transition:border-color 0.2s;}
+  .input-date-label {color:rgba(255,255,255,0.8);font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;display:block;}
+  .quiz-input-date {font-family: 'Saira Semi Condensed', sans-serif;width:100%;padding:18px 20px;background:rgba(2,13,7,0.6);border:1px solid rgba(255,255,255,0.3);border-radius:12px;color:#fff;font-size:16px;font-weight:500;outline:none;transition:border-color 0.2s;}
   .quiz-input-date:focus {border-color:#ffffff;}
    
-  .btn-wp-final{font-family: 'Saira Semi Condensed', sans-serif;display:flex;align-items:center;justify-content:center;gap:12px;background:#ffffff;border:1px solid #ffffff;box-shadow:0 4px 15px rgba(22,163,74,0.4);padding:18px 24px;border-radius:14px;color:#fff;font-size:18px;font-weight:700;text-decoration:none;width:100%;margin-top:15px;transition:background 0.2s;text-transform:uppercase;letter-spacing:0.5px;}
-  .btn-wp-final:hover{background:#ffffff;}
-  .btn-wp-final svg{width:22px;height:22px;fill:#fff;}
+  .btn-wp-final{font-family: 'Saira Semi Condensed', sans-serif;display:flex;align-items:center;justify-content:center;gap:12px;background:#ffffff;border:1px solid #ffffff;box-shadow:0 4px 15px rgba(255,255,255,0.4);padding:18px 24px;border-radius:14px;color:#020d07;font-size:18px;font-weight:700;text-decoration:none;width:100%;margin-top:15px;transition:background 0.2s;text-transform:uppercase;letter-spacing:0.5px;}
+  .btn-wp-final:hover{background:#eaeaea;}
+  .btn-wp-final svg{width:22px;height:22px;fill:#020d07;}
 
   /* CONFIGURAÇÃO DO VINIL */
   .vinyl-fixed{position:fixed;bottom:20%;right:0;z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;touch-action:none;transform:translateX(50%);pointer-events:none;}
@@ -145,7 +145,7 @@
     width: 220px;
     height: auto;
     pointer-events: none;
-    filter: drop-shadow(0 0 15px rgba(250,204,21,0.35)) blur(1.8px);
+    filter: drop-shadow(0 0 15px rgba(255,255,255,0.35)) blur(1.8px);
     opacity: 0.65; 
   }
   .eye-lid {
@@ -158,13 +158,13 @@
   .ld-screen{position:fixed;inset:0;background:rgba(2,13,7,0.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:999;display:none;align-items:center;justify-content:center;padding:24px;}
   .ld-screen.active{display:flex;}
   .ld-box{text-align:center;max-width:440px;display:flex;flex-direction:column;align-items:center;gap:24px;}
-  .ld-spin{width:46px;height:46px;border:3px solid rgba(74,222,128,0.15);border-top-color:#ffffff;border-radius:50%;animation:spinLoader 0.7s linear infinite;}
+  .ld-spin{width:46px;height:46px;border:3px solid rgba(255,255,255,0.15);border-top-color:#ffffff;border-radius:50%;animation:spinLoader 0.7s linear infinite;}
   @keyframes spinLoader{to{transform:rotate(360deg);}}
   .ld-txt{color:#fff;font-size:20px;font-weight:500;line-height:1.5;min-height:60px;text-align:center;text-transform:uppercase;}
   .ld-txt span{color:#ffffff;}
   .ld-cursor{display:inline-block;width:8px;height:18px;background:#ffffff;margin-left:4px;animation:blinkCursor 0.6s step-end infinite;}
   @keyframes blinkCursor{from,to{background:transparent;}50%{background:#ffffff;}}
-  .ld-timer{font-size:14px;color:rgba(134,239,172,0.5);letter-spacing:2px;text-transform:uppercase;font-weight:700;}
+  .ld-timer{font-size:14px;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;font-weight:700;}
 
   /* CONFIGURAÇÃO DO CANVAS DO AUDIO SPECTRUM */
   .audio-spectrum-canvas {
@@ -389,7 +389,7 @@
             <label class="input-date-label" for="datePickerInput">SELECIONE O DIA LIMITE:</label>
             <input type="date" class="quiz-input-date" id="datePickerInput">
           </div>
-          <button class="quiz-opt" style="text-align:center; background:rgba(34,197,94,0.15);" onclick="captureDateAndProceed()">CONFIRMAR DATA DE ENTREGA</button>
+          <button class="quiz-opt" style="text-align:center; background:rgba(255,255,255,0.15);" onclick="captureDateAndProceed()">CONFIRMAR DATA DE ENTREGA</button>
           <button class="quiz-back" onclick="prevStep(7)">← VOLTAR</button>
           <button class="quiz-reset" onclick="resetToMainMenu()">🏠 INÍCIO</button>
         </div>
@@ -639,7 +639,7 @@ function drawSpectrum() {
     const w = barWidth - spacing;
     const h = barHeights[i];
     
-    ctx.fillStyle = `rgba(253, 224, 71, ${Math.min(0.2 + (h / canvas.height), 0.75)})`;
+    ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(0.2 + (h / canvas.height), 0.75)})`;
     ctx.beginPath();
     if(ctx.roundRect) {
       ctx.roundRect(x, y, w, h, [4, 4, 0, 0]);
