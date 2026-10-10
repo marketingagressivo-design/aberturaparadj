@@ -111,6 +111,13 @@
   .bz .wp-icon{fill:#60a5fa;}
   .bz .bs{color:rgba(96,165,250,0.6);}
    
+  /* BOTÃO STUDIO PRO */
+  .bstudio{border-color:rgba(250,204,21,0.45);background:linear-gradient(135deg,rgba(250,204,21,0.12),rgba(34,197,94,0.08));}
+  .bstudio:hover{border-color:rgba(250,204,21,0.85);background:linear-gradient(135deg,rgba(250,204,21,0.2),rgba(34,197,94,0.12));}
+  .bstudio .dot{background:#facc15;box-shadow:0 0 8px #facc15;}
+  .bstudio .bs{color:rgba(250,204,21,0.7);}
+  .studio-icon{width:22px;height:22px;margin-left:auto;fill:none;stroke:#facc15;stroke-width:2;stroke-linecap:round;}
+  .new-tag{font-size:10px;letter-spacing:1.5px;color:#020d07;background:#facc15;border-radius:100px;padding:2px 8px;font-weight:800;}
   .sl2{color:rgba(255,255,255,0.4);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin:18px 0 10px;text-align:center;}
   .rtog{display:block;width:100%;background:none;border:none;padding:0;cursor:pointer;text-align:left;}
   .rsub{margin-top:2px;margin-bottom:12px;padding-left:12px;border-left:1px solid rgba(59,130,246,0.25);display:none;}
@@ -257,6 +264,15 @@
         <div class="gradual-item" style="animation-delay: 1.6s; margin-bottom: 12px;">
           <button class="quiz-opt" style="margin-bottom:0;" onclick="selectPurpose('OUTRO')">🚀 OUTRO</button>
         </div>
+        <p class="sl2 gradual-item" style="animation-delay: 1.8s;">FERRAMENTA PARA DJs</p>
+        <div class="gradual-item" style="animation-delay: 2.0s; margin-bottom: 12px;">
+          <a href="studio-dj-opener-pro.html" class="btn bstudio" onclick="openStudioPro(event)">
+            <div class="bl"><span class="dot"></span>ACESSAR STUDIO PRO <span class="new-tag">NOVO</span>
+              <svg class="studio-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg>
+            </div>
+            <div class="bs">MONTE SUA ABERTURA COM NOME DO DJ E MÚSICA DE ENTRADA, ONLINE</div>
+          </a>
+        </div>
       </div>
 
       <div id="headerBrandSection">
@@ -337,6 +353,16 @@
           </div>
           <div class="bs">NOME ARTÍSTICO E ACOMPANHAMENTO</div>
         </a>
+
+        <p class="sl2 gradual-item" style="animation-delay: 2.0s;">FERRAMENTA PARA DJs</p>
+        <div class="gradual-item" style="animation-delay: 2.2s; margin-bottom: 12px;">
+          <a href="studio-dj-opener-pro.html" class="btn bstudio" onclick="openStudioPro(event)">
+            <div class="bl"><span class="dot"></span>ACESSAR STUDIO PRO <span class="new-tag">NOVO</span>
+              <svg class="studio-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg>
+            </div>
+            <div class="bs">MONTE SUA ABERTURA COM NOME DO DJ E MÚSICA DE ENTRADA, ONLINE</div>
+          </a>
+        </div>
       </div>
 
       <div id="quizSection">
@@ -526,6 +552,19 @@ function runIntroGuidance() {
 window.addEventListener('DOMContentLoaded', () => {
   // Removidos os gatilhos automáticos para que rodem apenas após escolher a finalidade.
 });
+
+/* ==========================================================================
+   STUDIO PRO: abre a ferramenta (arquivo studio-dj-opener-pro.html na mesma pasta)
+   ========================================================================== */
+const STUDIO_URL = 'studio-dj-opener-pro.html';
+function openStudioPro(event) {
+  event.preventDefault();
+  try { if (sourceNode) { sourceNode.stop(); } } catch (e) {}
+  let went = false;
+  const go = () => { if (!went) { went = true; window.location.href = STUDIO_URL; } };
+  try { gtag('event', 'abrir_studio_pro', { finalidade: userAnswers.finalidade || 'NAO_ESCOLHIDA', event_callback: go }); } catch (e) {}
+  setTimeout(go, 400);   // garante a abertura mesmo se o Analytics estiver bloqueado
+}
 
 function toggleRemix(){ document.getElementById('rs').classList.toggle('open'); }
 
