@@ -273,6 +273,7 @@
   .pedido-box{display:inline-flex;flex-direction:column;align-items:center;gap:4px;border:1px dashed rgba(255,255,255,0.45);border-radius:12px;padding:12px 22px;margin:4px 0 18px;}
   .pedido-box span{font-family:'Saira Semi Condensed',sans-serif;color:rgba(255,255,255,0.55);font-size:11px;letter-spacing:2px;text-transform:uppercase;}
   .pedido-box b{color:#fff;font-size:22px;letter-spacing:2px;}
+  .pedido-box em{font-family:'Saira Semi Condensed',sans-serif;font-style:normal;color:rgba(255,255,255,0.45);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;}
   .ld-pedido{font-family:'Saira Semi Condensed',sans-serif;color:rgba(255,255,255,0.7);font-size:15px;letter-spacing:2px;text-transform:uppercase;}
   .ld-pedido b{color:#fff;}
   .ld-fb{display:none;flex-direction:column;align-items:center;gap:10px;width:100%;}
@@ -404,7 +405,7 @@
       <div class="ld-fb" id="ldFallback">
         <p>O WHATSAPP NÃO ABRIU?</p>
         <a href="#" class="btn-wp-final" id="ldFallbackLink" target="_blank" rel="noopener">TOCAR AQUI PARA ABRIR</a>
-        <button type="button" class="ld-mini" id="ldCopy" onclick="copyPedido()">COPIAR Nº DO PEDIDO</button>
+        <button type="button" class="ld-mini" id="ldCopy" onclick="copyPedido()">COPIAR Nº DO ORÇAMENTO</button>
         <button type="button" class="ld-mini" onclick="closeLoader()">← VOLTAR AO SITE</button>
       </div>
     </div>
@@ -1217,7 +1218,7 @@ function renderFinal(stage) {
     + '<p class="sub" style="font-size:16px;color:#fff;line-height:1.4;">' + (semPerguntas
       ? 'SEM PROBLEMAS! O ATENDIMENTO SERÁ FEITO NO SEU TEMPO. CLIQUE ABAIXO PARA INICIAR A CONVERSA.'
       : 'PERFEITO! COM BASE NAS SUAS RESPOSTAS, SEU ATENDIMENTO SERÁ BEM MAIS RÁPIDO.') + '</p>'
-    + '<div class="pedido-box"><span>SEU NÚMERO DE PEDIDO</span><b>#' + userAnswers.pedido + '</b></div>'
+    + '<div class="pedido-box"><span>PROTOCOLO DO SEU ORÇAMENTO</span><b>#' + userAnswers.pedido + '</b><em>SEM COMPROMISSO · NADA FOI COMPRADO</em></div>'
     + '<div class="dv" style="margin-bottom:24px;"></div>'
     + '<a href="#" class="btn-wp-final" onclick="executeFinalRedirect(event)"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm4.27 12.4c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4h-.46c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>AVANÇAR PARA O WHATSAPP</a>'
     + '<button class="quiz-back" style="margin-top:20px;" onclick="voltarEtapa()">← MODIFICAR RESPOSTAS</button>'
@@ -1226,7 +1227,7 @@ function renderFinal(stage) {
 }
 
 function montarMensagem() {
-  const a = userAnswers, L = ['PEDIDO #' + a.pedido];
+  const a = userAnswers, L = ['SOLICITAÇÃO DE ORÇAMENTO #' + a.pedido];
   if (a.autorizacao === 'NÃO') {
     L.push('OLÁ! TUDO BEM? VI SEUS SERVIÇOS E FIQUEI INTERESSADO NA PRODUÇÃO DE ' + a.servico);
     if (a.finalidade) L.push('FINALIDADE: ' + a.finalidade);
@@ -1262,7 +1263,7 @@ function executeFinalRedirect(event) {
   try { gtag('event', 'generate_lead', { pedido: a.pedido, servico: a.servico, finalidade: a.finalidade, temperatura: a.temperatura }); } catch (e) {}
   // tela de carregamento
   _ldTimers.forEach(clearTimeout); _ldTimers = [];
-  document.getElementById('ldPedido').innerHTML = 'PEDIDO <b>#' + a.pedido + '</b>';
+  document.getElementById('ldPedido').innerHTML = 'ORÇAMENTO <b>#' + a.pedido + '</b>';
   document.getElementById('ldFallbackLink').href = _wpUrl;
   document.getElementById('ldFallback').classList.remove('on');
   const timer = document.getElementById('loadingTimer');
@@ -1276,7 +1277,7 @@ function closeLoader() { _ldTimers.forEach(clearTimeout); _ldTimers = []; docume
 function copyPedido() {
   const t = '#' + userAnswers.pedido, b = document.getElementById('ldCopy');
   const ok = () => { b.textContent = 'COPIADO: ' + t; };
-  try { navigator.clipboard.writeText(t).then(ok, () => { b.textContent = 'SEU PEDIDO: ' + t; }); } catch (e) { b.textContent = 'SEU PEDIDO: ' + t; }
+  try { navigator.clipboard.writeText(t).then(ok, () => { b.textContent = 'SEU ORÇAMENTO: ' + t; }); } catch (e) { b.textContent = 'SEU ORÇAMENTO: ' + t; }
 }
 // voltou do WhatsApp pelo botão "voltar": mostra o plano B em vez da tela travada
 window.addEventListener('pageshow', e => { if (e.persisted && document.getElementById('loadingScreen').classList.contains('active')) { _ldTimers.forEach(clearTimeout); document.getElementById('loadingTimer').style.display = 'none'; document.getElementById('ldFallback').classList.add('on'); } });
@@ -1436,9 +1437,9 @@ function admRender() {
   if (ADM.demo) h += '<div class="adm-demo">⚠️ MODO EXEMPLO: estes números são inventados, só para você ver como o painel funciona. ' + (PLANILHA_URL ? '' : 'Ligue a planilha para ver os dados reais.') + '</div>';
 
   // marcar pedido fechado
-  h += '<div class="adm-h">FECHOU UM PEDIDO?</div><div class="adm-hs">Digite o número que veio na mensagem do WhatsApp (ex.: AP-7K3MQ) e o valor fechado.</div>'
+  h += '<div class="adm-h">FECHOU UM ORÇAMENTO?</div><div class="adm-hs">Digite o número que veio na mensagem do WhatsApp (ex.: AP-7K3MQ) e o valor fechado.</div>'
     + '<div class="adm-card"><div class="adm-close">'
-    + '<div><label for="admQP">Nº DO PEDIDO</label><input class="adm-in" id="admQP" placeholder="AP-XXXXX" autocomplete="off"></div>'
+    + '<div><label for="admQP">Nº DO ORÇAMENTO</label><input class="adm-in" id="admQP" placeholder="AP-XXXXX" autocomplete="off"></div>'
     + '<div><label for="admQV">VALOR (R$)</label><input class="adm-in" id="admQV" inputmode="decimal" placeholder="0,00"></div>'
     + '<button class="adm-b pri" onclick="admFecharRapido()">MARCAR COMO FECHADO</button>'
     + '</div><div class="adm-msg" id="admQMsg"></div></div>';
@@ -1447,10 +1448,10 @@ function admRender() {
   h += '<div class="adm-h">RESUMO</div><div class="adm-hs">' + per + '</div><div class="adm-kpis">'
     + kpi(visitas.toLocaleString('pt-BR'), 'VISITAS', 'pessoas diferentes no site')
     + kpi(leads.length.toLocaleString('pt-BR'), 'LEADS NO WHATSAPP', pct(leads.length, visitas) + ' das visitas')
-    + kpi(fech.length.toLocaleString('pt-BR'), 'PEDIDOS FECHADOS', '', 'win')
+    + kpi(fech.length.toLocaleString('pt-BR'), 'VENDAS FECHADAS', 'orçamentos que viraram venda', 'win')
     + kpi(pct(fech.length, leads.length), 'TAXA DE CONVERSÃO', 'lead → venda', 'win')
-    + kpi(brl(fat), 'FATURAMENTO', 'pedidos fechados')
-    + kpi(fech.length ? brl(fat / fech.length) : '—', 'TICKET MÉDIO', 'por pedido fechado')
+    + kpi(brl(fat), 'FATURAMENTO', 'vendas fechadas')
+    + kpi(fech.length ? brl(fat / fech.length) : '—', 'TICKET MÉDIO', 'por venda fechada')
     + '</div>';
 
   // funil geral
@@ -1490,7 +1491,7 @@ function admRender() {
 
   // lista de pedidos
   const servs = [...new Set(leads.map(l => l.servico).filter(Boolean))].sort();
-  h += '<div class="adm-h">PEDIDOS</div><div class="adm-hs">Mude o status e o valor direto aqui. Salva sozinho.</div>'
+  h += '<div class="adm-h">ORÇAMENTOS</div><div class="adm-hs">Mude o status e o valor direto aqui. Salva sozinho.</div>'
     + '<div class="adm-filt">'
     + '<input class="adm-in" id="admFq" placeholder="BUSCAR Nº OU NOME" value="' + esc(ADM.filtro.q) + '">'
     + sel('admFst', ['', ...ADM_STATUS], ADM.filtro.st, 'TODOS OS STATUS')
@@ -1536,7 +1537,7 @@ function admListar() {
   const lista = leads.filter(l => (!q || String(l.pedido).toUpperCase().includes(q) || String(l.nome || '').toUpperCase().includes(q))
     && (!F.st || (l.status || 'NOVO') === F.st) && (!F.temp || l.temperatura === F.temp) && (!F.serv || l.servico === F.serv));
   const box = $a('admLeads');
-  if (!lista.length) { box.innerHTML = '<div class="adm-empty">Nenhum pedido encontrado.</div>'; return; }
+  if (!lista.length) { box.innerHTML = '<div class="adm-empty">Nenhum orçamento encontrado.</div>'; return; }
   const campos = [['FINALIDADE', 'finalidade'], ['GÊNERO', 'genero'], ['ATUAÇÃO', 'atuacao'], ['COMO CONHECEU', 'origem'], ['ABERTURA ATUAL', 'aberturaAtual'], ['DURAÇÃO', 'duracao'], ['INVESTIMENTO', 'investimento'], ['PRAZO', 'prazoTipo'], ['DATA', 'prazoData'], ['UTM / ORIGEM', 'utm_source'], ['CAMPANHA', 'utm_campaign'], ['VEIO DE', 'referrer'], ['APARELHO', 'dispositivo'], ['FECHADO EM', 'dataFechamento']];
   box.innerHTML = lista.slice(0, ADM.mostrar).map(l => {
     const st = l.status || 'NOVO', temp = l.temperatura || 'SEM DADOS';
@@ -1574,18 +1575,18 @@ async function admSalvar(pedido, dados, aviso) {
     if (aviso) { aviso.textContent = 'SALVO ✓'; setTimeout(() => { aviso.textContent = ''; }, 2500); }
     const novoStatus = (lead && lead.status) || dados.status;
     const card = aviso && aviso.closest('.adm-lead'); if (card) card.classList.toggle('fechou', novoStatus === 'FECHOU');
-  } else if (aviso) { aviso.style.color = 'var(--bad)'; aviso.textContent = erro === 'nao_encontrado' ? 'PEDIDO NÃO ENCONTRADO' : 'ERRO AO SALVAR'; }
+  } else if (aviso) { aviso.style.color = 'var(--bad)'; aviso.textContent = erro === 'nao_encontrado' ? 'ORÇAMENTO NÃO ENCONTRADO' : 'ERRO AO SALVAR'; }
   return { ok, erro };
 }
 async function admFecharRapido() {
   const p = admPedido($a('admQP').value), v = admNum($a('admQV').value), m = $a('admQMsg');
-  if (!p || p === 'AP-') { m.className = 'adm-msg err'; m.textContent = 'Digite o número do pedido.'; return; }
+  if (!p || p === 'AP-') { m.className = 'adm-msg err'; m.textContent = 'Digite o número do orçamento.'; return; }
   const lead = ADM.leads.find(l => l.pedido === p);
-  if (ADM.demo && !lead) { m.className = 'adm-msg err'; m.textContent = 'Pedido ' + p + ' não encontrado.'; return; }
+  if (ADM.demo && !lead) { m.className = 'adm-msg err'; m.textContent = 'Orçamento ' + p + ' não encontrado.'; return; }
   m.className = 'adm-msg'; m.textContent = 'Salvando...';
   const r = await admSalvar(p, { status: 'FECHOU', valor: v || (lead ? admNum(lead.valor) : 0), notas: lead ? (lead.notas || '') : '' });
-  if (r.ok) { m.className = 'adm-msg ok'; m.textContent = '✓ Pedido #' + p + ' marcado como FECHADO' + (v ? ' (' + brl(v) + ')' : '') + '.'; setTimeout(admCarregar, 1200); }
-  else { m.className = 'adm-msg err'; m.textContent = r.erro === 'nao_encontrado' ? 'Pedido ' + p + ' não encontrado na planilha.' : 'Não consegui salvar. Tente de novo.'; }
+  if (r.ok) { m.className = 'adm-msg ok'; m.textContent = '✓ Orçamento #' + p + ' marcado como FECHADO' + (v ? ' (' + brl(v) + ')' : '') + '.'; setTimeout(admCarregar, 1200); }
+  else { m.className = 'adm-msg err'; m.textContent = r.erro === 'nao_encontrado' ? 'Orçamento ' + p + ' não encontrado na planilha.' : 'Não consegui salvar. Tente de novo.'; }
 }
 
 /* ---------- modo exemplo (dados inventados) ---------- */
