@@ -249,6 +249,129 @@
         @keyframes tpPop{0%{transform:scale(1.18);filter:brightness(1.8)}100%{transform:scale(1);filter:brightness(1)}}
         @keyframes tpScan{0%{top:-40%}100%{top:120%}}
         @media (prefers-reduced-motion:reduce){.tp-fx::before,.tp-pop{animation:none}}
+
+  /* ===== FERRAMENTAS OCULTAS (ver FERRAMENTAS_ATIVAS no script) ===== */
+  html.tools-off .tool-only{display:none !important;}
+
+  /* ===== QUESTIONÁRIO: progresso, grade de opções, prazo, nome, pedido ===== */
+  .qprog{display:none;margin:0 auto 18px;max-width:420px;}
+  .qprog.on{display:block;}
+  .qprog-track{height:4px;border-radius:4px;background:rgba(255,255,255,0.12);overflow:hidden;}
+  .qprog-bar{height:100%;width:0;background:#ffffff;border-radius:4px;transition:width .35s ease;}
+  .qprog-txt{font-family:'Saira Semi Condensed',sans-serif;color:rgba(255,255,255,0.55);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-top:8px;}
+  .qopts.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+  .qopts.grid .quiz-opt{margin-bottom:0;padding:16px 14px;font-size:15px;text-align:center;}
+  .quiz-opt.hi{border-color:rgba(255,255,255,0.75);background:rgba(255,255,255,0.16);box-shadow:0 0 18px rgba(255,255,255,0.12);}
+  .quiz-opt.hi small{display:block;font-size:11px;letter-spacing:1.5px;color:rgba(255,255,255,0.6);margin-top:3px;}
+  .quiz-opt.sel{border-color:#ffffff;background:rgba(255,255,255,0.2);}
+  .date-box{display:none;margin:4px 0 16px;padding:16px;border:1px solid rgba(255,255,255,0.25);border-radius:12px;background:rgba(255,255,255,0.04);}
+  .date-box.on{display:block;}
+  .quiz-input-date::-webkit-calendar-picker-indicator{filter:invert(1);}
+  .q-warn{color:#fca5a5;font-family:'Saira Semi Condensed',sans-serif;font-size:13px;letter-spacing:1px;text-transform:uppercase;margin-top:8px;min-height:18px;text-align:left;}
+  .q-skip{font-family:'Saira Semi Condensed',sans-serif;background:none;border:0;color:rgba(255,255,255,0.5);font-size:13px;letter-spacing:1.5px;text-transform:uppercase;text-decoration:underline;cursor:pointer;margin:2px 0 14px;padding:6px;}
+  .q-skip:hover{color:#fff;}
+  .pedido-box{display:inline-flex;flex-direction:column;align-items:center;gap:4px;border:1px dashed rgba(255,255,255,0.45);border-radius:12px;padding:12px 22px;margin:4px 0 18px;}
+  .pedido-box span{font-family:'Saira Semi Condensed',sans-serif;color:rgba(255,255,255,0.55);font-size:11px;letter-spacing:2px;text-transform:uppercase;}
+  .pedido-box b{color:#fff;font-size:22px;letter-spacing:2px;}
+  .ld-pedido{font-family:'Saira Semi Condensed',sans-serif;color:rgba(255,255,255,0.7);font-size:15px;letter-spacing:2px;text-transform:uppercase;}
+  .ld-pedido b{color:#fff;}
+  .ld-fb{display:none;flex-direction:column;align-items:center;gap:10px;width:100%;}
+  .ld-fb.on{display:flex;}
+  .ld-fb p{font-family:'Saira Semi Condensed',sans-serif;color:rgba(255,255,255,0.6);font-size:13px;letter-spacing:1px;text-transform:uppercase;line-height:1.4;}
+  .ld-fb .btn-wp-final{margin-top:0;}
+  .ld-mini{font-family:'Saira Semi Condensed',sans-serif;background:transparent;border:1px dashed rgba(255,255,255,0.3);border-radius:10px;color:rgba(255,255,255,0.7);padding:10px 16px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;}
+  .ld-mini:hover{color:#fff;border-color:rgba(255,255,255,0.6);}
+
+  /* ===== PAINEL ADMINISTRATIVO (#admin) ===== */
+  html.adm-on .pw{display:none;}
+  html.adm-on body{overflow:auto;}
+  .adm{--bg:#06110b;--card:#0c1912;--card2:#112219;--line:rgba(255,255,255,0.10);--ink:#f4f7f5;--ink2:rgba(244,247,245,0.68);--ink3:rgba(244,247,245,0.45);--bar:#e8efe9;--bar2:rgba(232,239,233,0.16);--win:#facc15;--good:#4ade80;--bad:#f87171;--warm:#fb923c;--cold:#93c5fd;
+    position:fixed;inset:0;z-index:3000;background:var(--bg);color:var(--ink);font-family:'Saira Semi Condensed',Arial,sans-serif;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+  .adm[hidden]{display:none;}
+  .adm *{font-variant-numeric:tabular-nums;}
+  .adm-wrap{max-width:1120px;margin:0 auto;padding:18px 16px 60px;}
+  .adm-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:18px;}
+  .adm-brand{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
+  .adm-brand small{display:block;font-family:'Saira Semi Condensed',sans-serif;font-weight:500;font-size:12px;color:var(--ink3);letter-spacing:2px;margin-top:2px;}
+  .adm-act{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+  .adm-seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .adm-seg button{background:transparent;border:0;color:var(--ink2);font:600 13px 'Saira Semi Condensed',sans-serif;letter-spacing:1px;padding:8px 12px;cursor:pointer;}
+  .adm-seg button.on{background:var(--ink);color:var(--bg);}
+  .adm-b{background:var(--card2);border:1px solid var(--line);border-radius:10px;color:var(--ink);font:600 13px 'Saira Semi Condensed',sans-serif;letter-spacing:1px;padding:8px 14px;cursor:pointer;text-transform:uppercase;}
+  .adm-b:hover{border-color:rgba(255,255,255,0.35);}
+  .adm-b.pri{background:var(--win);color:#111;border-color:var(--win);}
+  .adm-b:disabled{opacity:.5;cursor:default;}
+  .adm-demo{background:rgba(250,204,21,0.12);border:1px solid rgba(250,204,21,0.4);color:#fde68a;border-radius:10px;padding:10px 14px;font-size:14px;margin-bottom:16px;}
+  .adm-h{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin:26px 0 4px;}
+  .adm-hs{color:var(--ink3);font-size:13px;margin-bottom:12px;}
+  .adm-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;}
+  .adm-close{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end;}
+  .adm-close label,.adm-lbl{display:block;color:var(--ink3);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+  .adm-in{width:100%;background:var(--bg);border:1px solid rgba(255,255,255,0.2);border-radius:10px;color:var(--ink);font:500 16px 'Saira Semi Condensed',sans-serif;padding:10px 12px;outline:none;}
+  .adm-in:focus{border-color:var(--ink);}
+  .adm-msg{font-size:14px;margin-top:10px;min-height:20px;color:var(--ink2);}
+  .adm-msg.ok{color:var(--good);} .adm-msg.err{color:var(--bad);}
+  .adm-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;}
+  .adm-kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;}
+  .adm-kpi .v{font-size:30px;font-weight:700;line-height:1.05;}
+  .adm-kpi .l{color:var(--ink2);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;}
+  .adm-kpi .s{color:var(--ink3);font-size:12px;margin-top:4px;}
+  .adm-kpi.win{border-color:rgba(250,204,21,0.45);}
+  .adm-kpi.win .v{color:var(--win);}
+  .adm-fun{display:flex;flex-direction:column;gap:8px;}
+  .adm-fr{display:grid;grid-template-columns:minmax(120px,190px) 1fr 120px;gap:10px;align-items:center;font-size:14px;}
+  .adm-fr .n{color:var(--ink2);}
+  .adm-fr .t{text-align:right;color:var(--ink2);font-size:13px;}
+  .adm-fr .t b{color:var(--ink);font-size:15px;}
+  .adm-track{height:22px;background:var(--bar2);border-radius:0 4px 4px 0;position:relative;}
+  .adm-fill{height:100%;background:var(--bar);border-radius:0 4px 4px 0;min-width:2px;}
+  .adm-fill.win{background:var(--win);}
+  .adm-drop{font-size:11px;color:var(--bad);margin-left:4px;}
+  .adm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;}
+  .adm-bk h4{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--ink);margin-bottom:2px;}
+  .adm-bk .hs{color:var(--ink3);font-size:12px;margin-bottom:10px;}
+  .adm-br{display:grid;grid-template-columns:minmax(96px,150px) 1fr;gap:4px 10px;align-items:center;padding:5px 0;font-size:14px;cursor:default;}
+  .adm-br:hover .adm-fill{background:#fff;}
+  .adm-br .lab{color:var(--ink2);line-height:1.2;font-size:13px;}
+  .adm-br .adm-track{height:14px;}
+  .adm-br .meta{grid-column:2;color:var(--ink3);font-size:12px;}
+  .adm-br .meta b{color:var(--ink);font-weight:600;}
+  .adm-br .meta .w{color:var(--win);font-weight:600;}
+  .adm-empty{color:var(--ink3);font-size:14px;padding:8px 0;}
+  .adm-filt{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+  .adm-filt .adm-in{width:auto;flex:1 1 160px;font-size:14px;padding:8px 10px;}
+  .adm-leads{display:flex;flex-direction:column;gap:8px;}
+  .adm-lead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:8px 14px;}
+  .adm-lead.fechou{border-color:rgba(250,204,21,0.5);}
+  .adm-lead .top{display:flex;flex-wrap:wrap;align-items:center;gap:8px;}
+  .adm-lead .pid{font-family:'Orbitron',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;}
+  .adm-lead .dt{color:var(--ink3);font-size:13px;}
+  .adm-lead .info{grid-column:1;color:var(--ink2);font-size:14px;line-height:1.45;}
+  .adm-lead .info b{color:var(--ink);font-weight:600;}
+  .adm-lead .ctl{grid-column:2;grid-row:1 / span 2;display:flex;flex-direction:column;gap:6px;min-width:170px;}
+  .adm-lead .ctl select,.adm-lead .ctl input{font-size:14px;padding:7px 9px;}
+  .adm-lead .sv{font-size:12px;color:var(--good);min-height:14px;text-align:right;}
+  .adm-lead details{grid-column:1 / -1;font-size:13px;color:var(--ink2);}
+  .adm-lead summary{cursor:pointer;color:var(--ink3);letter-spacing:1px;text-transform:uppercase;font-size:11px;}
+  .adm-lead dl{display:grid;grid-template-columns:max-content 1fr;gap:3px 12px;margin-top:8px;}
+  .adm-lead dt{color:var(--ink3);} .adm-lead dd{color:var(--ink);word-break:break-word;}
+  .chip{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:100px;padding:2px 9px;border:1px solid currentColor;}
+  .chip.QUENTE{color:var(--warm);} .chip.MORNO{color:var(--win);} .chip.FRIO{color:var(--cold);} .chip.SEM{color:var(--ink3);}
+  .chip.st-FECHOU{color:var(--win);} .chip.st-PERDIDO{color:var(--bad);} .chip.st-NOVO{color:var(--ink2);} .chip.st-EM{color:var(--good);}
+  .adm-login{max-width:420px;margin:8vh auto 0;}
+  .adm-login p{color:var(--ink2);font-size:15px;line-height:1.5;margin-bottom:14px;}
+  .adm-login ol{color:var(--ink2);font-size:14px;line-height:1.6;padding-left:20px;margin:10px 0 16px;}
+  .adm-spin{width:34px;height:34px;border:3px solid rgba(255,255,255,0.15);border-top-color:#fff;border-radius:50%;animation:spinLoader .7s linear infinite;margin:40px auto;}
+  .adm-more{display:block;margin:12px auto 0;}
+  @media (max-width:640px){
+    .adm-close{grid-template-columns:1fr 1fr;}
+    .adm-close .adm-b{grid-column:1 / -1;}
+    .adm-fr{grid-template-columns:96px 1fr 84px;font-size:13px;}
+    .adm-grid{grid-template-columns:1fr;}
+    .adm-lead{grid-template-columns:1fr;}
+    .adm-lead .ctl{grid-column:1;grid-row:auto;flex-direction:row;flex-wrap:wrap;min-width:0;}
+    .adm-lead .ctl > *{flex:1 1 130px;}
+  }
 </style>
 </head>
 <body>
@@ -276,7 +399,14 @@
     <div class="ld-box">
       <div class="ld-spin"></div>
       <div class="ld-txt">ESTAMOS INDO PRO WHATSAPP<span id="typewriterTarget"></span><span class="ld-cursor"></span></div>
-      <div class="ld-timer" id="loadingTimer">CONECTANDO EM 5S...</div>
+      <div class="ld-pedido" id="ldPedido"></div>
+      <div class="ld-timer" id="loadingTimer">CONECTANDO EM 2S...</div>
+      <div class="ld-fb" id="ldFallback">
+        <p>O WHATSAPP NÃO ABRIU?</p>
+        <a href="#" class="btn-wp-final" id="ldFallbackLink" target="_blank" rel="noopener">TOCAR AQUI PARA ABRIR</a>
+        <button type="button" class="ld-mini" id="ldCopy" onclick="copyPedido()">COPIAR Nº DO PEDIDO</button>
+        <button type="button" class="ld-mini" onclick="closeLoader()">← VOLTAR AO SITE</button>
+      </div>
     </div>
   </div>
 
@@ -303,6 +433,7 @@
         <div class="gradual-item" style="animation-delay: 1.6s; margin-bottom: 12px;">
           <button class="quiz-opt" style="margin-bottom:0;" onclick="selectPurpose('OUTRO')">🚀 OUTRO</button>
         </div>
+        <div class="tool-only">
         <p class="sl2 gradual-item" style="animation-delay: 1.8s;">FERRAMENTA PARA DJs</p>
         <div class="gradual-item" style="animation-delay: 2.0s; margin-bottom: 12px;">
           <a href="#studio" class="btn bstudio" onclick="openStudioPro(event)">
@@ -319,6 +450,7 @@
             </div>
             <div class="bs">SUA LOGO EM VÍDEO 3D ANIMADO, COM OU SEM FUNDO</div>
           </a>
+        </div>
         </div>
       </div>
 
@@ -401,6 +533,7 @@
           <div class="bs">NOME ARTÍSTICO E ACOMPANHAMENTO</div>
         </a>
 
+        <div class="tool-only">
         <p class="sl2 gradual-item" style="animation-delay: 2.0s;">FERRAMENTA PARA DJs</p>
         <div class="gradual-item" style="animation-delay: 2.2s; margin-bottom: 12px;">
           <a href="#studio" class="btn bstudio" onclick="openStudioPro(event)">
@@ -418,82 +551,13 @@
             <div class="bs">SUA LOGO EM VÍDEO 3D ANIMADO, COM OU SEM FUNDO</div>
           </a>
         </div>
+        </div>
       </div>
 
       <div id="quizSection">
-        <div class="quiz-step active" id="step1">
-          <p class="quiz-title" id="title1"></p>
-          <button class="quiz-opt" onclick="nextStep(1, 'Sim')">✅ SIM, RESPONDER RÁPIDO</button>
-          <button class="quiz-opt" onclick="bypassToFinal()">❌ NÃO. PREFIRO QUE DEMORE MAIS O ATENDIMENTO</button>
-          <button class="quiz-reset-full" onclick="resetToMainMenu()">🏠 VOLTAR PARA O INÍCIO</button>
-        </div>
-        
-        <div class="quiz-step" id="step2">
-          <p class="quiz-title" id="title2"></p>
-          <button class="quiz-opt" onclick="nextStep(2, 'Sim, trabalho com eventos')">🎤 SIM, TRABALHO PROFISSIONALMENTE COM SHOWS/EVENTOS</button>
-          <button class="quiz-opt" onclick="nextStep(2, 'Sim, mas estou começando')">🎧 SIM, MAS AINDA ESTOU COMEÇANDO NA CARREIRA</button>
-          <button class="quiz-opt" onclick="nextStep(2, 'Ainda não sou profissional')">🚫 APENAS HOBBY / NÃO ATUO EM EVENTOS</button>
-          <button class="quiz-back" onclick="prevStep(2)">← VOLTAR</button>
-          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 INÍCIO</button>
-        </div>
-        
-        <div class="quiz-step" id="step3">
-          <p class="quiz-title" id="title3"></p>
-          <button class="quiz-opt" onclick="nextStep(3, 'Sim, acompanho')">📺 SIM, ACOMPANHO!</button>
-          <button class="quiz-opt" onclick="nextStep(3, 'Não, conheci agora!')">🤩 NÃO, CONHECI AGORA!</button>
-          <button class="quiz-opt" onclick="nextStep(3, 'Acompanho há muitos anos')">👑 ACOMPANHO HÁ MUITOS ANOS!</button>
-          <button class="quiz-back" onclick="prevStep(3)">← VOLTAR</button>
-          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 INÍCIO</button>
-        </div>
-        
-        <div class="quiz-step" id="step4">
-          <p class="quiz-title" id="title4"></p>
-          <button class="quiz-opt" onclick="nextStep(4, 'Sim, profissional')">🔥 SIM, JÁ UTILIZO UMA ABERTURA DE ALTO NÍVEL</button>
-          <button class="quiz-opt" onclick="nextStep(4, 'Sim, mas simples')">⚡ SIM, MAS É UM MATERIAL BÁSICO E ANTIGO</button>
-          <button class="quiz-opt" onclick="nextStep(4, 'Não utilizo')">❌ NÃO UTILIZO NENHUMA ABERTURA NO MOMENTO</button>
-          <button class="quiz-back" onclick="prevStep(4)">← VOLTAR</button>
-          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 INÍCIO</button>
-        </div>
-        
-        <div class="quiz-step" id="step5">
-          <p class="quiz-title" id="title5"></p>
-          <button class="quiz-opt" onclick="nextStep(5, '1 minuto')">⏱️ 1 MINUTO</button>
-          <button class="quiz-opt" onclick="nextStep(5, '1 minuto e meio')">⏱️ 1 MINUTO E MEIO (1:30)</button>
-          <button class="quiz-opt" onclick="nextStep(5, '2 minutos')">⏱️ 2 MINUTOS</button>
-          <button class="quiz-opt" onclick="nextStep(5, '2 minutos e meio')">⏱️ 2 MINUTOS E MEIO (2:30)</button>
-          <button class="quiz-opt" onclick="nextStep(5, '3 minutos')">⏱️ 3 MINUTOS</button>
-          <button class="quiz-back" onclick="prevStep(5)">← VOLTAR</button>
-          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 INÍCIO</button>
-        </div>
-        
-        <div class="quiz-step" id="step6">
-          <p class="quiz-title" id="title6"></p>
-          <button class="quiz-opt" onclick="nextStep(6, 'Sim, quero investir pois já tenho um evento para usar')">💎 SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR</button>
-          <button class="quiz-opt" onclick="nextStep(6, 'Está ainda no campo das ideias')">📈 ESTÁ AINDA NO CAMPO DAS IDEIAS</button>
-          <button class="quiz-opt" onclick="nextStep(6, 'No momento estou apenas pesquisando opções e valores')">🔍 NO MOMENTO ESTOU APENAS PESQUISANDO OPÇÕES E VALORES</button>
-          <button class="quiz-back" onclick="prevStep(6)">← VOLTAR</button>
-          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 INÍCIO</button>
-        </div>
-        
-        <div class="quiz-step" id="step7">
-          <p class="quiz-title" id="title7"></p>
-          <div class="input-date-container">
-            <label class="input-date-label" for="datePickerInput">SELECIONE O DIA LIMITE:</label>
-            <input type="date" class="quiz-input-date" id="datePickerInput">
-          </div>
-          <button class="quiz-opt" style="text-align:center; background:rgba(255,255,255,0.15);" onclick="captureDateAndProceed()">CONFIRMAR DATA DE ENTREGA</button>
-          <button class="quiz-back" onclick="prevStep(7)">← VOLTAR</button>
-          <button class="quiz-reset" onclick="resetToMainMenu()">🏠 INÍCIO</button>
-        </div>
-        
-        <div class="quiz-step" id="stepFinal">
-          <h2 class="ttl" style="margin-bottom:12px;"><span>ENTENDIDO!</span></h2>
-          <p class="sub" style="font-size:16px; color:#fff; line-height:1.4;" id="finalText">PERFEITO! COM BASE NAS SUAS RESPOSTAS, SEU ATENDIMENTO SERÁ BEM MAIS RÁPIDO.</p>
-          <div class="dv" style="margin-bottom:24px;"></div>
-          <a href="#" class="btn-wp-final" onclick="executeFinalRedirect(event)">AVANÇAR PARA O WHATSAPP</a>
-          <button class="quiz-back" style="margin-top:20px;" onclick="prevStep('Final')">← MODIFICAR RESPOSTAS</button>
-          <button class="quiz-reset-full" style="margin-top:10px;" onclick="resetToMainMenu()">🏠 VOLTAR PARA O INÍCIO</button>
-        </div>
+        <!-- As perguntas são montadas pelo script (veja STEPS e FLOWS) -->
+        <div class="qprog" id="qProg"><div class="qprog-track"><div class="qprog-bar" id="qProgBar"></div></div><p class="qprog-txt" id="qProgTxt"></p></div>
+        <div id="quizStage"></div>
       </div>
     </div>
   </div>
@@ -539,18 +603,26 @@
 </div>
 
 <script>
-let userAnswers = { finalidade: "", serviçoEscolhido: "", autorizacao: "", atuacao: "", conheceCanal: "", aberturaAtual: "", duracaoDesejada: "", intencaoInvestimento: "", dataLimiteEntrega: "NÃO INFORMADA / SEM DATA PREVISTA" };
-const WHATSAPP_NUMBER = "556191073673"; 
+/* ==========================================================================
+   CONFIGURAÇÕES PRINCIPAIS
+   ========================================================================== */
+// FERRAMENTAS (Studio Pro + Logo 3D): ocultas por enquanto.
+// Quando o dono pedir "ative as ferramentas", mudar para true.
+// (Os links diretos aberturaparashow.com.br/#studio e /#logo3d continuam funcionando.)
+const FERRAMENTAS_ATIVAS = false;
 
-const quizTexts = { 
-  1: "ESTAMOS COM ALTO VOLUME DE ATENDIMENTOS.\n\nPOSSO FAZER ALGUMAS PERGUNTAS RÁPIDAS PARA TE PASSAR UM ORÇAMENTO MAIS RÁPIDO?", 
-  2: "VOCÊ JÁ TRABALHA E ATUA ATIVAMENTE COMO ARTISTA PROFISSIONAL?", 
-  3: "VOCÊ JÁ CONHECIA O CANAL ABERTURA PARA SHOWS ANTES?", 
-  4: "VOCÊ JÁ POSSUI ALGUMA ABERTURA ESTRUTURADA PARA SEUS SHOWS?", 
-  5: "QUAL É A DURAÇÃO ESTIMADA QUE VOCÊ DESEJA PARA A SUA ABERTURA?", 
-  6: "PRETENDE INVESTIR POR AGORA? OU:", 
-  7: "PARA QUAL DATA LIMITE VOCÊ PRECISA DESSE PROJETO PRONTO E ENTREGUE?" 
-};
+// Endereço do Apps Script da Planilha Google que guarda leads e acessos (painel em /#admin).
+// Cole aqui a URL da implantação, a que termina em /exec. Vazio = nada é enviado.
+const PLANILHA_URL = "";
+
+const WHATSAPP_NUMBER = "556191073673";
+
+if (!FERRAMENTAS_ATIVAS) document.documentElement.classList.add('tools-off');
+
+function novasRespostas() {
+  return { pedido: "", finalidade: "", servico: "", fluxo: "", autorizacao: "", atuacao: "", genero: "", origem: "", aberturaAtual: "", duracao: "", investimento: "", prazoTipo: "", prazoData: "", nome: "", temperatura: "" };
+}
+let userAnswers = novasRespostas();
 
 function animateCounters(){
   document.querySelectorAll('[data-target]').forEach(el=>{
@@ -564,17 +636,6 @@ function animateCounters(){
   });
 }
 
-/* NOVA FUNÇÃO: Trata a escolha do segmento inicial e exibe o menu principal */
-function selectPurpose(purpose) {
-  userAnswers.finalidade = purpose;
-  document.getElementById('purposeSection').style.display = 'none';
-  document.getElementById('headerBrandSection').style.display = 'block';
-  document.getElementById('mainMenuSection').style.display = 'block';
-  
-  // Executa os contadores e os efeitos de brilho do layout original
-  setTimeout(animateCounters, 100);
-  runIntroGuidance();
-}
 
 /* ==========================================================================
    MECÂNICA DE SCROLL TRAVADA + FLASH DE BACKLIGHT SEQUENCIAL COM ATRAZO
@@ -928,124 +989,297 @@ scrollArea.addEventListener('touchend', () => {
 }, { passive: true });
 
 /* ==========================================================================
-   LÓGICA DOS MENUS E QUIZ
+   RASTREAMENTO (vai para a Planilha Google e para o Google Analytics)
    ========================================================================== */
-function handleMenuSelection(event, nomeServico, requereQuiz) {
+function _ss(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k, v); } catch (e) { return null; } }
+function _ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { return null; } }
+const _ALFA = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";   // sem 0/O/1/I para não confundir
+function rid(n) { let s = ""; const r = (window.crypto && crypto.getRandomValues) ? crypto.getRandomValues(new Uint8Array(n)) : null; for (let i = 0; i < n; i++) s += _ALFA[(r ? r[i] : Math.floor(Math.random() * 256)) % _ALFA.length]; return s; }
+const SESSAO = _ss('ap_s') || (() => { const s = rid(10); _ss('ap_s', s); return s; })();
+const UTM = (() => {
+  let u = { source: "", medium: "", campaign: "" };
+  try {
+    const p = new URLSearchParams(location.search);
+    if (p.get('utm_source')) { u = { source: p.get('utm_source') || "", medium: p.get('utm_medium') || "", campaign: p.get('utm_campaign') || "" }; _ss('ap_utm', JSON.stringify(u)); }
+    else { const g = _ss('ap_utm'); if (g) u = JSON.parse(g); }
+  } catch (e) {}
+  return u;
+})();
+const REFERRER = (() => { try { const r = document.referrer ? new URL(document.referrer).hostname : ""; return r && r !== location.hostname ? r : ""; } catch (e) { return ""; } })();
+const DISPOSITIVO = (() => { try { return matchMedia('(pointer: coarse)').matches ? 'CELULAR' : 'COMPUTADOR'; } catch (e) { return ''; } })();
+// o navegador onde o dono entrou no painel não conta nas estatísticas (dá para mudar no painel)
+function ignorarEsteAparelho() { return _ls('ap_ignorar') === '1'; }
+
+let _evQ = [], _evT = 0;
+function track(evento, etapa, valor) {
+  try { gtag('event', evento, { etapa: etapa || '', valor: valor || '', servico: userAnswers.servico || '', finalidade: userAnswers.finalidade || '' }); } catch (e) {}
+  if (!PLANILHA_URL || ignorarEsteAparelho()) return;
+  _evQ.push([new Date().toISOString(), SESSAO, evento, etapa || '', valor || '', userAnswers.servico || '', userAnswers.finalidade || '', UTM.source || REFERRER || '', DISPOSITIVO]);
+  clearTimeout(_evT); _evT = setTimeout(flushEventos, 1500);
+}
+function enviarPlanilha(obj) {
+  if (!PLANILHA_URL) return;
+  try { fetch(PLANILHA_URL, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(obj) }).catch(() => {}); } catch (e) {}
+}
+function flushEventos() { clearTimeout(_evT); if (!_evQ.length) return; const lote = _evQ; _evQ = []; enviarPlanilha({ a: 'ev', ev: lote }); }
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushEventos(); });
+window.addEventListener('pagehide', flushEventos);
+if (!/^#admin/.test(location.hash)) track('visita', '', location.pathname);
+
+/* ==========================================================================
+   QUESTIONÁRIO: perguntas e caminhos
+   Para mudar o texto de uma pergunta ou opção, edite STEPS.
+   Cada opção é [texto do botão, valor que vai para o WhatsApp e para o painel].
+   ========================================================================== */
+const STEPS = {
+  autorizacao: { t: "ESTAMOS COM ALTO VOLUME DE ATENDIMENTOS.\n\nPOSSO FAZER ALGUMAS PERGUNTAS RÁPIDAS PARA TE PASSAR UM ORÇAMENTO MAIS RÁPIDO?", semContagem: true,
+    o: [["✅ SIM, RESPONDER RÁPIDO", "SIM"], ["❌ NÃO. PREFIRO QUE DEMORE MAIS O ATENDIMENTO", "NÃO"]] },
+  atuacao: { t: "VOCÊ JÁ TRABALHA E ATUA ATIVAMENTE COMO ARTISTA PROFISSIONAL?",
+    o: [["🎤 SIM, TRABALHO PROFISSIONALMENTE COM SHOWS/EVENTOS", "PROFISSIONAL"], ["🎧 SIM, MAS AINDA ESTOU COMEÇANDO NA CARREIRA", "COMEÇANDO"], ["🚫 APENAS HOBBY / NÃO ATUO EM EVENTOS", "HOBBY"]] },
+  genero: { t: "QUAL É O SEU GÊNERO MUSICAL?", grade: true,
+    o: [["FUNK", "FUNK"], ["SERTANEJO", "SERTANEJO"], ["ELETRÔNICA", "ELETRÔNICA"], ["PAGODE / SAMBA", "PAGODE / SAMBA"], ["GOSPEL", "GOSPEL"], ["RAP / TRAP", "RAP / TRAP"], ["FORRÓ / PISEIRO", "FORRÓ / PISEIRO"], ["POP / ROCK", "POP / ROCK"], ["AXÉ / ARROCHA", "AXÉ / ARROCHA"], ["OUTRO / VÁRIOS", "OUTRO / VÁRIOS"]] },
+  origem: { t: "COMO VOCÊ CONHECEU O ABERTURA PARA SHOWS?", grade: true,
+    o: [["📸 INSTAGRAM", "INSTAGRAM"], ["▶️ YOUTUBE", "YOUTUBE"], ["🎵 TIKTOK", "TIKTOK"], ["🤝 INDICAÇÃO", "INDICAÇÃO"], ["🔎 GOOGLE", "GOOGLE"], ["✨ OUTRO", "OUTRO"]] },
+  aberturaAtual: { t: "VOCÊ JÁ POSSUI ALGUMA ABERTURA ESTRUTURADA PARA SEUS SHOWS?",
+    o: [["🔥 SIM, JÁ UTILIZO UMA ABERTURA DE ALTO NÍVEL", "SIM, DE ALTO NÍVEL"], ["⚡ SIM, MAS É UM MATERIAL BÁSICO E ANTIGO", "SIM, MAS BÁSICA/ANTIGA"], ["❌ NÃO UTILIZO NENHUMA ABERTURA NO MOMENTO", "NÃO UTILIZA"]] },
+  duracao: { t: "QUAL É A DURAÇÃO ESTIMADA QUE VOCÊ DESEJA PARA A SUA ABERTURA?",
+    o: [["⏱️ 1 MINUTO", "1 MINUTO"], ["⏱️ 1 MINUTO E MEIO (1:30)", "1:30"], ["⏱️ 2 MINUTOS", "2 MINUTOS"], ["⏱️ 2 MINUTOS E MEIO (2:30)", "2:30"], ["⏱️ 3 MINUTOS", "3 MINUTOS"], ["🤔 NÃO SEI, QUERO UMA INDICAÇÃO", "NÃO SABE / QUER INDICAÇÃO"]] },
+  investimento: { t: "PRETENDE INVESTIR POR AGORA? OU:",
+    o: [["💎 SIM, QUERO INVESTIR POIS JÁ TENHO UM EVENTO PARA USAR", "SIM, JÁ TEM EVENTO"], ["📈 ESTÁ AINDA NO CAMPO DAS IDEIAS", "CAMPO DAS IDEIAS"], ["🔍 NO MOMENTO ESTOU APENAS PESQUISANDO OPÇÕES E VALORES", "SÓ PESQUISANDO"]] },
+  prazo: { t: "PARA QUANDO VOCÊ PRECISA DESSE PROJETO PRONTO?", tipo: 'prazo' },
+  nome: { t: "PARA FINALIZAR: QUAL É O SEU NOME ARTÍSTICO?", tipo: 'nome' }
+};
+const FLOWS = {
+  abertura:  ['autorizacao', 'atuacao', 'genero', 'origem', 'aberturaAtual', 'duracao', 'investimento', 'prazo', 'nome'],
+  remix:     ['genero', 'prazo', 'nome'],
+  marketing: ['genero', 'prazo', 'nome'],
+  patente:   ['prazo', 'nome']
+};
+function fluxoDoServico(nome) {
+  const n = nome.toUpperCase();
+  if (n.startsWith('ABERTURA')) return 'abertura';
+  if (n.startsWith('REMIX')) return 'remix';
+  if (n.startsWith('PATENTE')) return 'patente';
+  return 'marketing';
+}
+// quem é hobby ou só está pesquisando não precisa responder o prazo
+function pularEtapa(k) {
+  if (k === 'prazo') return userAnswers.atuacao === 'HOBBY' || userAnswers.investimento === 'SÓ PESQUISANDO';
+  return false;
+}
+
+let quizFlow = [], quizHist = [], quizCur = null, typeTok = 0;
+
+function selectPurpose(purpose) {
+  userAnswers.finalidade = purpose;
+  track('finalidade', '', purpose);
+  document.getElementById('purposeSection').style.display = 'none';
+  document.getElementById('headerBrandSection').style.display = 'block';
+  document.getElementById('mainMenuSection').style.display = 'block';
+  setTimeout(animateCounters, 100);
+  runIntroGuidance();
+}
+
+function handleMenuSelection(event, nomeServico) {
   event.preventDefault();
-  userAnswers.serviçoEscolhido = nomeServico.toUpperCase(); 
-  if(requereQuiz) {
-    document.getElementById('headerBrandSection').style.display = 'none';
-    document.getElementById('mainMenuSection').style.display = 'none';
-    document.getElementById('quizSection').style.display = 'block';
-    runTypewriterQuestion(1);
-  } else {
-    executeDirectBypassRedirect(nomeServico);
-  }
+  userAnswers.servico = nomeServico.toUpperCase();
+  userAnswers.fluxo = fluxoDoServico(nomeServico);
+  track('servico', '', userAnswers.servico);
+  quizFlow = FLOWS[userAnswers.fluxo];
+  quizHist = []; quizCur = null;
+  document.getElementById('headerBrandSection').style.display = 'none';
+  document.getElementById('mainMenuSection').style.display = 'none';
+  document.getElementById('quizSection').style.display = 'block';
+  document.getElementById('scrollArea').scrollTo({ top: 0 });
+  renderStep(quizFlow[0]);
 }
 
 function resetToMainMenu() {
-  userAnswers = { finalidade: "", serviçoEscolhido: "", autorizacao: "", atuacao: "", conheceCanal: "", aberturaAtual: "", duracaoDesejada: "", intencaoInvestimento: "", dataLimiteEntrega: "NÃO INFORMADA / SEM DATA PREVISTA" };
-  document.querySelectorAll('.quiz-step').forEach(step => {
-    step.classList.remove('active');
-  });
+  const fin = userAnswers.finalidade, etapaAnterior = quizCur;
+  userAnswers = novasRespostas();
+  quizHist = []; quizCur = null; typeTok++;
+  document.getElementById('quizStage').innerHTML = '';
+  document.getElementById('qProg').classList.remove('on');
   document.getElementById('quizSection').style.display = 'none';
   document.getElementById('headerBrandSection').style.display = 'none';
   document.getElementById('mainMenuSection').style.display = 'none';
   document.getElementById('purposeSection').style.display = 'block';
-  document.getElementById('step1').classList.add('active');
-  const dateInput = document.getElementById('datePickerInput');
-  if (dateInput) dateInput.value = '';
+  document.getElementById('scrollArea').scrollTo({ top: 0 });
   introRan = false;
+  if (fin) track('voltou_inicio', etapaAnterior || '', '');
 }
 
-function bypassToFinal() {
-    userAnswers.autorizacao = "NÃO"; 
-    document.getElementById('step1').classList.remove('active');
-    document.getElementById('stepFinal').classList.add('active');
-    document.getElementById('finalText').textContent = "SEM PROBLEMAS! O ATENDIMENTO SERÁ FEITO NO SEU TEMPO. CLIQUE ABAIXO PARA INICIAR A CONVERSA.";
+function proximaEtapa(k) {
+  let i = quizFlow.indexOf(k) + 1;
+  while (i < quizFlow.length && pularEtapa(quizFlow[i])) i++;
+  return i < quizFlow.length ? quizFlow[i] : 'final';
+}
+function irPara(k) { if (quizCur) quizHist.push(quizCur); renderStep(k); }
+function responder(k, valor) {
+  userAnswers[k] = valor;
+  track('resposta', k, valor);
+  if (k === 'autorizacao' && valor === 'NÃO') return irPara('final');
+  irPara(proximaEtapa(k));
+}
+function voltarEtapa() {
+  if (!quizHist.length) return resetToMainMenu();
+  renderStep(quizHist.pop());
 }
 
-function nextStep(current, value) {
-  const upperVal = value.toUpperCase();
-  if(current === 1) userAnswers.autorizacao = upperVal;
-  if(current === 2) userAnswers.atuacao = upperVal;
-  if(current === 3) userAnswers.conheceCanal = upperVal;
-  if(current === 4) userAnswers.aberturaAtual = upperVal;
-  if(current === 5) userAnswers.duracaoDesejada = upperVal;
-  if(current === 6) userAnswers.intencaoInvestimento = upperVal;
-  
-  document.getElementById(`step${current}`).classList.remove('active');
-  let nextTarget = current + 1;
-  
-  if(current === 6) {
-    const artistaReal = (userAnswers.atuacao === "SIM, TRABALHO COM EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
-    const intencaoReal = (userAnswers.intencaoInvestimento === "SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR" || userAnswers.intencaoInvestimento === "ESTÁ AINDA NO CAMPO DAS IDEIAS");
-    nextTarget = (artistaReal && intencaoReal) ? 7 : 'Final'; 
+function atualizarProgresso(k) {
+  const box = document.getElementById('qProg');
+  if (k === 'final' || STEPS[k].semContagem) { box.classList.remove('on'); return; }
+  const vis = quizFlow.filter(s => !STEPS[s].semContagem && !pularEtapa(s));
+  const i = vis.indexOf(k) + 1, tot = vis.length;
+  box.classList.add('on');
+  document.getElementById('qProgBar').style.width = Math.round(i / tot * 100) + '%';
+  document.getElementById('qProgTxt').textContent = 'PERGUNTA ' + i + ' DE ' + tot;
+}
+
+function escHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+const NAV_HTML = '<button class="quiz-back" onclick="voltarEtapa()">← VOLTAR</button><button class="quiz-reset" onclick="resetToMainMenu()">🏠 INÍCIO</button>';
+
+function renderStep(k) {
+  quizCur = k;
+  const stage = document.getElementById('quizStage');
+  atualizarProgresso(k);
+  track('etapa', k, userAnswers.fluxo);
+  if (k === 'final') { renderFinal(stage); return; }
+  const st = STEPS[k];
+  let h = '<p class="quiz-title" id="qTitle"></p>';
+  if (st.tipo === 'prazo') {
+    const hoje = new Date(); const iso = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    const atual = userAnswers.prazoTipo === 'DATA ESPECÍFICA' ? userAnswers.prazoData : '';
+    h += '<button class="quiz-opt hi" onclick="abrirData()">📅 TENHO UMA DATA ESPECÍFICA<small>RECOMENDADO: GARANTE SUA DATA NA AGENDA</small></button>'
+      + '<div class="date-box' + (atual ? ' on' : '') + '" id="dateBox"><label class="input-date-label" for="datePickerInput">SELECIONE O DIA DO EVENTO / ENTREGA:</label>'
+      + '<input type="date" class="quiz-input-date" id="datePickerInput" min="' + iso(hoje) + '" value="' + (atual ? isoDeBR(atual) : '') + '">'
+      + '<div class="q-warn" id="dateWarn"></div>'
+      + '<button class="quiz-opt" style="text-align:center;background:rgba(255,255,255,0.15);margin:8px 0 0;" onclick="confirmarData()">CONFIRMAR DATA</button></div>'
+      + '<button class="quiz-opt" onclick="escolherPrazo(\'URGENTE (ATÉ 7 DIAS)\')">🚨 TENHO URGÊNCIA (ATÉ 7 DIAS)</button>'
+      + '<button class="quiz-opt" onclick="escolherPrazo(\'POUCA URGÊNCIA / SEM PRESSA\')">🕊️ POUCA URGÊNCIA / SEM PRESSA</button>';
+  } else if (st.tipo === 'nome') {
+    h += '<div class="input-date-container"><label class="input-date-label" for="nomeInput">NOME ARTÍSTICO (OPCIONAL):</label>'
+      + '<input type="text" class="quiz-input-date" id="nomeInput" maxlength="60" autocomplete="off" placeholder="EX.: DJ FULANO" value="' + escHtml(userAnswers.nome) + '"></div>'
+      + '<button class="quiz-opt" style="text-align:center;background:rgba(255,255,255,0.15);" onclick="confirmarNome()">CONTINUAR</button>'
+      + '<button class="q-skip" onclick="userAnswers.nome=\'\';irPara(\'final\')">PULAR ESTA PERGUNTA</button><br>';
+  } else {
+    h += '<div class="qopts' + (st.grade ? ' grid' : '') + '">' + st.o.map(([txt, val]) =>
+      '<button class="quiz-opt' + (userAnswers[k] === val ? ' sel' : '') + '" data-v="' + escHtml(val) + '">' + escHtml(txt) + '</button>').join('') + '</div>';
   }
-  
-  let nextEl = document.getElementById(`step${nextTarget}`);
-  if(nextEl) { nextEl.classList.add('active'); runTypewriterQuestion(nextTarget); } else { document.getElementById('stepFinal').classList.add('active'); }
+  h += (k === quizFlow[0] && k === 'autorizacao')
+    ? '<button class="quiz-reset-full" onclick="resetToMainMenu()">🏠 VOLTAR PARA O INÍCIO</button>'
+    : NAV_HTML;
+  stage.innerHTML = '<div class="quiz-step active">' + h + '</div>';
+  stage.querySelectorAll('.qopts .quiz-opt').forEach(b => b.addEventListener('click', () => responder(k, b.dataset.v)));
+  const ni = document.getElementById('nomeInput');
+  if (ni) ni.addEventListener('keydown', e => { if (e.key === 'Enter') confirmarNome(); });
+  typewriter(document.getElementById('qTitle'), st.t);
 }
 
-function prevStep(current) {
-  if(current === 'Final') {
-    document.getElementById('stepFinal').classList.remove('active');
-    if(userAnswers.autorizacao === "SIM") {
-        const artistaReal = (userAnswers.atuacao === "SIM, TRABALHO COM EVENTOS" || userAnswers.atuacao === "SIM, MAS ESTOU COMEÇANDO");
-        const intencaoReal = (userAnswers.intencaoInvestimento === "SIM, QUERO INVESTIR POIS JÁ TENHO EM EVENTO PARA USAR" || userAnswers.intencaoInvestimento === "ESTÁ AINDA NO CAMPO DAS IDEIAS");
-        if(artistaReal && intencaoReal) { document.getElementById('step7').classList.add('active'); runTypewriterQuestion(7); } else { document.getElementById('step6').classList.add('active'); runTypewriterQuestion(6); }
-    } else {
-        document.getElementById('step1').classList.add('active');
-        runTypewriterQuestion(1);
-    }
-    return;
+function typewriter(el, text) {
+  const tok = ++typeTok; el.textContent = ''; let i = 0;
+  (function type() { if (tok !== typeTok) return; if (i < text.length) { el.textContent += text.charAt(i++); setTimeout(type, 18); } })();
+}
+
+function dataBR(iso) { const [y, m, d] = iso.split('-'); return d + '/' + m + '/' + y; }
+function isoDeBR(br) { const [d, m, y] = br.split('/'); return y + '-' + m + '-' + d; }
+function abrirData() { const b = document.getElementById('dateBox'); b.classList.add('on'); const i = document.getElementById('datePickerInput'); try { i.focus(); i.showPicker && i.showPicker(); } catch (e) {} }
+function confirmarData() {
+  const v = document.getElementById('datePickerInput').value, w = document.getElementById('dateWarn');
+  if (!v) { w.textContent = 'ESCOLHA UMA DATA NO CALENDÁRIO.'; return; }
+  const hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+  if (new Date(v + 'T00:00:00') < hoje) { w.textContent = 'ESSA DATA JÁ PASSOU. ESCOLHA UMA DATA FUTURA.'; return; }
+  userAnswers.prazoTipo = 'DATA ESPECÍFICA'; userAnswers.prazoData = dataBR(v);
+  track('resposta', 'prazo', 'DATA ESPECÍFICA');
+  irPara(proximaEtapa('prazo'));
+}
+function escolherPrazo(tipo) { userAnswers.prazoTipo = tipo; userAnswers.prazoData = ''; track('resposta', 'prazo', tipo); irPara(proximaEtapa('prazo')); }
+function confirmarNome() { userAnswers.nome = (document.getElementById('nomeInput').value || '').trim().toUpperCase().slice(0, 60); track('resposta', 'nome', userAnswers.nome ? 'PREENCHEU' : 'VAZIO'); irPara('final'); }
+
+/* Nota do lead (só aparece no painel, nunca na mensagem do cliente) */
+function calcularTemperatura(a) {
+  if (a.autorizacao === 'NÃO') return 'SEM DADOS';
+  let p = a.fluxo === 'abertura' ? 0 : 2;
+  p += ({ 'PROFISSIONAL': 3, 'COMEÇANDO': 1, 'HOBBY': -2 })[a.atuacao] || 0;
+  p += ({ 'SIM, JÁ TEM EVENTO': 3, 'CAMPO DAS IDEIAS': 1, 'SÓ PESQUISANDO': -2 })[a.investimento] || 0;
+  if (a.prazoTipo === 'DATA ESPECÍFICA') { p += 2; const d = new Date(isoDeBR(a.prazoData) + 'T00:00:00'); if ((d - Date.now()) / 864e5 <= 30) p += 1; }
+  else if (a.prazoTipo && a.prazoTipo.startsWith('URGENTE')) p += 2;
+  if (a.aberturaAtual === 'SIM, MAS BÁSICA/ANTIGA' || a.aberturaAtual === 'NÃO UTILIZA') p += 1;
+  if (a.nome) p += 1;
+  return p >= 6 ? 'QUENTE' : p >= 3 ? 'MORNO' : 'FRIO';
+}
+
+function renderFinal(stage) {
+  if (!userAnswers.pedido) userAnswers.pedido = 'AP-' + rid(5);
+  const semPerguntas = userAnswers.autorizacao === 'NÃO';
+  stage.innerHTML = '<div class="quiz-step active">'
+    + '<h2 class="ttl" style="margin-bottom:12px;"><span>ENTENDIDO!</span></h2>'
+    + '<p class="sub" style="font-size:16px;color:#fff;line-height:1.4;">' + (semPerguntas
+      ? 'SEM PROBLEMAS! O ATENDIMENTO SERÁ FEITO NO SEU TEMPO. CLIQUE ABAIXO PARA INICIAR A CONVERSA.'
+      : 'PERFEITO! COM BASE NAS SUAS RESPOSTAS, SEU ATENDIMENTO SERÁ BEM MAIS RÁPIDO.') + '</p>'
+    + '<div class="pedido-box"><span>SEU NÚMERO DE PEDIDO</span><b>#' + userAnswers.pedido + '</b></div>'
+    + '<div class="dv" style="margin-bottom:24px;"></div>'
+    + '<a href="#" class="btn-wp-final" onclick="executeFinalRedirect(event)"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm4.27 12.4c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4h-.46c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>AVANÇAR PARA O WHATSAPP</a>'
+    + '<button class="quiz-back" style="margin-top:20px;" onclick="voltarEtapa()">← MODIFICAR RESPOSTAS</button>'
+    + '<button class="quiz-reset" style="margin-top:20px;" onclick="resetToMainMenu()">🏠 INÍCIO</button>'
+    + '</div>';
+}
+
+function montarMensagem() {
+  const a = userAnswers, L = ['PEDIDO #' + a.pedido];
+  if (a.autorizacao === 'NÃO') {
+    L.push('OLÁ! TUDO BEM? VI SEUS SERVIÇOS E FIQUEI INTERESSADO NA PRODUÇÃO DE ' + a.servico);
+    if (a.finalidade) L.push('FINALIDADE: ' + a.finalidade);
+    return L.join('\n');
   }
-  document.getElementById(`step${current}`).classList.remove('active');
-  let prevTarget = current - 1;
-  document.getElementById(`step${prevTarget}`).classList.add('active');
-  runTypewriterQuestion(prevTarget);
+  L.push('OLÁ! QUERO UM ORÇAMENTO PARA: ' + a.servico);
+  const add = (r, v) => { if (v) L.push(r + ': ' + v); };
+  add('NOME ARTÍSTICO', a.nome);
+  add('FINALIDADE', a.finalidade);
+  add('GÊNERO MUSICAL', a.genero);
+  add('ATUAÇÃO', a.atuacao);
+  add('ABERTURA ATUAL', a.aberturaAtual);
+  add('DURAÇÃO', a.duracao);
+  add('INVESTIMENTO', a.investimento);
+  add('PRAZO', a.prazoTipo === 'DATA ESPECÍFICA' ? 'DATA ESPECÍFICA: ' + a.prazoData : a.prazoTipo);
+  add('COMO CONHECEU', a.origem);
+  return L.join('\n');
 }
 
-function runTypewriterQuestion(stepId) {
-  const targetEl = document.getElementById(`title${stepId}`);
-  if(!targetEl) return;
-  targetEl.textContent = "";
-  const text = quizTexts[stepId];
-  let charIndex = 0;
-  function type() { if (charIndex < text.length) { targetEl.textContent += text.charAt(charIndex); charIndex++; setTimeout(type, 18); } }
-  type();
-}
-
-function executeDirectBypassRedirect(nomeServico) {
-  const loader = document.getElementById('loadingScreen');
-  loader.classList.add('active');
-  const msg = `OLÁ! TUDO BEM? VI SEUS SERVIÇOS E FIQUEI INTERESSADO NA PRODUÇÃO DE ${nomeServico.toUpperCase()}\nFINALIDADE: ${userAnswers.finalidade}`;
-  const wpUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`;
-  setTimeout(() => { window.location.href = wpUrl; }, 2000);
-}
-
+let _wpUrl = '', _ldTimers = [];
 function executeFinalRedirect(event) {
   event.preventDefault();
-  const loader = document.getElementById('loadingScreen');
-  loader.classList.add('active');
-  
-  let msg;
-  if(userAnswers.autorizacao === "SIM") {
-      msg = `OLÁ! QUERO UM ORÇAMENTO PARA: ${userAnswers.serviçoEscolhido}\nFINALIDADE: ${userAnswers.finalidade}\nATUAÇÃO: ${userAnswers.atuacao}\nJÁ CONHECE O CANAL: ${userAnswers.conheceCanal}\nABERTURA ATUAL: ${userAnswers.aberturaAtual}\nDURAÇÃO: ${userAnswers.duracaoDesejada}\nENTREGA: ${userAnswers.dataLimiteEntrega}`;
-  } else {
-      msg = `OLÁ! TUDO BEM? VI SEUS SERVIÇOS E FIQUEI INTERESSADO NA PRODUÇÃO DE ${userAnswers.serviçoEscolhido}\nFINALIDADE: ${userAnswers.finalidade}`;
-  }
-  
-  const wpUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(msg)}`;
-  setTimeout(() => { window.location.href = wpUrl; }, 2000);
+  const a = userAnswers;
+  a.temperatura = calcularTemperatura(a);
+  _wpUrl = 'https://api.whatsapp.com/send?phone=' + WHATSAPP_NUMBER + '&text=' + encodeURIComponent(montarMensagem());
+  // registra o lead na planilha
+  track('lead', 'final', a.pedido); flushEventos();
+  if (!ignorarEsteAparelho()) enviarPlanilha({ a: 'lead', lead: {
+    pedido: a.pedido, data: new Date().toISOString(), servico: a.servico, finalidade: a.finalidade, nome: a.nome, genero: a.genero,
+    atuacao: a.atuacao, origem: a.origem, aberturaAtual: a.aberturaAtual, duracao: a.duracao, investimento: a.investimento,
+    prazoTipo: a.prazoTipo, prazoData: a.prazoData, temperatura: a.temperatura, autorizacao: a.autorizacao,
+    utm_source: UTM.source, utm_medium: UTM.medium, utm_campaign: UTM.campaign, referrer: REFERRER, dispositivo: DISPOSITIVO, sessao: SESSAO } });
+  try { gtag('event', 'generate_lead', { pedido: a.pedido, servico: a.servico, finalidade: a.finalidade, temperatura: a.temperatura }); } catch (e) {}
+  // tela de carregamento
+  _ldTimers.forEach(clearTimeout); _ldTimers = [];
+  document.getElementById('ldPedido').innerHTML = 'PEDIDO <b>#' + a.pedido + '</b>';
+  document.getElementById('ldFallbackLink').href = _wpUrl;
+  document.getElementById('ldFallback').classList.remove('on');
+  const timer = document.getElementById('loadingTimer');
+  timer.style.display = ''; timer.textContent = 'CONECTANDO EM 2S...';
+  document.getElementById('loadingScreen').classList.add('active');
+  _ldTimers.push(setTimeout(() => { timer.textContent = 'CONECTANDO EM 1S...'; }, 1000));
+  _ldTimers.push(setTimeout(() => { window.location.href = _wpUrl; }, 2000));
+  _ldTimers.push(setTimeout(() => { timer.style.display = 'none'; document.getElementById('ldFallback').classList.add('on'); track('whatsapp_nao_abriu', 'final', a.pedido); }, 4500));
 }
-
-function captureDateAndProceed() {
-  const dateInput = document.getElementById('datePickerInput').value;
-  userAnswers.dataLimiteEntrega = dateInput ? dateInput : "NÃO INFORMADA / SEM DATA PREVISTA";
-  document.getElementById('step7').classList.remove('active');
-  document.getElementById('stepFinal').classList.add('active');
+function closeLoader() { _ldTimers.forEach(clearTimeout); _ldTimers = []; document.getElementById('loadingScreen').classList.remove('active'); }
+function copyPedido() {
+  const t = '#' + userAnswers.pedido, b = document.getElementById('ldCopy');
+  const ok = () => { b.textContent = 'COPIADO: ' + t; };
+  try { navigator.clipboard.writeText(t).then(ok, () => { b.textContent = 'SEU PEDIDO: ' + t; }); } catch (e) { b.textContent = 'SEU PEDIDO: ' + t; }
 }
+// voltou do WhatsApp pelo botão "voltar": mostra o plano B em vez da tela travada
+window.addEventListener('pageshow', e => { if (e.persisted && document.getElementById('loadingScreen').classList.contains('active')) { _ldTimers.forEach(clearTimeout); document.getElementById('loadingTimer').style.display = 'none'; document.getElementById('ldFallback').classList.add('on'); } });
 </script>
 <script>
 /* Studio DJ Opener Pro (código completo, embutido) */
@@ -1056,12 +1290,12 @@ const STUDIO_HTML = "<!DOCTYPE html>\n<html lang=\"pt-BR\" class=\"dark\">\n<hea
 /* LOGO 3D direto: aberturaparashow.com.br/#logo3d abre a ferramenta em tela cheia, sem o Studio em volta */
 function shareFromHash(){ const m=/^#logo3d=([A-Za-z0-9_-]+)/.exec(location.hash); return m?m[1]:''; }
 function logo3dHtml(share){
-  const tag='<script type="text/plain" id="f3d-src">', a=STUDIO_HTML.indexOf(tag);
+  const tag='<scr'+'ipt type="text/plain" id="f3d-src">', a=STUDIO_HTML.indexOf(tag);
   if (a<0) return '';
   const b=STUDIO_HTML.indexOf('<'+'/script>', a+tag.length);
-  return STUDIO_HTML.slice(a+tag.length, b).replace(/<\\\/script/g, '<'+'/script').replace(/<\\!--/g, '<!--')
+  return STUDIO_HTML.slice(a+tag.length, b).replace(/<\\\/script/g, '<'+'/script').replace(/<\\!--/g, '<!'+'--')
     .replace('<html lang="pt-BR" class="studio">', '<html lang="pt-BR" class="studio standalone">')
-    .replace('<head>', ()=> share ? '<head><script>window.__F3D_SHARE='+JSON.stringify(share)+';<'+'/script>' : '<head>');
+    .replace('<head>', ()=> share ? '<head><scr'+'ipt>window.__F3D_SHARE='+JSON.stringify(share)+';<'+'/script>' : '<head>');
 }
 function openLogo3d(ev, fromHash){
   if (ev) ev.preventDefault();
@@ -1087,6 +1321,316 @@ function closeLogo3d(){
 }
 window.addEventListener('popstate', ()=>{ if (/^#logo3d/.test(location.hash)) openLogo3d(null, true); else hideLogo3d(); });
 if (/^#logo3d/.test(location.hash)) window.addEventListener('load', ()=>openLogo3d(null, true));
+</script>
+
+<!-- ================= PAINEL ADMINISTRATIVO: aberturaparashow.com.br/#admin ================= -->
+<div class="adm" id="adminOv" hidden>
+  <div class="adm-wrap">
+    <div class="adm-top">
+      <div class="adm-brand">PAINEL ADMINISTRATIVO<small>ABERTURA PARA SHOWS · LEADS E CONVERSÃO</small></div>
+      <div class="adm-act" id="admActions" style="display:none">
+        <div class="adm-seg" id="admPeriod">
+          <button data-d="7">7 DIAS</button><button data-d="30" class="on">30 DIAS</button><button data-d="90">90 DIAS</button><button data-d="0">TUDO</button>
+        </div>
+        <button class="adm-b" onclick="admCarregar()">↻ ATUALIZAR</button>
+        <button class="adm-b" onclick="admSair()">SAIR</button>
+      </div>
+      <button class="adm-b" onclick="admFechar()">✕ VOLTAR AO SITE</button>
+    </div>
+    <div id="admBody"></div>
+  </div>
+</div>
+
+<script>
+/* ==========================================================================
+   PAINEL ADMINISTRATIVO
+   Abre em /#admin. A senha é conferida pela Planilha (Apps Script), não fica no site.
+   ========================================================================== */
+const ADM = { k: '', dias: 30, demo: false, leads: [], ev: [], filtro: { q: '', st: '', temp: '', serv: '' }, mostrar: 40 };
+const ADM_STATUS = ['NOVO', 'EM CONVERSA', 'FECHOU', 'PERDIDO'];
+const $a = id => document.getElementById(id);
+const brl = v => 'R$ ' + (Number(v) || 0).toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+const pct = (a, b) => b ? (a / b * 100).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + '%' : '—';
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function admNum(v) { if (typeof v === 'number') return v; v = String(v || '').replace(/[^\d,.-]/g, ''); if (v.includes(',')) v = v.replace(/\./g, '').replace(',', '.'); return parseFloat(v) || 0; }
+function admPedido(v) { v = String(v || '').toUpperCase().replace(/[#\s]/g, ''); if (v && !v.startsWith('AP-')) v = 'AP-' + v.replace(/^AP/, ''); return v; }
+function admData(iso) { const d = new Date(iso); return isNaN(d) ? '' : d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); }
+
+function admAbrir() {
+  document.documentElement.classList.add('adm-on');
+  $a('adminOv').hidden = false;
+  ADM.k = _ss('ap_k') || '';
+  if (ADM.demo || ADM.k) { $a('admActions').style.display = ''; admCarregar(); } else admLogin();
+}
+function admFechar() {
+  $a('adminOv').hidden = true; document.documentElement.classList.remove('adm-on');
+  if (/^#admin/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
+}
+function admSair() { _ss('ap_k', ''); ADM.k = ''; ADM.demo = false; $a('admActions').style.display = 'none'; admLogin(); }
+window.addEventListener('hashchange', () => { if (/^#admin/.test(location.hash)) admAbrir(); });
+if (/^#admin/.test(location.hash)) admAbrir();
+
+function admLogin(msg) {
+  const semPlanilha = !PLANILHA_URL;
+  $a('admBody').innerHTML = '<div class="adm-login adm-card">'
+    + (semPlanilha
+      ? '<p><b>O painel ainda não está ligado à planilha.</b> Enquanto isso, nenhum dado é guardado.</p>'
+        + '<ol><li>Crie uma Planilha Google e abra <b>Extensões → Apps Script</b>.</li><li>Cole o código do arquivo <b>painel-planilha.gs</b> e troque a senha.</li><li>Clique em <b>Implantar → Nova implantação → App da Web</b> (acesso: qualquer pessoa).</li><li>Cole a URL gerada em <b>PLANILHA_URL</b> no topo do script do index.html.</li></ol>'
+        + '<button class="adm-b pri" onclick="admDemo()">VER O PAINEL COM DADOS DE EXEMPLO</button>'
+      : '<p>Digite a senha do painel (a mesma que está no Apps Script da planilha).</p>'
+        + '<label class="adm-lbl" for="admSenha">SENHA</label><input class="adm-in" type="password" id="admSenha" autocomplete="current-password">'
+        + '<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="adm-b pri" id="admEntrar" onclick="admEntrar()">ENTRAR</button><button class="adm-b" onclick="admDemo()">VER EXEMPLO</button></div>'
+        + '<div class="adm-msg err" id="admLoginMsg">' + esc(msg || '') + '</div>')
+    + '</div>';
+  const s = $a('admSenha'); if (s) { s.focus(); s.addEventListener('keydown', e => { if (e.key === 'Enter') admEntrar(); }); }
+}
+async function admEntrar() {
+  const k = $a('admSenha').value.trim(); if (!k) return;
+  $a('admEntrar').disabled = true; $a('admLoginMsg').textContent = 'CONFERINDO...'; $a('admLoginMsg').className = 'adm-msg';
+  try {
+    const r = await admGet(k, ADM.dias);
+    if (!r.ok) { admLogin(r.erro === 'senha' ? 'Senha incorreta.' : 'A planilha respondeu com erro.'); return; }
+    ADM.k = k; _ss('ap_k', k); ADM.demo = false;
+    if (_ls('ap_ignorar') === null) _ls('ap_ignorar', '1');   // por padrão, seus próprios acessos não contam
+    $a('admActions').style.display = '';
+    admUsar(r);
+  } catch (e) { admLogin('Não consegui falar com a planilha. Confira a URL em PLANILHA_URL e a implantação (acesso: qualquer pessoa).'); }
+}
+async function admGet(k, dias) {
+  const r = await fetch(PLANILHA_URL + '?a=dados&k=' + encodeURIComponent(k) + '&dias=' + dias, { cache: 'no-store' });
+  return r.json();
+}
+async function admCarregar() {
+  if (ADM.demo) { admRender(); return; }
+  $a('admBody').innerHTML = '<div class="adm-spin"></div>';
+  try {
+    const r = await admGet(ADM.k, ADM.dias);
+    if (!r.ok) { if (r.erro === 'senha') { _ss('ap_k', ''); admLogin('Senha incorreta.'); } else admLogin('A planilha respondeu com erro.'); return; }
+    admUsar(r);
+  } catch (e) { $a('admBody').innerHTML = '<div class="adm-card adm-msg err">Não consegui carregar os dados. Verifique a internet e toque em ATUALIZAR.</div>'; }
+}
+function admUsar(r) { ADM.leads = r.leads || []; ADM.ev = r.ev || []; admRender(); }
+$a('admPeriod').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  $a('admPeriod').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+  ADM.dias = Number(b.dataset.d); ADM.mostrar = 40; admCarregar();
+});
+
+/* ---------- dados no período ---------- */
+function admNoPeriodo(iso) { if (!ADM.dias) return true; return new Date(iso) >= Date.now() - ADM.dias * 864e5; }
+function admPeriodo() {
+  const leads = ADM.leads.filter(l => admNoPeriodo(l.data)).sort((a, b) => String(b.data).localeCompare(String(a.data)));
+  const ev = ADM.ev.filter(e => admNoPeriodo(e[0]));
+  return { leads, ev };
+}
+function sessoesCom(ev, fn) { const s = new Set(); ev.forEach(e => { if (fn(e)) s.add(e[1]); }); return s; }
+
+/* ---------- desenho ---------- */
+function admRender() {
+  const { leads, ev } = admPeriodo();
+  const fech = leads.filter(l => l.status === 'FECHOU');
+  const fat = fech.reduce((s, l) => s + admNum(l.valor), 0);
+  const visitas = sessoesCom(ev, e => e[2] === 'visita').size;
+  const per = ADM.dias ? 'NOS ÚLTIMOS ' + ADM.dias + ' DIAS' : 'DESDE O INÍCIO';
+  let h = '';
+  if (ADM.demo) h += '<div class="adm-demo">⚠️ MODO EXEMPLO: estes números são inventados, só para você ver como o painel funciona. ' + (PLANILHA_URL ? '' : 'Ligue a planilha para ver os dados reais.') + '</div>';
+
+  // marcar pedido fechado
+  h += '<div class="adm-h">FECHOU UM PEDIDO?</div><div class="adm-hs">Digite o número que veio na mensagem do WhatsApp (ex.: AP-7K3MQ) e o valor fechado.</div>'
+    + '<div class="adm-card"><div class="adm-close">'
+    + '<div><label for="admQP">Nº DO PEDIDO</label><input class="adm-in" id="admQP" placeholder="AP-XXXXX" autocomplete="off"></div>'
+    + '<div><label for="admQV">VALOR (R$)</label><input class="adm-in" id="admQV" inputmode="decimal" placeholder="0,00"></div>'
+    + '<button class="adm-b pri" onclick="admFecharRapido()">MARCAR COMO FECHADO</button>'
+    + '</div><div class="adm-msg" id="admQMsg"></div></div>';
+
+  // KPIs
+  h += '<div class="adm-h">RESUMO</div><div class="adm-hs">' + per + '</div><div class="adm-kpis">'
+    + kpi(visitas.toLocaleString('pt-BR'), 'VISITAS', 'pessoas diferentes no site')
+    + kpi(leads.length.toLocaleString('pt-BR'), 'LEADS NO WHATSAPP', pct(leads.length, visitas) + ' das visitas')
+    + kpi(fech.length.toLocaleString('pt-BR'), 'PEDIDOS FECHADOS', '', 'win')
+    + kpi(pct(fech.length, leads.length), 'TAXA DE CONVERSÃO', 'lead → venda', 'win')
+    + kpi(brl(fat), 'FATURAMENTO', 'pedidos fechados')
+    + kpi(fech.length ? brl(fat / fech.length) : '—', 'TICKET MÉDIO', 'por pedido fechado')
+    + '</div>';
+
+  // funil geral
+  const f = [
+    ['ENTROU NO SITE', visitas],
+    ['ESCOLHEU FINALIDADE', sessoesCom(ev, e => e[2] === 'finalidade').size],
+    ['ESCOLHEU SERVIÇO', sessoesCom(ev, e => e[2] === 'servico').size],
+    ['RESPONDEU PERGUNTAS', sessoesCom(ev, e => e[2] === 'resposta').size],
+    ['FOI PRO WHATSAPP', leads.length],
+    ['FECHOU', fech.length]
+  ];
+  h += '<div class="adm-h">FUNIL DE ATENDIMENTO</div><div class="adm-hs">Quantas pessoas chegaram em cada passo. Em vermelho, quanto se perdeu do passo anterior.</div>'
+    + '<div class="adm-card"><div class="adm-fun">' + funil(f, true) + '</div></div>';
+
+  // onde desistem no questionário de abertura
+  const etapas = FLOWS.abertura.concat(['final']);
+  const nomesEt = { autorizacao: 'ACEITOU PERGUNTAS?', atuacao: 'ATUAÇÃO', genero: 'GÊNERO', origem: 'COMO CONHECEU', aberturaAtual: 'ABERTURA ATUAL', duracao: 'DURAÇÃO', investimento: 'INVESTIMENTO', prazo: 'PRAZO', nome: 'NOME ARTÍSTICO', final: 'TELA FINAL' };
+  const fq = etapas.map(k => [nomesEt[k], sessoesCom(ev, e => e[2] === 'etapa' && e[3] === k && e[4] === 'abertura').size]);
+  fq.push(['FOI PRO WHATSAPP', sessoesCom(ev, e => e[2] === 'lead' && /^ABERTURA/.test(e[5])).size]);
+  h += '<div class="adm-h">ONDE DESISTEM NO QUESTIONÁRIO</div><div class="adm-hs">Só abertura (completa e áudio). Pessoas que viram cada pergunta.</div>'
+    + '<div class="adm-card"><div class="adm-fun">' + (fq[0][1] ? funil(fq, true) : '<div class="adm-empty">Ainda sem dados no período.</div>') + '</div></div>';
+
+  // onde está o interesse
+  const contaEv = (tipo) => { const m = {}; const vistos = new Set(); ev.forEach(e => { if (e[2] !== tipo) return; const key = e[1] + '|' + e[4]; if (vistos.has(key)) return; vistos.add(key); m[e[4]] = (m[e[4]] || 0) + 1; }); return m; };
+  h += '<div class="adm-h">ONDE ESTÁ O INTERESSE</div><div class="adm-hs">Barra = volume. Embaixo: leads, fechados e a taxa de conversão de cada grupo. Conta só quem respondeu a pergunta.</div><div class="adm-grid">'
+    + quebra('SERVIÇO', 'cliques em cada serviço', leads, 'servico', contaEv('servico'))
+    + quebra('FINALIDADE', 'quem escolheu cada finalidade', leads, 'finalidade', contaEv('finalidade'))
+    + quebra('GÊNERO MUSICAL', 'leads por gênero', leads, 'genero')
+    + quebra('COMO CONHECEU', 'resposta do cliente', leads, 'origem')
+    + quebra('PRAZO', 'urgência do cliente', leads, 'prazoTipo')
+    + quebra('TEMPERATURA DO LEAD', 'nota calculada pelas respostas', leads, 'temperatura')
+    + quebra('INVESTIMENTO', 'intenção declarada', leads, 'investimento')
+    + quebra('ATUAÇÃO', 'momento da carreira', leads, 'atuacao')
+    + quebra('DURAÇÃO', 'tempo de abertura pedido', leads, 'duracao')
+    + quebra('ORIGEM DO ACESSO', 'campanha (UTM) ou site de onde veio', leads.map(l => Object.assign({}, l, { _orig: l.utm_source || l.referrer || 'DIRETO / WHATSAPP' })), '_orig')
+    + '</div>';
+
+  // lista de pedidos
+  const servs = [...new Set(leads.map(l => l.servico).filter(Boolean))].sort();
+  h += '<div class="adm-h">PEDIDOS</div><div class="adm-hs">Mude o status e o valor direto aqui. Salva sozinho.</div>'
+    + '<div class="adm-filt">'
+    + '<input class="adm-in" id="admFq" placeholder="BUSCAR Nº OU NOME" value="' + esc(ADM.filtro.q) + '">'
+    + sel('admFst', ['', ...ADM_STATUS], ADM.filtro.st, 'TODOS OS STATUS')
+    + sel('admFtemp', ['', 'QUENTE', 'MORNO', 'FRIO', 'SEM DADOS'], ADM.filtro.temp, 'TODAS AS TEMPERATURAS')
+    + sel('admFserv', ['', ...servs], ADM.filtro.serv, 'TODOS OS SERVIÇOS')
+    + '</div><div class="adm-leads" id="admLeads"></div>';
+
+  h += '<div style="margin-top:28px;color:var(--ink3);font-size:13px;"><label style="cursor:pointer"><input type="checkbox" id="admIgn" ' + (_ls('ap_ignorar') === '1' ? 'checked' : '') + '> Não contar os meus acessos e testes feitos neste aparelho</label></div>';
+
+  $a('admBody').innerHTML = h;
+  $a('admFq').addEventListener('input', e => { ADM.filtro.q = e.target.value; ADM.mostrar = 40; admListar(); });
+  [['admFst', 'st'], ['admFtemp', 'temp'], ['admFserv', 'serv']].forEach(([id, k]) => $a(id).addEventListener('change', e => { ADM.filtro[k] = e.target.value; ADM.mostrar = 40; admListar(); }));
+  $a('admIgn').addEventListener('change', e => _ls('ap_ignorar', e.target.checked ? '1' : '0'));
+  admListar();
+}
+function kpi(v, l, s, cls) { return '<div class="adm-kpi ' + (cls || '') + '"><div class="v">' + v + '</div><div class="l">' + l + '</div>' + (s ? '<div class="s">' + s + '</div>' : '') + '</div>'; }
+function funil(rows, mostrarQueda) {
+  const max = Math.max(1, ...rows.map(r => r[1]));
+  return rows.map(([n, v], i) => {
+    const ant = i ? rows[i - 1][1] : 0, queda = i && ant ? Math.round((1 - v / ant) * 100) : 0;
+    return '<div class="adm-fr" title="' + esc(n) + ': ' + v + '"><div class="n">' + esc(n) + '</div><div class="adm-track"><div class="adm-fill' + (n === 'FECHOU' ? ' win' : '') + '" style="width:' + (v / max * 100) + '%"></div></div>'
+      + '<div class="t"><b>' + v.toLocaleString('pt-BR') + '</b>' + (mostrarQueda && i && queda > 0 ? '<span class="adm-drop">−' + queda + '%</span>' : '') + '</div></div>';
+  }).join('');
+}
+function quebra(titulo, sub, leads, campo, base) {
+  const m = {};
+  leads.forEach(l => { if (!l[campo]) return; const k = l[campo]; (m[k] = m[k] || { l: 0, f: 0, v: 0 }); m[k].l++; if (l.status === 'FECHOU') { m[k].f++; m[k].v += admNum(l.valor); } });
+  if (base) Object.keys(base).forEach(k => { m[k] = m[k] || { l: 0, f: 0, v: 0 }; m[k].b = base[k]; });
+  let rows = Object.entries(m).map(([k, o]) => ({ k, b: base ? (o.b || 0) : o.l, l: o.l, f: o.f, v: o.v }));
+  rows.sort((a, b) => b.b - a.b || b.l - a.l);
+  if (rows.length > 9) { const resto = rows.slice(8); rows = rows.slice(0, 8); rows.push(resto.reduce((s, r) => ({ k: 'OUTROS', b: s.b + r.b, l: s.l + r.l, f: s.f + r.f, v: s.v + r.v }), { k: 'OUTROS', b: 0, l: 0, f: 0, v: 0 })); }
+  const max = Math.max(1, ...rows.map(r => r.b));
+  const corpo = rows.length ? rows.map(r => '<div class="adm-br" title="' + esc(r.k) + (base ? ' · ' + r.b + ' cliques' : '') + ' · ' + r.l + ' leads · ' + r.f + ' fechados · ' + brl(r.v) + '">'
+      + '<div class="lab">' + esc(r.k) + '</div><div class="adm-track"><div class="adm-fill" style="width:' + (r.b / max * 100) + '%"></div></div>'
+      + '<div class="meta">' + (base ? '<b>' + r.b + '</b> cliques · ' : '') + '<b>' + r.l + '</b> ' + (r.l === 1 ? 'lead' : 'leads') + ' · <span class="w">' + r.f + (r.f === 1 ? ' fechado' : ' fechados') + '</span> · conv. <b>' + pct(r.f, r.l) + '</b></div></div>').join('')
+    : '<div class="adm-empty">Sem dados no período.</div>';
+  return '<div class="adm-card adm-bk"><h4>' + titulo + '</h4><div class="hs">' + sub + '</div>' + corpo + '</div>';
+}
+function sel(id, opts, cur, vazio) { return '<select class="adm-in" id="' + id + '">' + opts.map(o => '<option value="' + esc(o) + '"' + (o === cur ? ' selected' : '') + '>' + esc(o || vazio) + '</option>').join('') + '</select>'; }
+
+function admListar() {
+  const { leads } = admPeriodo(), F = ADM.filtro, q = F.q.trim().toUpperCase();
+  const lista = leads.filter(l => (!q || String(l.pedido).toUpperCase().includes(q) || String(l.nome || '').toUpperCase().includes(q))
+    && (!F.st || (l.status || 'NOVO') === F.st) && (!F.temp || l.temperatura === F.temp) && (!F.serv || l.servico === F.serv));
+  const box = $a('admLeads');
+  if (!lista.length) { box.innerHTML = '<div class="adm-empty">Nenhum pedido encontrado.</div>'; return; }
+  const campos = [['FINALIDADE', 'finalidade'], ['GÊNERO', 'genero'], ['ATUAÇÃO', 'atuacao'], ['COMO CONHECEU', 'origem'], ['ABERTURA ATUAL', 'aberturaAtual'], ['DURAÇÃO', 'duracao'], ['INVESTIMENTO', 'investimento'], ['PRAZO', 'prazoTipo'], ['DATA', 'prazoData'], ['UTM / ORIGEM', 'utm_source'], ['CAMPANHA', 'utm_campaign'], ['VEIO DE', 'referrer'], ['APARELHO', 'dispositivo'], ['FECHADO EM', 'dataFechamento']];
+  box.innerHTML = lista.slice(0, ADM.mostrar).map(l => {
+    const st = l.status || 'NOVO', temp = l.temperatura || 'SEM DADOS';
+    const prazo = l.prazoTipo === 'DATA ESPECÍFICA' ? 'DATA: ' + l.prazoData : (l.prazoTipo || '');
+    return '<div class="adm-lead' + (st === 'FECHOU' ? ' fechou' : '') + '" data-p="' + esc(l.pedido) + '">'
+      + '<div class="top"><span class="pid">#' + esc(l.pedido) + '</span><span class="chip ' + temp.split(' ')[0] + '">' + esc(temp) + '</span><span class="dt">' + admData(l.data) + '</span></div>'
+      + '<div class="info"><b>' + esc(l.servico) + '</b>' + (l.nome ? ' · ' + esc(l.nome) : '') + (l.genero ? ' · ' + esc(l.genero) : '') + (prazo ? ' · ' + esc(prazo) : '') + (l.finalidade ? ' · ' + esc(l.finalidade) : '') + '</div>'
+      + '<div class="ctl">' + sel('', ADM_STATUS, st, '').replace('<select class="adm-in" id="">', '<select class="adm-in" data-f="status" aria-label="Status">')
+      + '<input class="adm-in" data-f="valor" inputmode="decimal" placeholder="VALOR R$" value="' + (admNum(l.valor) ? esc(String(admNum(l.valor)).replace('.', ',')) : '') + '" aria-label="Valor">'
+      + '<div class="sv"></div></div>'
+      + '<details><summary>VER TODAS AS RESPOSTAS E ANOTAÇÕES</summary><dl>' + campos.filter(([, c]) => l[c]).map(([n, c]) => '<dt>' + n + '</dt><dd>' + esc(c === 'dataFechamento' ? admData(l[c]) : l[c]) + '</dd>').join('') + '</dl>'
+      + '<label class="adm-lbl" style="margin-top:10px">ANOTAÇÕES</label><input class="adm-in" data-f="notas" value="' + esc(l.notas || '') + '" placeholder="EX.: PEDIU DESCONTO, VOLTA SEXTA"></details>'
+      + '</div>';
+  }).join('') + (lista.length > ADM.mostrar ? '<button class="adm-b adm-more" onclick="ADM.mostrar+=40;admListar()">MOSTRAR MAIS (' + (lista.length - ADM.mostrar) + ')</button>' : '');
+  box.querySelectorAll('.adm-lead [data-f]').forEach(inp => inp.addEventListener('change', () => {
+    const card = inp.closest('.adm-lead'), p = card.dataset.p;
+    const dados = { status: card.querySelector('[data-f=status]').value, valor: admNum(card.querySelector('[data-f=valor]').value), notas: card.querySelector('[data-f=notas]').value };
+    admSalvar(p, dados, card.querySelector('.sv'));
+  }));
+}
+
+async function admSalvar(pedido, dados, aviso) {
+  const lead = ADM.leads.find(l => l.pedido === pedido);
+  if (aviso) { aviso.style.color = ''; aviso.textContent = 'SALVANDO...'; }
+  let ok = true, erro = '';
+  if (!ADM.demo) {
+    try {
+      const r = await fetch(PLANILHA_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ a: 'upd', k: ADM.k, pedido }, dados)) }).then(x => x.json());
+      ok = !!r.ok; erro = r.erro || '';
+      if (ok && r.lead) Object.assign(dados, r.lead);
+    } catch (e) { ok = false; erro = 'rede'; }
+  }
+  if (ok) {
+    if (lead) { const antes = lead.status; Object.assign(lead, dados); if (dados.status === 'FECHOU' && antes !== 'FECHOU' && !lead.dataFechamento) lead.dataFechamento = new Date().toISOString(); }
+    if (aviso) { aviso.textContent = 'SALVO ✓'; setTimeout(() => { aviso.textContent = ''; }, 2500); }
+    const novoStatus = (lead && lead.status) || dados.status;
+    const card = aviso && aviso.closest('.adm-lead'); if (card) card.classList.toggle('fechou', novoStatus === 'FECHOU');
+  } else if (aviso) { aviso.style.color = 'var(--bad)'; aviso.textContent = erro === 'nao_encontrado' ? 'PEDIDO NÃO ENCONTRADO' : 'ERRO AO SALVAR'; }
+  return { ok, erro };
+}
+async function admFecharRapido() {
+  const p = admPedido($a('admQP').value), v = admNum($a('admQV').value), m = $a('admQMsg');
+  if (!p || p === 'AP-') { m.className = 'adm-msg err'; m.textContent = 'Digite o número do pedido.'; return; }
+  const lead = ADM.leads.find(l => l.pedido === p);
+  if (ADM.demo && !lead) { m.className = 'adm-msg err'; m.textContent = 'Pedido ' + p + ' não encontrado.'; return; }
+  m.className = 'adm-msg'; m.textContent = 'Salvando...';
+  const r = await admSalvar(p, { status: 'FECHOU', valor: v || (lead ? admNum(lead.valor) : 0), notas: lead ? (lead.notas || '') : '' });
+  if (r.ok) { m.className = 'adm-msg ok'; m.textContent = '✓ Pedido #' + p + ' marcado como FECHADO' + (v ? ' (' + brl(v) + ')' : '') + '.'; setTimeout(admCarregar, 1200); }
+  else { m.className = 'adm-msg err'; m.textContent = r.erro === 'nao_encontrado' ? 'Pedido ' + p + ' não encontrado na planilha.' : 'Não consegui salvar. Tente de novo.'; }
+}
+
+/* ---------- modo exemplo (dados inventados) ---------- */
+function admDemo() {
+  ADM.demo = true; $a('admActions').style.display = '';
+  const pick = a => a[Math.floor(Math.random() * a.length)], L = [], E = [];
+  const servs = ['ABERTURA COMPLETA', 'ABERTURA COMPLETA', 'ABERTURA COMPLETA', 'ABERTURA EM ÁUDIO', 'ABERTURA EM ÁUDIO', 'REMIX PROFISSIONAL - JÁ SEI A MÚSICA', 'REMIX PROFISSIONAL - PRECISO DE IDEIA', 'LOTAR MINHA AGENDA', 'VENDER MAIS INGRESSOS', 'PATENTEAR MINHA MARCA'];
+  const fins = ['DJ', 'DJ', 'DJ', 'CANTOR', 'CANTOR', 'MC', 'FESTIVAL', 'OUTRO'];
+  const gens = ['FUNK', 'FUNK', 'SERTANEJO', 'SERTANEJO', 'ELETRÔNICA', 'ELETRÔNICA', 'PAGODE / SAMBA', 'GOSPEL', 'RAP / TRAP', 'FORRÓ / PISEIRO', 'POP / ROCK'];
+  for (let i = 0; i < 900; i++) {
+    const s = 'S' + i, t = Date.now() - Math.random() * 95 * 864e5, iso = n => new Date(t + n * 6e4).toISOString();
+    E.push([iso(0), s, 'visita', '', '/', '', '', '', '']);
+    if (Math.random() < .72) {
+      const fin = pick(fins); E.push([iso(1), s, 'finalidade', '', fin, '', fin, '', '']);
+      if (Math.random() < .62) {
+        const sv = pick(servs), fl = fluxoDoServico(sv); E.push([iso(2), s, 'servico', '', sv, sv, fin, '', '']);
+        const steps = FLOWS[fl]; let foi = true;
+        for (let j = 0; j < steps.length && foi; j++) { E.push([iso(3 + j), s, 'etapa', steps[j], fl, sv, fin, '', '']); if (j > 0 || steps[j] !== 'autorizacao') E.push([iso(3 + j), s, 'resposta', steps[j], '', sv, fin, '', '']); foi = Math.random() < .88; }
+        if (foi) {
+          E.push([iso(14), s, 'etapa', 'final', fl, sv, fin, '', '']);
+          if (Math.random() < .85) {
+            E.push([iso(15), s, 'lead', 'final', '', sv, fin, '', '']);
+            const a = { fluxo: fl, autorizacao: fl === 'abertura' ? (Math.random() < .85 ? 'SIM' : 'NÃO') : '', atuacao: '', investimento: '', prazoTipo: '', prazoData: '', aberturaAtual: '', nome: '' };
+            const lead = { pedido: 'AP-' + rid(5), data: iso(15), servico: sv, finalidade: fin, status: 'NOVO', valor: 0, notas: '' };
+            if (a.autorizacao !== 'NÃO') {
+              lead.genero = pick(gens);
+              if (fl === 'abertura') { a.atuacao = pick(['PROFISSIONAL', 'PROFISSIONAL', 'COMEÇANDO', 'HOBBY']); a.investimento = pick(['SIM, JÁ TEM EVENTO', 'CAMPO DAS IDEIAS', 'SÓ PESQUISANDO']); a.aberturaAtual = pick(STEPS.aberturaAtual.o)[1]; lead.duracao = pick(STEPS.duracao.o)[1]; lead.origem = pick(STEPS.origem.o)[1]; }
+              const pz = Math.random(); a.prazoTipo = pz < .5 ? 'DATA ESPECÍFICA' : pz < .75 ? 'URGENTE (ATÉ 7 DIAS)' : 'POUCA URGÊNCIA / SEM PRESSA';
+              if (a.prazoTipo === 'DATA ESPECÍFICA') { const d = new Date(Date.now() + Math.random() * 60 * 864e5); a.prazoData = d.toLocaleDateString('pt-BR'); }
+              if (Math.random() < .6) a.nome = 'DJ ' + pick(['NOVA', 'KAIO', 'LUNA', 'RAFA', 'THEO', 'BIA', 'PH', 'GUTO']);
+            }
+            Object.assign(lead, a); lead.temperatura = calcularTemperatura(Object.assign({}, userAnswers, a));
+            lead.utm_source = Math.random() < .35 ? pick(['instagram', 'facebook', 'google']) : ''; lead.referrer = !lead.utm_source && Math.random() < .3 ? pick(['l.instagram.com', 'youtube.com', 'google.com']) : '';
+            const chance = { QUENTE: .5, MORNO: .22, FRIO: .06, 'SEM DADOS': .15 }[lead.temperatura];
+            const r = Math.random();
+            if (r < chance) { lead.status = 'FECHOU'; lead.valor = /ABERTURA COMPLETA/.test(sv) ? pick([800, 1000, 1200, 1500]) : /ÁUDIO/.test(sv) ? pick([350, 450, 500]) : pick([600, 900, 1500]); lead.dataFechamento = iso(60 * 24 * 2); }
+            else if (r < chance + .2) lead.status = 'PERDIDO'; else if (r < chance + .4) lead.status = 'EM CONVERSA';
+            L.push(lead);
+          }
+        }
+      }
+    }
+  }
+  ADM.leads = L; ADM.ev = E; admRender();
+}
 </script>
 </body>
 </html>
