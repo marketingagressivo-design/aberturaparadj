@@ -338,6 +338,14 @@
   .adm-fill{height:100%;background:var(--bar);border-radius:0 4px 4px 0;min-width:2px;}
   .adm-fill.win{background:var(--win);}
   .adm-drop{font-size:11px;color:var(--bad);margin-left:4px;}
+  .adm-ab{width:100%;border-collapse:collapse;font-size:14px;}
+  .adm-ab th{text-align:left;font-size:12px;letter-spacing:1.5px;color:var(--ink2);padding:0 10px 10px;}
+  .adm-ab th small,.adm-ab td small{display:block;color:var(--ink3);font-size:11px;letter-spacing:0;font-weight:400;}
+  .adm-ab td{padding:10px;border-top:1px solid var(--line);vertical-align:top;}
+  .adm-ab td:first-child{color:var(--ink3);font-size:12px;letter-spacing:1.5px;padding-left:0;width:28%;}
+  .adm-ab td.win{color:var(--win);} .adm-ab td.win small{color:var(--win);opacity:.75;}
+  .adm-abv{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:14px;line-height:1.7;color:var(--ink2);}
+  .adm-abv small{color:var(--ink3);font-size:12px;line-height:1.4;display:block;margin-top:6px;}
   .adm-ytg{display:grid;grid-template-columns:200px 1fr;gap:14px;margin-top:14px;align-items:start;}
   .adm-ytg img{width:100%;border-radius:10px;display:block;aspect-ratio:16/9;object-fit:cover;background:var(--card2);}
   .adm-ytg label{display:block;font-size:11px;letter-spacing:1.5px;color:var(--ink3);margin:10px 0 5px;}
@@ -1033,6 +1041,18 @@ const UTM = (() => {
   return u;
 })();
 const REFERRER = (() => { try { const r = document.referrer ? new URL(document.referrer).hostname : ""; return r && r !== location.hostname ? r : ""; } catch (e) { return ""; } })();
+/* TESTE A/B: metade dos visitantes vai DIRETO pro WhatsApp ao escolher o serviço,
+   a outra metade passa pela TRIAGEM (perguntas). O grupo é sorteado uma vez e fica guardado no aparelho.
+   Para desligar o teste: ativo: false (todo mundo volta para a triagem).
+   Para ver um grupo de propósito: site/?ab=direto ou site/?ab=triagem */
+const AB_TESTE = { ativo: true, pctDireto: 50 };
+const AB_GRUPO = (() => {
+  if (!AB_TESTE.ativo) return 'TRIAGEM';
+  try { const f = (new URLSearchParams(location.search).get('ab') || '').toUpperCase(); if (f === 'DIRETO' || f === 'TRIAGEM') return f; } catch (e) {}
+  let g = _ls('ap_ab');
+  if (g !== 'DIRETO' && g !== 'TRIAGEM') { g = Math.random() * 100 < AB_TESTE.pctDireto ? 'DIRETO' : 'TRIAGEM'; _ls('ap_ab', g); }
+  return g;
+})();
 const DISPOSITIVO = (() => { try { return matchMedia('(pointer: coarse)').matches ? 'CELULAR' : 'COMPUTADOR'; } catch (e) { return ''; } })();
 // o navegador onde o dono entrou no painel não conta nas estatísticas (dá para mudar no painel)
 function ignorarEsteAparelho() { return _ls('ap_ignorar') === '1'; }
@@ -1132,6 +1152,13 @@ function handleMenuSelection(event, nomeServico) {
   userAnswers.servico = nomeServico.toUpperCase();
   userAnswers.fluxo = fluxoDoServico(nomeServico);
   track('servico', '', userAnswers.servico);
+  userAnswers.teste = AB_GRUPO;
+  track('ab', 'servico', AB_GRUPO);
+  if (AB_GRUPO === 'DIRETO') {   // teste A/B: vai direto pro WhatsApp, sem perguntas
+    userAnswers.pedido = 'AP-' + rid(5);
+    executeFinalRedirect(event);
+    return;
+  }
   quizFlow = FLOWS[userAnswers.fluxo];
   quizHist = []; quizCur = null;
   document.getElementById('servBox').innerHTML = htmlServico();
@@ -1247,7 +1274,7 @@ function confirmarNome() { userAnswers.nome = (document.getElementById('nomeInpu
 
 /* Nota do lead (só aparece no painel, nunca na mensagem do cliente) */
 function calcularTemperatura(a) {
-  if (a.autorizacao === 'NÃO') return 'SEM DADOS';
+  if (a.autorizacao === 'NÃO' || a.teste === 'DIRETO') return 'SEM DADOS';
   let p = a.fluxo === 'abertura' ? 0 : 2;
   p += ({ 'PROFISSIONAL': 3, 'COMEÇANDO': 1, 'HOBBY': -2 })[a.atuacao] || 0;
   p += ({ 'SIM, JÁ TEM EVENTO': 3, 'CAMPO DAS IDEIAS': 1, 'SÓ PESQUISANDO': -2 })[a.investimento] || 0;
@@ -1283,6 +1310,13 @@ function montarMensagem() {
   const a = userAnswers, L = ['SOLICITAÇÃO DE ORÇAMENTO #' + a.pedido];
   const info = INFO_SERVICO[a.servico], servTxt = info ? info.msg : a.servico;
   const add = (r, v) => { if (v) L.push(r + ': ' + v); };
+  if (a.teste === 'DIRETO') {   // teste A/B: sem triagem
+    L.push('OLÁ! GOSTARIA DE UM ORÇAMENTO PARA: ' + servTxt);
+    if (info) add('INCLUI', info.inclui);
+    add('FINALIDADE', a.finalidade);
+    add('VEIO DO VÍDEO', videoOrigem());
+    return L.join('\n');
+  }
   if (a.autorizacao === 'NÃO') {
     L.push('OLÁ! TUDO BEM? VI SEUS SERVIÇOS E FIQUEI INTERESSADO NA PRODUÇÃO DE ' + servTxt);
     if (info) add('INCLUI', info.inclui);
@@ -1317,8 +1351,8 @@ function executeFinalRedirect(event) {
     pedido: a.pedido, data: new Date().toISOString(), servico: a.servico, finalidade: a.finalidade, nome: a.nome, genero: a.genero,
     atuacao: a.atuacao, origem: a.origem, aberturaAtual: a.aberturaAtual, duracao: a.duracao, investimento: a.investimento,
     prazoTipo: a.prazoTipo, prazoData: a.prazoData, temperatura: a.temperatura, autorizacao: a.autorizacao,
-    utm_source: UTM.source, utm_medium: UTM.medium, utm_campaign: UTM.campaign, referrer: REFERRER, dispositivo: DISPOSITIVO, sessao: SESSAO } });
-  try { gtag('event', 'generate_lead', { pedido: a.pedido, servico: a.servico, finalidade: a.finalidade, temperatura: a.temperatura }); } catch (e) {}
+    utm_source: UTM.source, utm_medium: UTM.medium, utm_campaign: UTM.campaign, referrer: REFERRER, dispositivo: DISPOSITIVO, sessao: SESSAO, teste: a.teste || '' } });
+  try { gtag('event', 'generate_lead', { pedido: a.pedido, servico: a.servico, finalidade: a.finalidade, temperatura: a.temperatura, teste_ab: a.teste || '' }); } catch (e) {}
   // tela de carregamento
   _ldTimers.forEach(clearTimeout); _ldTimers = [];
   document.getElementById('ldPedido').innerHTML = 'ORÇAMENTO <b>#' + a.pedido + '</b>';
@@ -1512,6 +1546,8 @@ function admRender() {
     + kpi(fech.length ? brl(fat / fech.length) : '—', 'TICKET MÉDIO', 'por venda fechada')
     + '</div>';
 
+  h += admHtmlAB(leads, ev);
+
   // funil geral
   const f = [
     ['ENTROU NO SITE', visitas],
@@ -1569,6 +1605,45 @@ function admRender() {
   if (ADM.ytIn) admYtGerar();
   ytPreencherTitulos();
 }
+/* ---------- TESTE A/B: direto pro WhatsApp x triagem ---------- */
+function admHtmlAB(leads, ev) {
+  const grupoSess = {}, grupoPed = {};
+  ev.forEach(e => { if (e[2] === 'ab' && (e[4] === 'DIRETO' || e[4] === 'TRIAGEM') && !grupoSess[e[1]]) grupoSess[e[1]] = e[4]; });
+  ev.forEach(e => { if (e[2] === 'lead' && e[4] && grupoSess[e[1]]) grupoPed[e[4]] = grupoSess[e[1]]; });
+  const G = { TRIAGEM: { n: 0, leads: 0, fech: 0, fat: 0 }, DIRETO: { n: 0, leads: 0, fech: 0, fat: 0 } };
+  Object.values(grupoSess).forEach(g => G[g].n++);
+  leads.forEach(l => {
+    const g = grupoSess[l.sessao] || grupoPed[l.pedido] || (l.teste === 'DIRETO' || l.teste === 'TRIAGEM' ? l.teste : '');
+    if (!g) return;
+    G[g].leads++; if (l.status === 'FECHOU') { G[g].fech++; G[g].fat += admNum(l.valor); }
+  });
+  let h = '<div class="adm-h">TESTE A/B: DIRETO X TRIAGEM</div><div class="adm-hs">'
+    + (AB_TESTE.ativo ? 'Ligado: ' + AB_TESTE.pctDireto + '% dos visitantes vão direto pro WhatsApp ao escolher o serviço.' : 'Desligado: todos passam pela triagem.')
+    + ' Conta a partir de quem escolheu um serviço. O que decide é a RECEITA POR VISITANTE.</div>';
+  if (!G.TRIAGEM.n && !G.DIRETO.n) return h + '<div class="adm-card"><div class="adm-empty">Ainda sem visitantes no teste neste período.</div></div>';
+  const linha = (rot, f, fmt, melhor) => '<tr><td>' + rot + '</td>' + ['TRIAGEM', 'DIRETO'].map(g => '<td' + (melhor === g ? ' class="win"' : '') + '>' + fmt(G[g]) + '</td>').join('') + '</tr>';
+  const qual = f => { const a = f(G.TRIAGEM), b = f(G.DIRETO); return a === b ? '' : a > b ? 'TRIAGEM' : 'DIRETO'; };
+  const tx = (a, b) => b ? a / b : 0;
+  h += '<div class="adm-card"><table class="adm-ab"><thead><tr><th></th><th>A · TRIAGEM<small>com perguntas</small></th><th>B · DIRETO<small>sem perguntas</small></th></tr></thead><tbody>'
+    + linha('ESCOLHERAM SERVIÇO', null, g => g.n.toLocaleString('pt-BR'))
+    + linha('CHEGARAM NO WHATSAPP', null, g => g.leads + ' <small>(' + pct(g.leads, g.n) + ')</small>', qual(g => tx(g.leads, g.n)))
+    + linha('VENDAS FECHADAS', null, g => g.fech + ' <small>(' + pct(g.fech, g.n) + ' dos visitantes · ' + pct(g.fech, g.leads) + ' dos leads)</small>', qual(g => tx(g.fech, g.n)))
+    + linha('FATURAMENTO', null, g => brl(g.fat))
+    + linha('RECEITA POR VISITANTE', null, g => '<b>' + (g.n ? brl(g.fat / g.n) : '—') + '</b>', qual(g => tx(g.fat, g.n)))
+    + '</tbody></table>';
+  // a diferença já é confiável? (teste de duas proporções, 95%)
+  const z = (x1, n1, x2, n2) => { if (!n1 || !n2) return 0; const p = (x1 + x2) / (n1 + n2); const se = Math.sqrt(p * (1 - p) * (1 / n1 + 1 / n2)); return se ? (x2 / n2 - x1 / n1) / se : 0; };
+  const veredito = (nome, x1, x2) => {
+    const n1 = G.TRIAGEM.n, n2 = G.DIRETO.n, zz = z(x1, n1, x2, n2);
+    if (n1 < 100 || n2 < 100 || x1 + x2 < 20) return '⏳ <b>' + nome + ':</b> ainda poucos dados para concluir.';
+    if (Math.abs(zz) < 1.96) return '🤝 <b>' + nome + ':</b> por enquanto, sem diferença confiável entre os dois.';
+    return '✅ <b>' + nome + ':</b> ' + (zz > 0 ? 'DIRETO' : 'TRIAGEM') + ' está melhor, com 95% de confiança.';
+  };
+  h += '<div class="adm-abv">' + veredito('Chegar no WhatsApp', G.TRIAGEM.leads, G.DIRETO.leads) + '<br>' + veredito('Fechar venda', G.TRIAGEM.fech, G.DIRETO.fech)
+    + '<br><small>Chegar no WhatsApp é só metade da história: a triagem pode perder gente no caminho e mesmo assim vender mais. Decida pela venda e pela receita por visitante.</small></div></div>';
+  return h;
+}
+
 /* ---------- YouTube: gerador de link rastreado + vídeos que mais trazem clientes ---------- */
 function ytId(s) {
   s = String(s || '').trim();
@@ -1738,6 +1813,18 @@ function admDemo() {
       const fin = pick(fins); E.push([iso(1), s, 'finalidade', '', fin, '', fin, '', '']);
       if (Math.random() < .62) {
         const sv = pick(servs), fl = fluxoDoServico(sv); E.push([iso(2), s, 'servico', '', sv, sv, fin, '', '']);
+        const grp = Math.random() < .5 ? 'DIRETO' : 'TRIAGEM'; E.push([iso(2), s, 'ab', 'servico', grp, sv, fin, '', '']);
+        if (grp === 'DIRETO') {
+          if (Math.random() < .9) {
+            const pd = 'AP-' + rid(5); E.push([iso(3), s, 'lead', 'final', pd, sv, fin, '', '']);
+            const lead = { pedido: pd, data: iso(3), servico: sv, finalidade: fin, status: 'NOVO', valor: 0, notas: '', temperatura: 'SEM DADOS', sessao: s };
+            const r = Math.random();
+            if (r < .13) { lead.status = 'FECHOU'; lead.valor = /ABERTURA COMPLETA/.test(sv) ? pick([800, 1000, 1200, 1500]) : /ÁUDIO/.test(sv) ? pick([350, 450, 500]) : pick([600, 900, 1500]); lead.dataFechamento = iso(60 * 24 * 2); }
+            else if (r < .4) lead.status = 'PERDIDO'; else if (r < .6) lead.status = 'EM CONVERSA';
+            L.push(lead);
+          }
+          continue;
+        }
         const steps = FLOWS[fl]; let foi = true;
         for (let j = 0; j < steps.length && foi; j++) { E.push([iso(3 + j), s, 'etapa', steps[j], fl, sv, fin, '', '']); if (j > 0 || steps[j] !== 'autorizacao') E.push([iso(3 + j), s, 'resposta', steps[j], '', sv, fin, '', '']); foi = Math.random() < .88; }
         if (foi) {
@@ -1745,7 +1832,7 @@ function admDemo() {
           if (Math.random() < .85) {
             E.push([iso(15), s, 'lead', 'final', '', sv, fin, '', '']);
             const a = { fluxo: fl, autorizacao: fl === 'abertura' ? (Math.random() < .85 ? 'SIM' : 'NÃO') : '', atuacao: '', investimento: '', prazoTipo: '', prazoData: '', aberturaAtual: '', nome: '' };
-            const lead = { pedido: 'AP-' + rid(5), data: iso(15), servico: sv, finalidade: fin, status: 'NOVO', valor: 0, notas: '' };
+            const lead = { pedido: 'AP-' + rid(5), data: iso(15), servico: sv, finalidade: fin, status: 'NOVO', valor: 0, notas: '', sessao: s };
             if (a.autorizacao !== 'NÃO') {
               lead.genero = pick(gens);
               if (fl === 'abertura') { a.atuacao = pick(['PROFISSIONAL', 'PROFISSIONAL', 'COMEÇANDO', 'HOBBY']); a.investimento = pick(['SIM, JÁ TEM EVENTO', 'CAMPO DAS IDEIAS', 'SÓ PESQUISANDO']); a.aberturaAtual = pick(STEPS.aberturaAtual.o)[1]; lead.duracao = pick(STEPS.duracao.o)[1]; lead.origem = pick(STEPS.origem.o)[1]; }
