@@ -71,6 +71,16 @@
   .bl .dot{width:9px;height:9px;border-radius:50%;background:#ffffff;flex-shrink:0;}
   .wp-icon{width:20px;height:20px;fill:#ffffff;margin-left:auto;}
   .bs{color:rgba(255,255,255,0.6);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;padding-left:19px;text-align:left;line-height:1.4;}
+  /* selos "ÁUDIO + VÍDEO" / "SÓ ÁUDIO" nos botões e no questionário */
+  .tags{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:8px;padding-left:19px;}
+  .tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#fff;border:1px solid rgba(255,255,255,0.55);background:rgba(255,255,255,0.12);border-radius:999px;padding:3px 10px;line-height:1.3;}
+  .tag.v{background:#fff;color:#000;border-color:#fff;}
+  .tag.off{color:rgba(255,255,255,0.55);border-style:dashed;background:transparent;font-weight:600;}
+  .tags .plus{color:#fff;font-weight:700;font-size:13px;}
+  .serv-box{display:flex;flex-direction:column;align-items:center;gap:6px;border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.06);border-radius:12px;padding:10px 14px;margin:0 auto 18px;max-width:420px;}
+  .serv-box span{font-family:'Saira Semi Condensed',sans-serif;color:rgba(255,255,255,0.55);font-size:10px;letter-spacing:2px;text-transform:uppercase;}
+  .serv-box b{color:#fff;font-size:15px;letter-spacing:1px;text-transform:uppercase;}
+  .serv-box .tags{padding-left:0;margin-top:0;justify-content:center;}
    
   /* Camada de efeito de iluminação absoluta desfocada por trás dos botões */
   .glow-box {
@@ -487,7 +497,8 @@
             <div class="bl"><span class="dot"></span>ABERTURA COMPLETA
               <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
             </div>
-            <div class="bs">ÁUDIO EXCLUSIVO + VÍDEO PROFISSIONAL ULTRA HD</div>
+            <div class="tags"><span class="tag">🎵 ÁUDIO</span><span class="plus">+</span><span class="tag v">🎬 VÍDEO</span></div>
+            <div class="bs">ÁUDIO EXCLUSIVO + VÍDEO PROFISSIONAL ULTRA HD PARA O TELÃO</div>
           </a>
         </div>
         
@@ -497,6 +508,7 @@
             <div class="bl"><span class="dot"></span>ABERTURA EM ÁUDIO
               <svg class="wp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.23c-1.46 0-2.88-.39-4.11-1.13l-.29-.17-3.03.79.81-2.95-.19-.3C4.6 14.77 4.14 13.39 4.14 11.91c0-4.3 3.5-7.8 7.8-7.8 4.3 0 7.8 3.5 7.8 7.8s-3.5 7.8-7.8 7.8zm4.27-5.83c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-0.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>
             </div>
+            <div class="tags"><span class="tag">🎵 SOMENTE ÁUDIO</span><span class="tag off">SEM VÍDEO</span></div>
             <div class="bs">LOCUÇÃO + PRODUÇÃO DE TRILHA SONORA E EFEITOS EXCLUSIVOS</div>
           </a>
         </div>
@@ -558,6 +570,7 @@
       <div id="quizSection">
         <!-- As perguntas são montadas pelo script (veja STEPS e FLOWS) -->
         <div class="qprog" id="qProg"><div class="qprog-track"><div class="qprog-bar" id="qProgBar"></div></div><p class="qprog-txt" id="qProgTxt"></p></div>
+        <div id="servBox"></div>
         <div id="quizStage"></div>
       </div>
     </div>
@@ -1069,6 +1082,26 @@ function pularEtapa(k) {
   return false;
 }
 
+/* O que cada abertura inclui. "msg" é como o serviço aparece na mensagem do WhatsApp.
+   O valor salvo no painel continua o mesmo (ABERTURA COMPLETA / ABERTURA EM ÁUDIO). */
+const INFO_SERVICO = {
+  'ABERTURA COMPLETA': {
+    msg: 'ABERTURA COMPLETA (ÁUDIO + VÍDEO)',
+    inclui: 'ÁUDIO EXCLUSIVO + VÍDEO PROFISSIONAL ULTRA HD',
+    tags: '<span class="tag">🎵 ÁUDIO</span><span class="plus">+</span><span class="tag v">🎬 VÍDEO</span>'
+  },
+  'ABERTURA EM ÁUDIO': {
+    msg: 'ABERTURA EM ÁUDIO (SOMENTE ÁUDIO, SEM VÍDEO)',
+    inclui: 'LOCUÇÃO + TRILHA SONORA E EFEITOS EXCLUSIVOS',
+    tags: '<span class="tag">🎵 SOMENTE ÁUDIO</span><span class="tag off">SEM VÍDEO</span>'
+  }
+};
+function htmlServico() {
+  const info = INFO_SERVICO[userAnswers.servico];
+  return '<div class="serv-box"><span>SERVIÇO ESCOLHIDO</span><b>' + escHtml(userAnswers.servico) + '</b>'
+    + (info ? '<div class="tags">' + info.tags + '</div>' : '') + '</div>';
+}
+
 let quizFlow = [], quizHist = [], quizCur = null, typeTok = 0;
 
 function selectPurpose(purpose) {
@@ -1088,6 +1121,7 @@ function handleMenuSelection(event, nomeServico) {
   track('servico', '', userAnswers.servico);
   quizFlow = FLOWS[userAnswers.fluxo];
   quizHist = []; quizCur = null;
+  document.getElementById('servBox').innerHTML = htmlServico();
   document.getElementById('headerBrandSection').style.display = 'none';
   document.getElementById('mainMenuSection').style.display = 'none';
   document.getElementById('quizSection').style.display = 'block';
@@ -1100,6 +1134,7 @@ function resetToMainMenu() {
   userAnswers = novasRespostas();
   quizHist = []; quizCur = null; typeTok++;
   document.getElementById('quizStage').innerHTML = '';
+  document.getElementById('servBox').innerHTML = '';
   document.getElementById('qProg').classList.remove('on');
   document.getElementById('quizSection').style.display = 'none';
   document.getElementById('headerBrandSection').style.display = 'none';
@@ -1228,13 +1263,16 @@ function renderFinal(stage) {
 
 function montarMensagem() {
   const a = userAnswers, L = ['SOLICITAÇÃO DE ORÇAMENTO #' + a.pedido];
+  const info = INFO_SERVICO[a.servico], servTxt = info ? info.msg : a.servico;
+  const add = (r, v) => { if (v) L.push(r + ': ' + v); };
   if (a.autorizacao === 'NÃO') {
-    L.push('OLÁ! TUDO BEM? VI SEUS SERVIÇOS E FIQUEI INTERESSADO NA PRODUÇÃO DE ' + a.servico);
+    L.push('OLÁ! TUDO BEM? VI SEUS SERVIÇOS E FIQUEI INTERESSADO NA PRODUÇÃO DE ' + servTxt);
+    if (info) add('INCLUI', info.inclui);
     if (a.finalidade) L.push('FINALIDADE: ' + a.finalidade);
     return L.join('\n');
   }
-  L.push('OLÁ! QUERO UM ORÇAMENTO PARA: ' + a.servico);
-  const add = (r, v) => { if (v) L.push(r + ': ' + v); };
+  L.push('OLÁ! QUERO UM ORÇAMENTO PARA: ' + servTxt);
+  if (info) add('INCLUI', info.inclui);
   add('NOME ARTÍSTICO', a.nome);
   add('FINALIDADE', a.finalidade);
   add('GÊNERO MUSICAL', a.genero);
