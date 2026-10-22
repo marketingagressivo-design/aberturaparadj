@@ -1071,7 +1071,7 @@ function enviarPlanilha(obj) {
 function flushEventos() { clearTimeout(_evT); if (!_evQ.length) return; const lote = _evQ; _evQ = []; enviarPlanilha({ a: 'ev', ev: lote }); }
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushEventos(); });
 window.addEventListener('pagehide', flushEventos);
-if (!/^#admin/.test(location.hash)) track('visita', '', location.pathname);
+if (!/^#admin|^#entregas$|^#[a-z0-9]+(?:-[a-z0-9]+)*-[a-z0-9]{4}$/.test(location.hash)) track('visita', '', location.pathname);
 
 /* ==========================================================================
    QUESTIONÁRIO: perguntas e caminhos
@@ -1855,5 +1855,332 @@ function admDemo() {
   ADM.leads = L; ADM.ev = E; admRender();
 }
 </script>
+<!-- ================= ENTREGAS: aberturaparashow.com.br/#entregas (você) e /#dj-fulano-7k3m (cliente) ================= -->
+<style>
+  html.ent-on .pw{display:none;}
+  html.ent-on body{overflow:auto;}
+  .ent{position:fixed;inset:0;z-index:3001;overflow-y:auto;-webkit-overflow-scrolling:touch;background:radial-gradient(120% 70% at 50% 0%,#0d2a18 0%,#04100a 55%,#020806 100%);color:#f4f7f5;font-family:'Saira Semi Condensed',Arial,sans-serif;}
+  .ent[hidden]{display:none;}
+  .ent-wrap{max-width:620px;margin:0 auto;padding:28px 16px 70px;}
+  .ent-marca{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:3px;color:rgba(244,247,245,.55);text-align:center;}
+  .ent-hero{text-align:center;margin:26px 0 22px;}
+  .ent-hero .em{font-size:44px;line-height:1;}
+  .ent-hero h1{font-family:'Orbitron',sans-serif;font-size:clamp(22px,6vw,32px);font-weight:900;line-height:1.15;margin:14px 0 10px;text-transform:uppercase;}
+  .ent-hero h1 span{color:#facc15;}
+  .ent-hero p{color:rgba(244,247,245,.75);font-size:17px;line-height:1.5;margin:0;}
+  .ent-prazo{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:18px auto 0;padding:10px 14px;border:1px solid rgba(250,204,21,.45);background:rgba(250,204,21,.08);border-radius:12px;color:#fde68a;font-size:15px;max-width:460px;}
+  .ent-prazo b{font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:1px;color:#facc15;}
+  .ent-arqs{display:flex;flex-direction:column;gap:10px;margin:26px 0;}
+  .ent-arq{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.05);color:#fff;text-decoration:none;transition:.15s;}
+  .ent-arq:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.09);}
+  .ent-arq.top{background:#facc15;border-color:#facc15;color:#111;}
+  .ent-arq.top:hover{background:#fde047;}
+  .ent-arq .ic{font-size:26px;flex:none;}
+  .ent-arq .tx{flex:1;min-width:0;}
+  .ent-arq .t1{font-family:'Orbitron',sans-serif;font-weight:700;font-size:15px;letter-spacing:1px;text-transform:uppercase;}
+  .ent-arq .t2{font-size:14px;opacity:.75;margin-top:2px;line-height:1.35;overflow-wrap:anywhere;}
+  .ent-arq .tag{font-size:11px;font-weight:800;letter-spacing:1.5px;padding:3px 8px;border-radius:999px;background:#111;color:#facc15;flex:none;}
+  .ent-arq.ok{border-color:#4ade80;}
+  .ent-h{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;margin:30px 0 12px;text-transform:uppercase;}
+  .ent-dicas{display:flex;flex-direction:column;gap:10px;}
+  .ent-dica{display:flex;gap:14px;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);}
+  .ent-dica .ic{font-size:24px;flex:none;line-height:1.2;}
+  .ent-dica b{display:block;font-size:16px;margin-bottom:3px;}
+  .ent-dica span{color:rgba(244,247,245,.72);font-size:15px;line-height:1.45;}
+  .ent-dica.alerta{border-color:rgba(248,113,113,.5);background:rgba(248,113,113,.07);}
+  .ent-wp{display:flex;align-items:center;justify-content:center;gap:10px;margin:30px auto 0;padding:14px 20px;border-radius:14px;background:#25d366;color:#fff;font-weight:700;font-size:16px;letter-spacing:1px;text-decoration:none;max-width:360px;text-transform:uppercase;}
+  .ent-wp svg{width:22px;height:22px;fill:#fff;}
+  .ent-aut{margin:8px 0 0;padding:24px 20px;border-radius:18px;border:1px solid rgba(250,204,21,.5);background:rgba(250,204,21,.07);text-align:center;}
+  .ent-aut .ic{font-size:38px;line-height:1;}
+  .ent-aut h2{font-family:'Orbitron',sans-serif;font-size:clamp(17px,4.6vw,21px);font-weight:700;line-height:1.35;margin:12px 0 10px;}
+  .ent-aut h2 span{color:#facc15;}
+  .ent-aut p{color:rgba(244,247,245,.72);font-size:15px;line-height:1.5;margin:0 0 18px;}
+  .ent-aut-b{display:flex;flex-direction:column;gap:10px;max-width:360px;margin:0 auto;}
+  .ent-aut-b button{padding:15px 18px;border-radius:14px;font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;cursor:pointer;border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;}
+  .ent-aut-b .sim{background:#facc15;border-color:#facc15;color:#111;}
+  .ent-aut-b button:disabled{opacity:.5;cursor:default;}
+  .ent-aut-m{min-height:20px;margin-top:12px;color:#fde68a;font-size:14px;}
+  .ent-aut-ok{margin:0 0 4px;padding:12px 14px;border-radius:12px;border:1px solid #4ade80;background:rgba(74,222,128,.08);color:#bbf7d0;font-size:15px;text-align:center;}
+  .ent-rod{text-align:center;color:rgba(244,247,245,.4);font-size:13px;margin-top:26px;}
+  .ent-spin{width:34px;height:34px;border:3px solid rgba(255,255,255,.15);border-top-color:#fff;border-radius:50%;animation:spinLoader .7s linear infinite;margin:80px auto;}
+  /* sua página de envio */
+  .ent-adm .adm-card{margin-bottom:14px;}
+  .ent-zona{display:flex;flex-direction:column;align-items:center;gap:6px;border:2px dashed rgba(255,255,255,.3);border-radius:14px;padding:34px 16px;text-align:center;cursor:pointer;transition:.15s;}
+  .ent-zona b{font-family:'Orbitron',sans-serif;font-size:15px;letter-spacing:1.5px;}
+  .ent-zona span{color:var(--ink3);font-size:14px;}
+  .ent-zona:hover,.ent-zona.on{border-color:var(--win);background:rgba(250,204,21,.06);}
+  .ent-fl{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
+  .ent-f{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);}
+  .ent-f .n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .ent-f small{color:var(--ink3);}
+  .ent-f .bar{grid-column:1/-1;height:6px;border-radius:3px;background:var(--bar2);overflow:hidden;}
+  .ent-f .bar i{display:block;height:100%;width:0;background:var(--win);transition:width .2s;}
+  .ent-f .x{background:none;border:0;color:var(--ink3);font-size:18px;cursor:pointer;}
+  .ent-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .ent-res{border:1px solid var(--good);}
+  .ent-res .lnk{font-family:'Orbitron',sans-serif;font-size:15px;word-break:break-all;color:var(--win);margin:8px 0 12px;}
+  .ent-acts{display:flex;gap:8px;flex-wrap:wrap;}
+  .ent-li{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:12px 0;border-top:1px solid var(--line);}
+  .ent-li:first-child{border-top:0;}
+  .ent-li .c{font-weight:700;font-size:16px;}
+  .ent-li .s{color:var(--ink3);font-size:13px;margin-top:2px;}
+  .ent-li .s .g{color:var(--good);} .ent-li .s .r{color:var(--bad);}
+  .ent-li a{color:var(--win);}
+  @media(max-width:560px){.ent-row{grid-template-columns:1fr;}}
+</style>
+<div class="ent" id="entOv" hidden><div class="ent-wrap" id="entBody"></div></div>
+
+<script>
+/* ==========================================================================
+   ENTREGAS
+   - aberturaparashow.com.br/#entregas   → sua página: arraste WAV/MP3 e gere o link
+   - aberturaparashow.com.br/#dj-fulano-7k3m → página do cliente para baixar (expira sozinha)
+   Os arquivos ficam no seu Google Drive (projeto "Entregas" do Apps Script) e são apagados no prazo.
+   ========================================================================== */
+const ENTREGAS_URL = "https://script.google.com/macros/s/AKfycbyNq5L5EMio_MGxt-FcB7nzCLJrdcVS6qfe9cWz9SVmnCwCFwjljmPof4MGomoY86Eg6g/exec";   // ← cole aqui o endereço /exec do Apps Script de Entregas
+const ENT = { k: _ss('ap_ent_k') || '', arquivos: [], enviando: false, ultimo: null };
+const RE_ENTREGA = /^#([a-z0-9]+(?:-[a-z0-9]+)*-[a-z0-9]{4})$/;
+
+function entApi(corpo) {
+  return fetch(ENTREGAS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(corpo), cache: 'no-store' })
+    .then(r => r.json()).catch(() => ({ ok: false, erro: 'rede' }));
+}
+function entMostrar(html) { document.documentElement.classList.add('ent-on'); $a('entOv').hidden = false; $a('entBody').innerHTML = html; $a('entOv').scrollTo(0, 0); }
+function entTam(b) { b = Number(b) || 0; return b >= 1048576 ? (b / 1048576).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB'; }
+function entFalta(iso) {
+  const ms = Date.parse(iso) - Date.now(); if (ms <= 0) return 'expirado';
+  const h = Math.floor(ms / 3600e3), m = Math.floor(ms % 3600e3 / 6e4);
+  return h >= 48 ? Math.floor(h / 24) + ' dias' : h ? h + 'h ' + String(m).padStart(2, '0') + 'min' : m + ' min';
+}
+function entQuando(iso) { const d = new Date(iso); return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) + ' às ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); }
+const ENT_WP_SVG = '<svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.39-1.39c1.48.81 3.15 1.24 4.84 1.24 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm4.27 12.4c-.23-.12-1.36-.67-1.57-.75-.21-.08-.36-.12-.52.12-.16.24-.61.75-.75.91-.13.15-.27.17-.5.05-.23-.12-.97-.36-1.85-1.15-.68-.61-1.14-1.36-1.28-1.6-.14-.24-.01-.37.1-.5.11-.13.24-.34.36-.51.12-.17.16-.29.24-.48.08-.19.04-.36-.02-.51-.06-.15-.52-1.25-.71-1.71-.19-.46-.39-.39-.52-.4h-.46c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.51c.12.17 1.66 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.07.16 1.47.1.45-.07 1.36-.56 1.55-1.09.19-.53.19-.98.13-1.07-.06-.09-.23-.14-.46-.26z"/></svg>';
+function entWp(txt) { return 'https://api.whatsapp.com/send?phone=' + WHATSAPP_NUMBER + '&text=' + encodeURIComponent(txt); }
+
+/* ---------- página do cliente ---------- */
+async function entCliente(slug) {
+  entMostrar('<div class="ent-marca">ABERTURA PARA SHOWS</div><div class="ent-spin"></div>');
+  const r = ENTREGAS_URL ? await entApi({ a: 'ver', slug }) : { ok: false, erro: 'sem_url' };
+  const rod = '<div class="ent-rod">ABERTURA PARA SHOWS · aberturaparashow.com.br</div>';
+  if (!r.ok) {
+    const exp = r.erro === 'expirou';
+    entMostrar('<div class="ent-marca">ABERTURA PARA SHOWS</div><div class="ent-hero"><div class="em">' + (exp ? '⌛' : '🔎') + '</div>'
+      + '<h1>' + (exp ? 'ESTE LINK <span>EXPIROU</span>' : r.erro === 'rede' ? 'SEM <span>CONEXÃO</span>' : 'LINK NÃO <span>ENCONTRADO</span>') + '</h1>'
+      + '<p>' + (exp ? 'Por segurança, os arquivos ficam disponíveis só por um tempo. Fale com a gente no WhatsApp que a gente te ajuda.'
+        : r.erro === 'rede' ? 'Confira a sua internet e recarregue a página.' : 'Confira se o link está completo, igual ao que você recebeu.') + '</p></div>'
+      + '<a class="ent-wp" href="' + entWp('Oi! Preciso de ajuda com o link da minha abertura (' + slug + ').') + '" target="_blank" rel="noopener">' + ENT_WP_SVG + 'FALAR NO WHATSAPP</a>' + rod);
+    return;
+  }
+  if (r.perguntar) return entPergunta(slug, r);
+  entDownloads(slug, r);
+}
+/* antes de liberar o download: autoriza publicar no portfólio do YouTube? (qualquer resposta libera) */
+function entPergunta(slug, r) {
+  const nome = String(r.cliente || '').trim();
+  entMostrar('<div class="ent-marca">ABERTURA PARA SHOWS</div>'
+    + '<div class="ent-hero"><div class="em">🎉</div><h1>SUA ABERTURA ESTÁ <span>PRONTA</span>' + (nome ? ',<br>' + esc(nome) : '') + '!</h1>'
+    + '<p>Antes de baixar, só uma perguntinha rápida:</p></div>'
+    + '<div class="ent-aut"><div class="ic">📺</div><h2>Você autoriza a gente a publicar a sua abertura, <span>de forma protegida</span>, no nosso portfólio do YouTube?</h2>'
+    + '<p>Assim mais artistas conhecem o nosso trabalho. Qualquer que seja a sua resposta, o download é liberado logo em seguida.</p>'
+    + '<div class="ent-aut-b"><button class="sim" id="entAutSim" onclick="entResponder(\'' + slug + '\',\'SIM\')">✅ SIM, AUTORIZO</button>'
+    + '<button class="nao" id="entAutNao" onclick="entResponder(\'' + slug + '\',\'NAO\')">AGORA NÃO</button></div>'
+    + '<div class="ent-aut-m" id="entAutMsg"></div></div>'
+    + '<div class="ent-rod">ABERTURA PARA SHOWS · aberturaparashow.com.br</div>');
+}
+async function entResponder(slug, resposta) {
+  const bs = [$a('entAutSim'), $a('entAutNao')]; bs.forEach(b => { if (b) b.disabled = true; });
+  $a('entAutMsg').textContent = 'Liberando o download…';
+  const r = await entApi({ a: 'autorizar', slug, resposta });
+  if (r.ok && r.arquivos) return entDownloads(slug, r, resposta);
+  if (!r.ok && (r.erro === 'expirou' || r.erro === 'nao_encontrado')) return entCliente(slug);
+  bs.forEach(b => { if (b) b.disabled = false; });
+  $a('entAutMsg').textContent = 'Não consegui registrar. Confira a internet e toque de novo.';
+}
+function entDownloads(slug, r, acabouDeResponder) {
+  const nome = String(r.cliente || '').trim();
+  // WAV primeiro (qualidade máxima), depois o vídeo, depois MP3, depois o resto
+  const ord = a => /\.wave?$/i.test(a.nome) || /wav/i.test(a.tipo) ? 0 : /\.(mp4|mov|m4v|webm|mkv|avi)$/i.test(a.nome) || /^video\//i.test(a.tipo) ? 1 : /\.mp3$/i.test(a.nome) || /mpeg/i.test(a.tipo) ? 2 : 3;
+  const arqs = r.arquivos.slice().sort((a, b) => ord(a) - ord(b));
+  const temWav = arqs.some(x => ord(x) === 0), temVideo = arqs.some(x => ord(x) === 1);
+  const botoes = arqs.map((a, i) => {
+    const t = ord(a), top = i === 0;
+    const t1 = t === 0 ? 'BAIXAR EM WAV' : t === 1 ? 'BAIXAR O VÍDEO' : t === 2 ? 'BAIXAR EM MP3' : 'BAIXAR ARQUIVO';
+    const t2 = (t === 0 ? 'Qualidade máxima · use este no show' : t === 1 ? 'Vídeo da abertura para o telão / painel de LED' : t === 2 ? 'Para ouvir no celular e mandar no WhatsApp' : a.nome) + ' · ' + entTam(a.tamanho);
+    return '<a class="ent-arq' + (top ? ' top' : '') + '" href="' + esc(a.url) + '" target="_blank" rel="noopener" data-nome="' + esc(a.nome) + '" onclick="entBaixou(this,\'' + slug + '\')">'
+      + '<span class="ic">⬇️</span><span class="tx"><div class="t1">' + t1 + '</div><div class="t2">' + esc(t2) + '</div></span>' + (t === 0 ? '<span class="tag">RECOMENDADO</span>' : '') + '</a>';
+  }).join('');
+  entMostrar('<div class="ent-marca">ABERTURA PARA SHOWS</div>'
+    + '<div class="ent-hero"><div class="em">🎉</div><h1>SUA ABERTURA ESTÁ <span>PRONTA</span>' + (nome ? ',<br>' + esc(nome) : '') + '!</h1>'
+    + '<p>Muito obrigado pela confiança! Foi um prazer criar essa abertura pra você. Agora é só baixar e fazer o público vir abaixo. 🔥</p>'
+    + '<div class="ent-prazo">⏳ Disponível por mais <b id="entFalta">' + entFalta(r.expira) + '</b> · até ' + entQuando(r.expira) + '</div></div>'
+    + (acabouDeResponder === 'SIM' ? '<div class="ent-aut-ok">📺 Valeu por autorizar! A sua abertura vai para o nosso portfólio no YouTube de forma protegida. 🙏</div>' : '')
+    + '<div class="ent-arqs">' + botoes + '</div>'
+    + '<div class="ent-h">ANTES DE TUDO</div><div class="ent-dicas">'
+    + '<div class="ent-dica alerta"><span class="ic">☁️</span><div><b>Baixe agora e salve na nuvem</b><span>Este link expira em ' + entQuando(r.expira) + ' e os arquivos são apagados. Guarde no Google Drive, iCloud ou Dropbox <u>e</u> num pendrive, pra nunca perder.</span></div></div>'
+    + '</div>'
+    + '<div class="ent-h">COMO USAR NO SHOW</div><div class="ent-dicas">'
+    + (temWav ? '<div class="ent-dica"><span class="ic">🎚️</span><div><b>Prefira sempre o arquivo WAV</b><span>É a qualidade máxima, sem compressão. No som grande do evento a diferença aparece. O MP3 é para ouvir no celular e mandar no WhatsApp.</span></div></div>' : '')
+    + (temVideo ? '<div class="ent-dica"><span class="ic">🖥️</span><div><b>Leve o vídeo num pendrive para o telão</b><span>Entregue o arquivo original para quem opera o painel de LED. Não mande pelo WhatsApp, porque ele comprime e a imagem perde qualidade.</span></div></div>' : '')
+    + '<div class="ent-dica"><span class="ic">🎤</span><div><b>Não fale no microfone enquanto a abertura toca</b><span>Falar por cima tapa os efeitos e a locução e soa amador. Deixe a abertura rolar inteira e entre com tudo no final: é aí que o público explode.</span></div></div>'
+    + '<div class="ent-dica"><span class="ic">🔊</span><div><b>Teste no som do evento antes</b><span>Na passagem de som, toque a abertura no volume do show para acertar o nível e evitar surpresa na hora.</span></div></div>'
+    + '</div>'
+    + '<a class="ent-wp" href="' + entWp('Oi! Baixei minha abertura' + (r.pedido ? ' (#' + r.pedido + ')' : '') + ' 🎉') + '" target="_blank" rel="noopener">' + ENT_WP_SVG + 'FALAR NO WHATSAPP</a>'
+    + '<div class="ent-rod">Ficou incrível? Marca a gente quando usar no show! 🙌<br><br>ABERTURA PARA SHOWS · aberturaparashow.com.br</div>');
+  clearInterval(ENT.relogio);
+  ENT.relogio = setInterval(() => { const el = $a('entFalta'); if (!el) return clearInterval(ENT.relogio); el.textContent = entFalta(r.expira); if (Date.parse(r.expira) < Date.now()) { clearInterval(ENT.relogio); entCliente(slug); } }, 30000);
+}
+function entBaixou(a, slug) {
+  a.classList.add('ok');
+  try { fetch(ENTREGAS_URL, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ a: 'baixou', slug, nome: a.dataset.nome }) }); } catch (e) {}
+}
+
+/* ---------- sua página de envio (#entregas) ---------- */
+function entAdmin() {
+  if (!ENTREGAS_URL) return entMostrar('<div class="adm ent-adm" style="position:static;background:none">' + entTopo() + '<div class="adm-card"><b>FALTA LIGAR AS ENTREGAS</b><p style="color:var(--ink2);line-height:1.5">Instale o Apps Script de Entregas (veja o LEIA-ME) e cole o endereço /exec em <code>ENTREGAS_URL</code> no index.html.</p></div></div>');
+  if (!ENT.k) return entLogin();
+  entMostrar('<div class="adm ent-adm" style="position:static;background:none">' + entTopo(true)
+    + '<div class="adm-h">NOVA ENTREGA</div><div class="adm-hs">Arraste o WAV e o MP3 do cliente. Gera um link que fica no ar pelo tempo escolhido e depois apaga sozinho.</div>'
+    + '<div class="adm-card"><div class="ent-row">'
+    + '<div><label class="adm-lbl" for="entCli">NOME DO CLIENTE (vai no link e na página)</label><input class="adm-in" id="entCli" placeholder="Ex.: DJ Fulano" autocomplete="off" maxlength="60"></div>'
+    + '<div><label class="adm-lbl" for="entPed">Nº DO ORÇAMENTO (opcional)</label><input class="adm-in" id="entPed" placeholder="AP-XXXXX" autocomplete="off"></div></div>'
+    + '<label class="adm-lbl" style="margin-top:12px">LINK DISPONÍVEL POR</label><div class="adm-seg" id="entHoras"><button data-h="24">24H</button><button data-h="48" class="on">48H</button><button data-h="72">72H</button><button data-h="168">7 DIAS</button></div>'
+    + '<div class="ent-zona" id="entZona" tabindex="0" style="margin-top:14px"><b>ARRASTE OS ARQUIVOS AQUI</b><span>WAV, MP3 ou vídeo da abertura · ou clique para escolher</span></div>'
+    + '<input type="file" id="entArq" multiple accept=".wav,.wave,.mp3,audio/*,video/*,.zip" hidden>'
+    + '<div class="ent-fl" id="entLista"></div>'
+    + '<div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="adm-b pri" id="entEnviar" onclick="entEnviar()">ENVIAR E GERAR LINK</button><span class="adm-msg" id="entMsg" style="margin:0"></span></div></div>'
+    + '<div id="entRes"></div>'
+    + '<div class="adm-h">ENTREGAS</div><div class="adm-hs">Links gerados. Some sozinho depois do prazo.</div><div class="adm-card" id="entTodas"><div class="adm-spin" style="margin:10px auto"></div></div></div>');
+  const z = $a('entZona'), inp = $a('entArq');
+  z.onclick = () => inp.click();
+  z.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); inp.click(); } };
+  inp.onchange = () => { entAdd(inp.files); inp.value = ''; };
+  ['dragenter', 'dragover'].forEach(t => z.addEventListener(t, e => { e.preventDefault(); z.classList.add('on'); }));
+  ['dragleave', 'dragend'].forEach(t => z.addEventListener(t, () => z.classList.remove('on')));
+  z.addEventListener('drop', e => { e.preventDefault(); z.classList.remove('on'); entAdd(e.dataTransfer.files); });
+  $a('entHoras').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; $a('entHoras').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); });
+  ENT.arquivos = []; entDesenharLista(); entCarregarLista();
+}
+// arquivo solto fora da caixa não pode abrir no lugar da página
+['dragover', 'drop'].forEach(t => window.addEventListener(t, e => { if (!$a('entOv').hidden) e.preventDefault(); }));
+function entTopo(logado) {
+  return '<div class="adm-top"><div class="adm-brand">ENTREGAS<small>ABERTURA PARA SHOWS · LINKS PARA O CLIENTE BAIXAR</small></div><div class="adm-act">'
+    + (logado ? '<button class="adm-b" onclick="entSair()">SAIR</button>' : '') + '<button class="adm-b" onclick="entFechar()">✕ VOLTAR AO SITE</button></div></div>';
+}
+function entLogin(msg) {
+  entMostrar('<div class="adm ent-adm" style="position:static;background:none">' + entTopo() + '<div class="adm-login adm-card">'
+    + '<label class="adm-lbl" for="entSenha">SENHA DAS ENTREGAS</label><input class="adm-in" type="password" id="entSenha" autocomplete="current-password">'
+    + '<div style="margin-top:12px"><button class="adm-b pri" id="entEntrar" onclick="entEntrar()">ENTRAR</button></div><div class="adm-msg err" id="entLMsg">' + esc(msg || '') + '</div></div></div>');
+  $a('entSenha').addEventListener('keydown', e => { if (e.key === 'Enter') entEntrar(); }); $a('entSenha').focus();
+}
+async function entEntrar() {
+  const k = $a('entSenha').value.trim(); if (!k) return;
+  $a('entEntrar').disabled = true; $a('entLMsg').className = 'adm-msg'; $a('entLMsg').textContent = 'CONFERINDO...';
+  const r = await entApi({ a: 'teste', k });
+  if (r.ok) { ENT.k = k; _ss('ap_ent_k', k); entAdmin(); }
+  else entLogin(r.erro === 'senha' ? 'Senha errada.' : 'Não consegui falar com o Apps Script (' + (r.erro || 'erro') + ').');
+}
+function entSair() { ENT.k = ''; _ss('ap_ent_k', ''); entLogin(); }
+function entFechar() {
+  if (ENT.enviando && !confirm('Ainda está enviando. Sair mesmo assim?')) return;
+  $a('entOv').hidden = true; document.documentElement.classList.remove('ent-on');
+  if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+}
+function entAdd(files) {
+  for (const f of files) { if (ENT.arquivos.length >= 10) break; if (!ENT.arquivos.some(x => x.f.name === f.name && x.f.size === f.size)) ENT.arquivos.push({ f, p: 0, id: '' }); }
+  entDesenharLista();
+}
+function entDesenharLista() {
+  $a('entLista').innerHTML = ENT.arquivos.map((a, i) => '<div class="ent-f"><span class="n">' + (/\.wave?$/i.test(a.f.name) ? '🎚️ ' : '🎵 ') + esc(a.f.name) + '</span><small id="entP' + i + '">' + entTam(a.f.size) + '</small>'
+    + (ENT.enviando ? '<span></span>' : '<button class="x" title="Tirar" onclick="ENT.arquivos.splice(' + i + ',1);entDesenharLista()">✕</button>') + '<div class="bar"><i id="entB' + i + '" style="width:' + Math.round(a.p * 100) + '%"></i></div></div>').join('');
+}
+function entMsg(t, tipo) { $a('entMsg').textContent = t; $a('entMsg').className = 'adm-msg ' + (tipo || ''); }
+function entSubir(file, token, pasta, onProg) {
+  return fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable&fields=id,name,size', {
+    method: 'POST', headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json; charset=UTF-8', 'X-Upload-Content-Type': file.type || 'application/octet-stream', 'X-Upload-Content-Length': String(file.size) },
+    body: JSON.stringify({ name: file.name, parents: [pasta] })
+  }).then(r => {
+    const loc = r.headers.get('Location');
+    if (!r.ok || !loc) throw new Error('o Google Drive recusou o envio (' + r.status + ')');
+    return new Promise((ok, falha) => {
+      const x = new XMLHttpRequest(); x.open('PUT', loc);
+      x.upload.onprogress = e => { if (e.lengthComputable) onProg(e.loaded / e.total); };
+      x.onload = () => x.status < 300 ? ok(JSON.parse(x.responseText)) : falha(new Error('envio falhou (' + x.status + ')'));
+      x.onerror = () => falha(new Error('a conexão caiu durante o envio'));
+      x.send(file);
+    });
+  });
+}
+async function entEnviar() {
+  if (ENT.enviando) return;
+  const cli = $a('entCli').value.trim();
+  if (!cli) { entMsg('Digite o nome do cliente.', 'err'); $a('entCli').focus(); return; }
+  if (!ENT.arquivos.length) { entMsg('Arraste pelo menos um arquivo.', 'err'); return; }
+  const horas = Number(($a('entHoras').querySelector('.on') || {}).dataset.h) || 48;
+  ENT.enviando = true; $a('entEnviar').disabled = true; entDesenharLista(); entMsg('Preparando…');
+  try {
+    const t = await entApi({ a: 'token', k: ENT.k });
+    if (!t.ok) throw new Error(t.erro === 'senha' ? 'senha expirada, entre de novo' : 'não consegui autorizar o envio (' + (t.detalhe || t.erro) + ')');
+    for (let i = 0; i < ENT.arquivos.length; i++) {
+      const a = ENT.arquivos[i]; if (a.id) continue;
+      entMsg('Enviando ' + (i + 1) + ' de ' + ENT.arquivos.length + '…');
+      const r = await entSubir(a.f, t.token, t.pasta, p => { a.p = p; const b = $a('entB' + i), s = $a('entP' + i); if (b) b.style.width = Math.round(p * 100) + '%'; if (s) s.textContent = Math.round(p * 100) + '% de ' + entTam(a.f.size); });
+      a.id = r.id; a.p = 1;
+    }
+    entMsg('Gerando o link…');
+    const c = await entApi({ a: 'criar', k: ENT.k, cliente: cli, pedido: admPedido($a('entPed').value), horas, arquivos: ENT.arquivos.map(a => ({ id: a.id, nome: a.f.name })) });
+    if (!c.ok) throw new Error(c.detalhe || c.erro);
+    ENT.arquivos = []; ENT.enviando = false; entDesenharLista(); entMsg('');
+    $a('entCli').value = ''; $a('entPed').value = ''; $a('entEnviar').disabled = false;
+    entResultado(cli, c.slug, c.expira, horas); entCarregarLista();
+  } catch (e) {
+    ENT.enviando = false; $a('entEnviar').disabled = false; entDesenharLista();
+    entMsg('Não deu certo: ' + e.message + '. Tente de novo (o que já subiu não é enviado de novo).', 'err');
+  }
+}
+function entLink(slug) { return (/^https?:$/.test(location.protocol) ? location.origin + location.pathname : 'https://aberturaparashow.com.br/') + '#' + slug; }
+function entTextoCliente(cli, link, horas) {
+  const prazo = horas >= 48 && horas % 24 === 0 ? (horas / 24) + ' dias' : horas + 'h';
+  return 'Oi' + (cli ? ' ' + cli : '') + '! Sua abertura ficou pronta! 🎉🔥\n\nBaixe aqui: ' + link + '\n\n⚠️ O link fica disponível só por ' + (horas === 48 ? '48h' : prazo) + '. Baixe agora e salve na nuvem pra não perder!';
+}
+function entResultado(cli, slug, expira, horas) {
+  const link = entLink(slug);
+  $a('entRes').innerHTML = '<div class="adm-card ent-res"><b>✅ LINK PRONTO PARA ' + esc(cli.toUpperCase()) + '</b><div class="lnk">' + esc(link) + '</div>'
+    + '<input id="entResL" type="hidden" value="' + esc(link) + '"><textarea id="entResT" hidden>' + esc(entTextoCliente(cli, link, horas)) + '</textarea>'
+    + '<div class="ent-acts"><button class="adm-b pri" onclick="entCopiar(this,\'entResL\')">COPIAR LINK</button><button class="adm-b" onclick="entCopiar(this,\'entResT\')">COPIAR MENSAGEM PRO CLIENTE</button><a class="adm-b" href="' + esc(link) + '" target="_blank" rel="noopener" style="text-decoration:none">VER A PÁGINA</a></div>'
+    + '<div class="adm-hs" style="margin:10px 0 0">Expira em ' + entQuando(expira) + '.</div></div>';
+}
+function entCopiar(btn, id) {
+  const t = $a(id).value, ok = () => { const o = btn.textContent; btn.textContent = '✓ COPIADO'; setTimeout(() => btn.textContent = o, 1800); };
+  try { navigator.clipboard.writeText(t).then(ok, () => prompt('Copie:', t)); } catch (e) { prompt('Copie:', t); }
+}
+async function entCarregarLista() {
+  const r = await entApi({ a: 'listar', k: ENT.k }), box = $a('entTodas'); if (!box) return;
+  if (!r.ok) { box.innerHTML = '<div class="adm-msg err">Não consegui carregar a lista (' + esc(r.erro) + ').</div>'; return; }
+  const ativas = r.entregas.filter(e => !e.expirou), velhas = r.entregas.filter(e => e.expirou).slice(0, 10);
+  const li = e => '<div class="ent-li"><div><div class="c">' + esc(e.cliente || e.slug) + (e.pedido ? ' <small style="color:var(--ink3)">#' + esc(e.pedido) + '</small>' : '') + '</div>'
+    + '<div class="s">' + (e.expirou ? '<span class="r">EXPIRADO</span>' : '⏳ ' + entFalta(e.expira) + ' · <a href="' + esc(entLink(e.slug)) + '" target="_blank" rel="noopener">' + esc(e.slug) + '</a>')
+    + ' · ' + (e.downloads ? '<span class="g">✓ baixou ' + e.downloads + 'x</span>' : 'ainda não baixou')
+    + ' · ' + (e.autorizou === 'SIM' ? '<span class="g">📺 autorizou YouTube</span>' : e.autorizou === 'NAO' ? '<span class="r">não autorizou YouTube</span>' : 'YouTube: sem resposta') + ' · ' + e.arquivos.map(a => esc(a.nome)).join(', ') + '</div></div>'
+    + '<button class="adm-b" onclick="entApagar(\'' + e.slug + '\',this)">APAGAR</button></div>';
+  box.innerHTML = (ativas.length ? ativas.map(li).join('') : '<div class="adm-empty">Nenhum link no ar agora.</div>')
+    + (velhas.length ? '<div class="adm-lbl" style="margin-top:16px">EXPIRADOS (os arquivos já foram apagados)</div>' + velhas.map(li).join('') : '');
+}
+async function entApagar(slug, btn) {
+  if (!confirm('Apagar agora o link e os arquivos de “' + slug + '”? O cliente não vai mais conseguir baixar.')) return;
+  btn.disabled = true; const r = await entApi({ a: 'apagar', k: ENT.k, slug });
+  if (!r.ok) { btn.disabled = false; alert('Não consegui apagar: ' + r.erro); return; } entCarregarLista();
+}
+
+/* ---------- abrir pelo endereço ---------- */
+function entRota() {
+  const h = location.hash, m = RE_ENTREGA.exec(h);
+  if (h === '#entregas') { entAdmin(); return true; }
+  if (m && !/^#(admin|studio|logo3d)/.test(h)) { entCliente(m[1]); return true; }
+  return false;
+}
+window.addEventListener('hashchange', entRota);
+entRota();
+</script>
+
+
 </body>
 </html>
