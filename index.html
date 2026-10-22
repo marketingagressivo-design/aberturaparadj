@@ -338,6 +338,18 @@
   .adm-fill{height:100%;background:var(--bar);border-radius:0 4px 4px 0;min-width:2px;}
   .adm-fill.win{background:var(--win);}
   .adm-drop{font-size:11px;color:var(--bad);margin-left:4px;}
+  .adm-ytg{display:grid;grid-template-columns:200px 1fr;gap:14px;margin-top:14px;align-items:start;}
+  .adm-ytg img{width:100%;border-radius:10px;display:block;aspect-ratio:16/9;object-fit:cover;background:var(--card2);}
+  .adm-ytg label{display:block;font-size:11px;letter-spacing:1.5px;color:var(--ink3);margin:10px 0 5px;}
+  .adm-ytc{display:flex;gap:8px;}.adm-ytc .adm-in{font-size:14px;padding:8px 10px;min-width:0;}.adm-ytc .adm-b{white-space:nowrap;}
+  .adm-ytt{font-weight:700;font-size:15px;line-height:1.3;}
+  .adm-ytr{display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line);}
+  .adm-ytr:first-of-type{border-top:0;}
+  .adm-ytr .pos{width:20px;color:var(--ink3);text-align:right;flex:none;}
+  .adm-ytr img{width:96px;border-radius:8px;display:block;aspect-ratio:16/9;object-fit:cover;flex:none;background:var(--card2);}
+  .adm-ytr .noimg{width:96px;aspect-ratio:16/9;border-radius:8px;background:var(--card2);display:flex;align-items:center;justify-content:center;color:var(--ink3);flex:none;}
+  .adm-ytr .inf{min-width:0;flex:1;}.adm-ytr .nums{color:var(--ink2);font-size:13px;margin-top:2px;}.adm-ytr .w{color:var(--win);}
+  @media(max-width:640px){.adm-ytg{grid-template-columns:1fr;}.adm-ytc{flex-direction:column;}}
   .adm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;}
   .adm-bk h4{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--ink);margin-bottom:2px;}
   .adm-bk .hs{color:var(--ink3);font-size:12px;margin-bottom:10px;}
@@ -1013,8 +1025,9 @@ const SESSAO = _ss('ap_s') || (() => { const s = rid(10); _ss('ap_s', s); return
 const UTM = (() => {
   let u = { source: "", medium: "", campaign: "" };
   try {
-    const p = new URLSearchParams(location.search);
-    if (p.get('utm_source')) { u = { source: p.get('utm_source') || "", medium: p.get('utm_medium') || "", campaign: p.get('utm_campaign') || "" }; _ss('ap_utm', JSON.stringify(u)); }
+    const p = new URLSearchParams(location.search), yt = (p.get('yt') || '').trim();
+    if (/^[\w-]{1,60}$/.test(yt)) { u = { source: 'youtube', medium: 'video', campaign: yt }; _ss('ap_utm', JSON.stringify(u)); }   // link do gerador do painel
+    else if (p.get('utm_source')) { u = { source: p.get('utm_source') || "", medium: p.get('utm_medium') || "", campaign: p.get('utm_campaign') || "" }; _ss('ap_utm', JSON.stringify(u)); }
     else { const g = _ss('ap_utm'); if (g) u = JSON.parse(g); }
   } catch (e) {}
   return u;
@@ -1261,6 +1274,11 @@ function renderFinal(stage) {
     + '</div>';
 }
 
+// vídeo do YouTube de onde o cliente veio (link gerado no painel: site/?yt=ID)
+function videoOrigem() {
+  if (String(UTM.source).toLowerCase() !== 'youtube' || !UTM.campaign) return '';
+  return /^[\w-]{11}$/.test(UTM.campaign) ? 'youtu.be/' + UTM.campaign : UTM.campaign;
+}
 function montarMensagem() {
   const a = userAnswers, L = ['SOLICITAÇÃO DE ORÇAMENTO #' + a.pedido];
   const info = INFO_SERVICO[a.servico], servTxt = info ? info.msg : a.servico;
@@ -1269,6 +1287,7 @@ function montarMensagem() {
     L.push('OLÁ! TUDO BEM? VI SEUS SERVIÇOS E FIQUEI INTERESSADO NA PRODUÇÃO DE ' + servTxt);
     if (info) add('INCLUI', info.inclui);
     if (a.finalidade) L.push('FINALIDADE: ' + a.finalidade);
+    if (videoOrigem()) L.push('VEIO DO VÍDEO: ' + videoOrigem());
     return L.join('\n');
   }
   L.push('OLÁ! QUERO UM ORÇAMENTO PARA: ' + servTxt);
@@ -1282,6 +1301,7 @@ function montarMensagem() {
   add('INVESTIMENTO', a.investimento);
   add('PRAZO', a.prazoTipo === 'DATA ESPECÍFICA' ? 'DATA ESPECÍFICA: ' + a.prazoData : a.prazoTipo);
   add('COMO CONHECEU', a.origem);
+  add('VEIO DO VÍDEO', videoOrigem());
   return L.join('\n');
 }
 
@@ -1527,6 +1547,8 @@ function admRender() {
     + quebra('ORIGEM DO ACESSO', 'campanha (UTM) ou site de onde veio', leads.map(l => Object.assign({}, l, { _orig: l.utm_source || l.referrer || 'DIRETO / WHATSAPP' })), '_orig')
     + '</div>';
 
+  h += admHtmlYoutube(leads);
+
   // lista de pedidos
   const servs = [...new Set(leads.map(l => l.servico).filter(Boolean))].sort();
   h += '<div class="adm-h">ORÇAMENTOS</div><div class="adm-hs">Mude o status e o valor direto aqui. Salva sozinho.</div>'
@@ -1544,7 +1566,82 @@ function admRender() {
   [['admFst', 'st'], ['admFtemp', 'temp'], ['admFserv', 'serv']].forEach(([id, k]) => $a(id).addEventListener('change', e => { ADM.filtro[k] = e.target.value; ADM.mostrar = 40; admListar(); }));
   $a('admIgn').addEventListener('change', e => _ls('ap_ignorar', e.target.checked ? '1' : '0'));
   admListar();
+  if (ADM.ytIn) admYtGerar();
+  ytPreencherTitulos();
 }
+/* ---------- YouTube: gerador de link rastreado + vídeos que mais trazem clientes ---------- */
+function ytId(s) {
+  s = String(s || '').trim();
+  if (/^[\w-]{11}$/.test(s)) return s;
+  try {
+    const u = new URL(/^https?:\/\//i.test(s) ? s : 'https://' + s), h = u.hostname.replace(/^(www|m|music)\./, '');
+    if (h === 'youtu.be') { const id = u.pathname.split('/')[1] || ''; return /^[\w-]{11}$/.test(id) ? id : ''; }
+    if (/(^|\.)youtube\.com$/.test(h)) {
+      const v = u.searchParams.get('v'); if (/^[\w-]{11}$/.test(v || '')) return v;
+      const m = u.pathname.match(/^\/(shorts|live|embed|v)\/([\w-]{11})/); if (m) return m[2];
+    }
+  } catch (e) {}
+  return '';
+}
+function siteBase() { return /^https?:$/.test(location.protocol) ? location.origin + location.pathname : 'https://aberturaparashow.com.br/'; }
+const _ytTit = (() => { try { return JSON.parse(_ls('ap_ytt') || '{}'); } catch (e) { return {}; } })();
+function ytTitulo(id) {   // título do vídeo pelo oEmbed do YouTube (guardado neste aparelho)
+  if (!/^[\w-]{11}$/.test(id)) return Promise.resolve('');
+  if (_ytTit[id]) return Promise.resolve(_ytTit[id]);
+  return fetch('https://www.youtube.com/oembed?format=json&url=' + encodeURIComponent('https://www.youtube.com/watch?v=' + id))
+    .then(r => r.ok ? r.json() : null).then(j => { const t = (j && j.title) || ''; if (t) { _ytTit[id] = t; _ls('ap_ytt', JSON.stringify(_ytTit)); } return t; }).catch(() => '');
+}
+function ytPreencherTitulos() {
+  document.querySelectorAll('#admBody [data-ytt]').forEach(el => { ytTitulo(el.dataset.ytt).then(t => { if (t) el.textContent = t; }); });
+}
+function admCopiar(btn, id) {
+  const t = document.getElementById(id).value, ok = () => { const o = btn.textContent; btn.textContent = '✓ COPIADO'; setTimeout(() => btn.textContent = o, 1800); };
+  try { navigator.clipboard.writeText(t).then(ok, () => { document.getElementById(id).select(); document.execCommand('copy'); ok(); }); }
+  catch (e) { document.getElementById(id).select(); document.execCommand('copy'); ok(); }
+}
+function admYtGerar() {
+  const v = document.getElementById('admYtIn').value; ADM.ytIn = v;
+  const id = ytId(v), out = document.getElementById('admYtOut');
+  if (!v.trim()) { out.innerHTML = ''; return; }
+  if (!id) { out.innerHTML = '<div class="adm-msg err">Não reconheci esse link. Cole o endereço do vídeo (youtube.com/watch?v=…, youtu.be/…, ou /shorts/…).</div>'; return; }
+  const link = siteBase() + '?yt=' + id;
+  const desc = '🎬 Quer uma abertura assim pro seu show? Faça seu orçamento aqui: ' + link;
+  out.innerHTML = '<div class="adm-ytg">'
+    + '<a href="https://youtu.be/' + id + '" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/' + id + '/mqdefault.jpg" alt="" onerror="this.style.visibility=\'hidden\'"></a>'
+    + '<div><div class="adm-ytt" data-ytt="' + id + '">VÍDEO ' + id + '</div>'
+    + '<label>LINK RASTREADO</label><div class="adm-ytc"><input class="adm-in" id="admYtLink" readonly value="' + esc(link) + '"><button class="adm-b pri" onclick="admCopiar(this,\'admYtLink\')">COPIAR LINK</button></div>'
+    + '<label>TEXTO PRONTO PARA A DESCRIÇÃO</label><div class="adm-ytc"><input class="adm-in" id="admYtDesc" readonly value="' + esc(desc) + '"><button class="adm-b" onclick="admCopiar(this,\'admYtDesc\')">COPIAR TEXTO</button></div>'
+    + '</div></div>';
+  ytPreencherTitulos();
+}
+function admHtmlYoutube(leads) {
+  const yv = {}; let semLink = 0;
+  leads.forEach(l => {
+    const src = String(l.utm_source || '').toLowerCase();
+    if (src === 'youtube' && l.utm_campaign) {
+      const o = yv[l.utm_campaign] || (yv[l.utm_campaign] = { id: l.utm_campaign, leads: 0, fech: 0, fat: 0 });
+      o.leads++; if (l.status === 'FECHOU') { o.fech++; o.fat += admNum(l.valor); }
+    } else if (/youtube|youtu\.be/i.test(String(l.referrer || '')) || (src === 'youtube' && !l.utm_campaign)) semLink++;
+  });
+  const lista = Object.values(yv).sort((a, b) => b.fat - a.fat || b.fech - a.fech || b.leads - a.leads);
+  let h = '<div class="adm-h">VÍDEOS DO YOUTUBE</div><div class="adm-hs">Cole o link de um vídeo para gerar o link rastreado da descrição. Quem chegar por ele aparece no ranking abaixo e na mensagem do WhatsApp (VEIO DO VÍDEO).</div>'
+    + '<div class="adm-card"><label for="admYtIn" class="adm-lbl">LINK DO VÍDEO NO YOUTUBE</label>'
+    + '<input class="adm-in" id="admYtIn" placeholder="https://www.youtube.com/watch?v=..." autocomplete="off" value="' + esc(ADM.ytIn || '') + '" oninput="admYtGerar()">'
+    + '<div id="admYtOut"></div></div>';
+  h += '<div class="adm-card" style="margin-top:12px"><div class="adm-lbl" style="margin-bottom:8px">VÍDEOS QUE MAIS TRAZEM CLIENTES</div>';
+  if (!lista.length) h += '<div class="adm-empty">Ainda nenhum lead pelos links rastreados neste período.</div>';
+  h += lista.slice(0, 15).map((o, i) => {
+    const vid = /^[\w-]{11}$/.test(o.id);
+    return '<div class="adm-ytr"><b class="pos">' + (i + 1) + '</b>'
+      + (vid ? '<a href="https://youtu.be/' + o.id + '" target="_blank" rel="noopener"><img loading="lazy" src="https://i.ytimg.com/vi/' + o.id + '/mqdefault.jpg" alt="" onerror="this.style.visibility=\'hidden\'"></a>' : '<span class="noimg">▶</span>')
+      + '<div class="inf"><div class="adm-ytt"' + (vid ? ' data-ytt="' + o.id + '"' : '') + '>' + esc(vid ? 'VÍDEO ' + o.id : o.id) + '</div>'
+      + '<div class="nums">' + o.leads + (o.leads === 1 ? ' lead' : ' leads') + ' · <span class="w">' + o.fech + (o.fech === 1 ? ' venda' : ' vendas') + '</span> · ' + pct(o.fech, o.leads) + ' conversão' + (o.fat ? ' · <span class="w">' + brl(o.fat) + '</span>' : '') + '</div></div></div>';
+  }).join('');
+  if (lista.length > 15) h += '<div class="adm-hs" style="margin:8px 0 0">e mais ' + (lista.length - 15) + ' vídeos com leads.</div>';
+  if (semLink) h += '<div class="adm-hs" style="margin:10px 0 0">+ ' + semLink + (semLink === 1 ? ' lead veio' : ' leads vieram') + ' do YouTube sem link rastreado (não dá para saber o vídeo).</div>';
+  return h + '</div>';
+}
+
 function kpi(v, l, s, cls) { return '<div class="adm-kpi ' + (cls || '') + '"><div class="v">' + v + '</div><div class="l">' + l + '</div>' + (s ? '<div class="s">' + s + '</div>' : '') + '</div>'; }
 function funil(rows, mostrarQueda) {
   const max = Math.max(1, ...rows.map(r => r[1]));
@@ -1657,7 +1754,7 @@ function admDemo() {
               if (Math.random() < .6) a.nome = 'DJ ' + pick(['NOVA', 'KAIO', 'LUNA', 'RAFA', 'THEO', 'BIA', 'PH', 'GUTO']);
             }
             Object.assign(lead, a); lead.temperatura = calcularTemperatura(Object.assign({}, userAnswers, a));
-            lead.utm_source = Math.random() < .35 ? pick(['instagram', 'facebook', 'google']) : ''; lead.referrer = !lead.utm_source && Math.random() < .3 ? pick(['l.instagram.com', 'youtube.com', 'google.com']) : '';
+            lead.utm_source = Math.random() < .35 ? pick(['instagram', 'facebook', 'google', 'youtube', 'youtube']) : ''; if (lead.utm_source === 'youtube') { lead.utm_medium = 'video'; lead.utm_campaign = pick(['Kc5mT9xQw2A', 'Kc5mT9xQw2A', 'pL0vR3dJ8sE', 'zH7nB2wYq4M', 'aT6gU1cVx9K']); } lead.referrer = !lead.utm_source && Math.random() < .3 ? pick(['l.instagram.com', 'youtube.com', 'google.com']) : '';
             const chance = { QUENTE: .5, MORNO: .22, FRIO: .06, 'SEM DADOS': .15 }[lead.temperatura];
             const r = Math.random();
             if (r < chance) { lead.status = 'FECHOU'; lead.valor = /ABERTURA COMPLETA/.test(sv) ? pick([800, 1000, 1200, 1500]) : /ÁUDIO/.test(sv) ? pick([350, 450, 500]) : pick([600, 900, 1500]); lead.dataFechamento = iso(60 * 24 * 2); }
