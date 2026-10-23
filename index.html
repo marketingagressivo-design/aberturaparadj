@@ -2182,5 +2182,44 @@ entRota();
 </script>
 
 
+<!--
+  Abertura CRM — registra de qual estado vem cada visita do site (para a aba MAPA → PROCURA).
+  Cole este bloco no site, logo antes de </body>, em todas as páginas (ou na página principal).
+  Troque COLE_AQUI_A_URL pela URL do Apps Script "Visitas do site" (termina em /exec).
+
+  - Conta 1 vez por visitante por dia. Robôs do Google e afins ficam de fora.
+  - Descobre o estado pelo IP com o ipapi.co (se falhar, tenta o ipwho.is). O IP não é guardado.
+  - Não aparece nada para o visitante e não atrasa o carregamento da página.
+-->
+<script>
+(function () {
+  var URL_VISITAS = 'https://script.google.com/macros/s/AKfycbwLK0J8szzJv41pTTGT8Im91dj1wyeq8-gG1YRPrKQkAYklf7O_2crND8ZRe58bq0zk/exec';
+  try {
+    if (!/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(URL_VISITAS)) return;
+    if (navigator.webdriver || /bot|crawl|spider|slurp|preview|lighthouse|headless/i.test(navigator.userAgent)) return;
+    var ls = window.localStorage, hoje = new Date().toISOString().slice(0, 10);
+    if (ls.getItem('abv_dia') === hoje) return;
+    var v = ls.getItem('abv_id');
+    if (!v) { v = (Math.random().toString(36).slice(2) + Date.now().toString(36)).replace(/[^a-z0-9]/gi, ''); ls.setItem('abv_id', v); }
+    var enviar = function (g) {
+      ls.setItem('abv_dia', hoje);
+      fetch(URL_VISITAS, {
+        method: 'POST', mode: 'no-cors', keepalive: true,
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ v: v, pais: g.pais || '', uf: g.uf || '', cidade: g.cidade || '',
+          pg: (location.pathname + location.search).slice(0, 120), ref: (document.referrer || '').slice(0, 120) })
+      }).catch(function () {});
+    };
+    var geo = function (url, ler) { return fetch(url).then(function (r) { return r.json(); }).then(ler); };
+    var iniciar = function () {
+      geo('https://ipapi.co/json/', function (j) { if (!j || j.error) throw 0; enviar({ pais: j.country_code, uf: j.region_code || j.region, cidade: j.city }); })
+        .catch(function () { return geo('https://ipwho.is/', function (j) { if (!j || j.success === false) throw 0; enviar({ pais: j.country_code, uf: j.region_code || j.region, cidade: j.city }); }); })
+        .catch(function () { enviar({}); });
+    };
+    if (document.readyState === 'complete') setTimeout(iniciar, 1500);
+    else window.addEventListener('load', function () { setTimeout(iniciar, 1500); });
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>
