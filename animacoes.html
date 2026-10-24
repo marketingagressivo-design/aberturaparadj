@@ -38,13 +38,32 @@ h2{font:700 13px Inter;letter-spacing:.1em;color:var(--mut);margin:26px 0 10px}
 button.okb{background:var(--acc);color:#111;border:0;border-radius:10px;padding:14px 26px;font:800 14px Unbounded,system-ui;letter-spacing:.04em;cursor:pointer}
 button.okb:disabled{opacity:.35;cursor:default}
 .ver .barra .okb{display:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px;padding:0;list-style:none}
+.chips li{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 12px;font:600 12.5px Inter;color:var(--fg)}
+.chips li b{color:var(--acc);font-weight:700}
+.passos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}
+.passos div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 10px}
+.passos b{display:block;font:800 12px Unbounded,system-ui;color:var(--acc);margin-bottom:2px}
+.passos span{color:var(--mut);font-size:12px;line-height:1.3;display:block}
+.esc .passos{display:none}
 </style>
 </head>
 <body>
 <header>
   <div class="marca">ABERTURA PARA SHOWS</div>
-  <h1 id="tit">Animações para painel de LED</h1>
-  <p class="sub" id="sub">Loops de uns 2 minutos, travados no BPM que você toca, com a sua logo e as suas fotos. Cada cena abaixo é uma prévia com uma logo de exemplo.</p>
+  <h1 id="tit">Animações profissionais para painel de LED</h1>
+  <p class="sub" id="sub">Visual no padrão dos grandes festivais internacionais, feito com a sua logo e as suas fotos e sincronizado no BPM que você toca. Você escolhe as cenas e a gente monta a animação do seu show. As prévias usam uma logo de exemplo: imagina a sua no lugar.</p>
+  <ul class="chips">
+    <li><b>No BPM</b> do seu set</li>
+    <li>Preto de verdade no LED, <b>sem estourar</b></li>
+    <li>Entrega em <b>2K e 1080p</b></li>
+    <li>Fecha em <b>loop</b> no telão</li>
+  </ul>
+  <div class="passos">
+    <div><b>1. Escolha</b><span>as cenas com a cara do seu show</span></div>
+    <div><b>2. Mande</b><span>logo e fotos no WhatsApp</span></div>
+    <div><b>3. Brilhe</b><span>receba pronta para o painel</span></div>
+  </div>
   <div class="oferta" id="oferta"></div>
 </header>
 <main id="main">
@@ -81,7 +100,7 @@ button.okb:disabled{opacity:.35;cursor:default}
   }
   if (modo === 'escolher') {
     document.getElementById('tit').textContent = 'Escolha as cenas da sua animação';
-    document.getElementById('sub').textContent = 'Toque nas cenas que você quer (fica marcado, igual selecionar fotos na galeria) e aperte OK. Quanto mais cenas, mais variado fica o seu loop.';
+    document.getElementById('sub').textContent = 'Toque nas cenas que você quer (fica marcado, igual selecionar fotos na galeria) e aperte OK. Quanto mais cenas, mais longa e variada fica a sua animação no painel.';
     var of = document.getElementById('oferta');
     if (promo) { of.style.display = 'block'; of.innerHTML = '<b>Condição especial</b> até ' + new Date(ate).toLocaleString('pt-BR', { weekday: 'long', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) + '. Depois volta o valor normal:<br>' + tabela.map(function (t) { return 'até ' + t[0] + ' cenas: <b>' + brl(t[1]) + '</b> <s style="color:#8b9a93">' + brl(t[2]) + '</s>'; }).join(' · '); }
   }
