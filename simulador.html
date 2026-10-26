@@ -106,6 +106,17 @@ textarea { flex: 1; min-width: 0; resize: none; border: 0; background: transpare
 .nota { width: 100%; background: var(--bg); border: 1px solid var(--linha); color: var(--tx); border-radius: 8px; padding: 8px 9px; font: 15px var(--sys); }
 .chip[disabled] { opacity: .5; cursor: default; }
 #titEf { font: 700 17px/1.1 var(--disp); letter-spacing: .02em; }
+.nm { display: flex; align-items: flex-start; gap: 6px; } .nm b { flex: 1; min-width: 0; }
+.lapis { all: unset; cursor: pointer; color: var(--tx3); font-size: 15px; padding: 0 4px; line-height: 1.2; } .lapis:focus-visible { outline: 2px solid var(--am); }
+.orig { color: var(--tx3); font: 400 11px var(--mono); }
+.guia { font-size: 12.5px; color: var(--tx2); line-height: 1.45; } .guia .gt { color: var(--am); font-weight: 600; } .guia i { color: var(--tx3); font-style: normal; }
+.peds { display: flex; gap: 5px; flex-wrap: wrap; }
+.ped { all: unset; cursor: pointer; font-size: 12px; padding: 4px 8px; border-radius: 99px; border: 1px solid var(--linha); color: var(--tx2); }
+.ped.on { border-color: var(--am); color: #111; background: var(--am); } .ped:focus-visible { outline: 2px solid var(--am); }
+.mat { background: var(--card); border: 1px solid var(--linha); border-radius: 14px; padding: 10px 12px; margin-top: 12px; }
+.mat summary { cursor: pointer; font: 700 15px/1.2 var(--disp); letter-spacing: .02em; color: var(--am); }
+.mat ul { margin: 10px 0 6px; padding-left: 18px; display: grid; gap: 6px; font-size: 13.5px; color: var(--tx2); } .mat li b { color: var(--tx); font-weight: 600; }
+.mat p { margin: 0; font-size: 12.5px; color: var(--tx3); }
 </style>
 </head>
 <body>
@@ -348,7 +359,42 @@ function toast(t) { let el = document.querySelector('.toast'); if (!el) { el = d
 const LABP = { jobs: {}, porChave: LS.get('labChave', {}) };   // job → {chave, st, url, erro, codigo, drive, nota}
 let modelos = LS.get('modelos', []);   // [{codigo, chave, nome, drive, nota, em}]
 let versaoPc = '';
-const nomeEf = id => (CAT.find(c => c.id === id) || {}).n || id;
+/* ---------- o que mandar para cada efeito (parecido com as referências) ---------- */
+const MAT = {
+  dj: ['🎧', 'Foto do DJ de frente', 'rosto e ombros, olhando para a câmera, boa luz. O fundo pode ser qualquer um: a ferramenta deve recortar.'],
+  djcorpo: ['🙌', 'DJ tocando, corpo inteiro', 'atrás da controladora, braço para cima ou mexendo nos botões, de preferência com luz de palco atrás.'],
+  obj: ['🧊', 'Foto de um objeto sozinho', 'controladora, fone, troféu, garrafa ou a logo num objeto. Fundo liso ajuda. Serve para virar 3D.'],
+  pista: ['🔦', 'Vídeo de pista ou palco', '7 s com luz forte, laser, fumaça ou público pulando.'],
+  calmo: ['🕯', 'Momento calmo', '7 s de casal, abraço, brinde ou decoração, com pouco movimento.'],
+  rosto: ['🙂', 'Close de rosto com contraste', 'luz de um lado só e fundo escuro. Fica ótimo em pontos, letras e contornos.'],
+  festa: ['🎉', 'Vídeo de festa comum', '7 s com gente e cor (aniversário, casamento). É o teste de cor.'],
+  nada: ['✍️', 'Só o nome', 'qualquer foto de fundo serve. O nome vem do campo lá em cima.']
+};
+const GUIA = {
+  filtro_natural: ['festa'], filtro_suave: ['calmo'], filtro_festa: ['festa'], filtro_neon: ['pista'], filtro_cinema: ['calmo', 'festa'], filtro_vibrante: ['festa'], filtro_pb: ['calmo', 'rosto'],
+  grao: ['calmo'], film_dust: ['calmo'], vinheta: ['calmo', 'dj'],
+  halftone: ['rosto', 'dj'], halftone_rastreio: ['dj', 'djcorpo'], psicodelico: ['djcorpo', 'rosto'], mosaico_linhas: ['obj', 'pista'], ascii: ['rosto', 'dj'],
+  pb_granulado: ['rosto', 'djcorpo'], glitch: ['pista'], parallax: ['djcorpo', 'obj'], flash_zoom: ['pista'],
+  enxame: ['nada', 'pista'], letreiro_negativo: ['pista', 'djcorpo'],
+  trans_luz_vazando: ['calmo'], trans_bokeh: ['calmo'], trans_queima_filme: ['festa'], trans_flash_balada: ['pista'], trans_laser: ['pista', 'djcorpo'], trans_particulas: ['festa', 'pista'], trans_varredura: ['festa']
+};
+const PEDIDOS = { fundo: '✂ recortar o fundo', tres: '🧊 virar 3D' };
+let nomes = LS.get('nomes', {}), pedidos = LS.get('pedidos', {});   // nomes: id → nome novo · pedidos: id → {fundo, tres}
+const nomeOriginal = id => (CAT.find(c => c.id === id) || {}).n || id;
+function guiaHtml(id) {
+  const g = GUIA[id] || []; if (!g.length) return '';
+  return '<div class="guia"><span class="gt">📌 Mande:</span> ' + g.map(k => '<span title="' + esc(MAT[k][2]) + '">' + MAT[k][0] + ' ' + esc(MAT[k][1].toLowerCase()) + '</span>').join(' <i>ou</i> ') + '</div>';
+}
+function pedidosHtml(id) {
+  const p = pedidos[id] || {};
+  return '<div class="peds">' + Object.entries(PEDIDOS).map(([k, t]) => '<button class="ped' + (p[k] ? ' on' : '') + '" data-ped="' + id + '" data-k="' + k + '" aria-pressed="' + !!p[k] + '">' + t + '</button>').join('') + '</div>';
+}
+function materialHtml() {
+  return '<details class="mat"><summary>📸 Material para separar (parecido com as referências)</summary><ul>'
+    + Object.values(MAT).map(m => '<li><b>' + m[0] + ' ' + esc(m[1]) + '</b>: ' + esc(m[2]) + '</li>').join('')
+    + '</ul><p>Vídeos de 7 s bastam (a página corta sozinha). Em cada efeito, o 📌 diz qual deles mandar. Marque ✂ ou 🧊 no card quando o efeito precisar recortar o fundo ou transformar o objeto em 3D: vira pedido no relatório.</p></details>';
+}
+const nomeEf = id => nomes[id] || nomeOriginal(id);
 function jobDe(chave) { const j = LABP.porChave[chave]; return j && LABP.jobs[j] ? LABP.jobs[j] : null; }
 function labEvento(p, e) {   // mensagens do canal sobre efeitos (ao vivo ou do histórico de 12 h)
   const anexo = e.attachment, doPc = /-out$/.test(e.topic || '');
@@ -385,15 +431,16 @@ function labCard(chave) {
 function labTopo() {
   const n = modelos.length;
   $('labResumo').textContent = n ? n + ' modelo(s) salvo(s) no Drive' : 'Nenhum modelo salvo ainda.';
-  $('btRel').disabled = !n && !Object.keys(LABP.jobs).length;
+  $('btRel').disabled = !n && !Object.keys(LABP.jobs).length && !Object.keys(nomes).length && !Object.keys(pedidos).length;
 }
 function montarEfeitos() {
   let h = '', sec = '';
   for (const c of CAT) {
     if (c.sec !== sec) { if (sec) h += '</div>'; sec = c.sec; h += '<h2>' + esc(sec) + '</h2><div class="grade">'; }
-    h += '<div class="ef" data-ef="' + c.id + '"><div class="mid"></div><div class="c"><b>' + esc(c.n) + '</b>' + (c.d ? '<p>' + esc(c.d) + '</p>' : '') + '<div class="acao"></div></div></div>';
+    h += '<div class="ef" data-ef="' + c.id + '"><div class="mid"></div><div class="c"><div class="nm"><b data-nome="' + c.id + '">' + esc(nomeEf(c.id)) + '</b><button class="lapis" data-ren="' + c.id + '" aria-label="Mudar o nome">✎</button></div>'
+      + (nomes[c.id] ? '<small class="orig">antes: ' + esc(c.n) + '</small>' : '') + (c.d ? '<p>' + esc(c.d) + '</p>' : '') + guiaHtml(c.id) + pedidosHtml(c.id) + '<div class="acao"></div></div></div>';
   }
-  $('efLista').innerHTML = h + '</div>';
+  $('efLista').innerHTML = materialHtml() + h + '</div>';
   CAT.forEach(c => labCard(c.id)); labTopo();
 }
 /* preparar o arquivo no celular: foto até 1600 px; vídeo grande vira um trecho de 7 s em 720p (gravado aqui mesmo) */
@@ -455,6 +502,20 @@ async function labEnviar(chave, arquivo) {
 $('efLista').addEventListener('change', e => { const i = e.target.closest('[data-arq]'); if (i && i.files[0]) { const f = i.files[0]; i.value = ''; labEnviar(i.dataset.arq, f); } });
 $('efLista').addEventListener('input', e => { const n = e.target.closest('[data-nota]'); if (n) { const j = jobDe(n.dataset.nota); if (j) j.nota = n.value; } });
 $('efLista').addEventListener('click', e => {
+  const ren = e.target.closest('[data-ren]');
+  if (ren) {
+    const id = ren.dataset.ren, b = document.querySelector('[data-nome="' + id + '"]'); if (!b) return;
+    const inp = document.createElement('input'); inp.className = 'nota'; inp.value = nomeEf(id); inp.setAttribute('aria-label', 'Novo nome do efeito');
+    b.replaceWith(inp); ren.hidden = true; inp.focus(); inp.select();
+    const fim = salvar => { if (fim.feito) return; fim.feito = true; const v = inp.value.trim();
+      if (salvar) { if (!v || v === nomeOriginal(id)) delete nomes[id]; else nomes[id] = v.slice(0, 50); LS.set('nomes', nomes); }
+      montarEfeitos(); };
+    inp.addEventListener('keydown', ev => { if (ev.key === 'Enter') fim(true); if (ev.key === 'Escape') fim(false); });
+    inp.addEventListener('blur', () => fim(true));
+    return;
+  }
+  const pd = e.target.closest('[data-ped]');
+  if (pd) { const id = pd.dataset.ped, k = pd.dataset.k, o = pedidos[id] = pedidos[id] || {}; o[k] = !o[k]; if (!o.fundo && !o.tres) delete pedidos[id]; LS.set('pedidos', pedidos); pd.classList.toggle('on', !!o[k]); pd.setAttribute('aria-pressed', !!o[k]); labTopo(); return; }
   const s = e.target.closest('[data-salvar]'); if (!s) return;
   const chave = s.dataset.salvar, j = jobDe(chave); if (!j) return;
   j.salvando = true; labCard(chave);
@@ -471,8 +532,11 @@ function relatorio() {
   const testados = Object.values(LABP.jobs).filter(j => j.pronto && !j.codigo), erros = Object.values(LABP.jobs).filter(j => j.erro);
   if (testados.length) { linhas.push('', 'TESTADOS E NÃO SALVOS:'); testados.forEach(j => linhas.push('- ' + nomeEf(j.chave) + ' (id: ' + j.chave + ')' + (j.nota ? ' · nota: ' + j.nota : ''))); }
   if (erros.length) { linhas.push('', 'ERROS:'); erros.forEach(j => linhas.push('- ' + nomeEf(j.chave) + ' (id: ' + j.chave + '): ' + String(j.st || '').replace(/^⚠\s*/, ''))); }
+  const ren = Object.entries(nomes), peds = Object.entries(pedidos);
+  if (ren.length) { linhas.push('', 'NOMES NOVOS (trocar na extensão):'); ren.forEach(([id, n]) => linhas.push('- ' + id + ': "' + nomeOriginal(id) + '" → "' + n + '"')); }
+  if (peds.length) { linhas.push('', 'PEDIDOS DE FUNÇÃO NOVA:'); peds.forEach(([id, o]) => linhas.push('- ' + nomeEf(id) + ' (id: ' + id + '): ' + [o.fundo && 'recortar o fundo (DJ/pessoa/objeto) antes do efeito', o.tres && 'transformar o objeto/pessoa em 3D'].filter(Boolean).join(' + '))); }
   const obs = ($('labObs') && $('labObs').value.trim()) || LS.get('labObs', '');
-  linhas.push('', 'O QUE EU QUERO MUDAR:', obs || '(nada escrito)', '', 'Pedido: use os modelos acima como exemplos fixos na página de efeitos da extensão e ajuste o motor conforme as notas.');
+  linhas.push('', 'O QUE EU QUERO MUDAR:', obs || '(nada escrito)', '', 'Pedido: use os modelos acima como exemplos fixos na página de efeitos da extensão, troque os nomes, crie as funções pedidas e ajuste o motor conforme as notas.');
   return linhas.join('\n');
 }
 $('btRel').onclick = () => {
