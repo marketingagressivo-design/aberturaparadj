@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#06110b">
+<title>Simulador Abertura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@500;700;800&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+/* Layout: app de uma tela (cabeçalho, conversa rolando, caixa de mensagem presa embaixo), feito para o polegar no celular */
+:root {
+  --bg: #06110b; --card: #0c1912; --card2: #112219; --linha: rgba(255,255,255,.10);
+  --tx: #f4f7f5; --tx2: rgba(244,247,245,.68); --tx3: rgba(244,247,245,.45);
+  --am: #facc15; --ok: #4ade80; --mau: #f87171; --eu: #14532d; --eu2: #166534;
+  --disp: "Saira Semi Condensed", "Arial Narrow", system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, monospace;
+  --sys: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--tx); font: 15px/1.42 var(--sys); -webkit-text-size-adjust: 100%; overflow: hidden; }
+.app { height: 100%; display: flex; flex-direction: column; max-width: 760px; margin: 0 auto; }
+header { flex: none; padding: calc(env(safe-area-inset-top, 0px) + 10px) max(14px, env(safe-area-inset-right, 0px)) 10px max(14px, env(safe-area-inset-left, 0px));
+  display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--linha); background: var(--bg); }
+.logo { width: 36px; height: 36px; border-radius: 10px; background: var(--am); color: #111; display: grid; place-items: center; font: 800 18px/1 var(--disp); flex: none; }
+.tit { flex: 1; min-width: 0; }
+.tit button { all: unset; cursor: pointer; display: block; font: 700 17px/1.1 var(--disp); letter-spacing: .02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.tit button::after { content: " ▾"; color: var(--tx3); font-size: 13px; }
+.st { font: 400 11.5px/1.3 var(--mono); color: var(--tx3); display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+.st i { width: 7px; height: 7px; border-radius: 50%; background: var(--tx3); flex: none; }
+.st.on i { background: var(--ok); box-shadow: 0 0 0 3px rgba(74,222,128,.18); } .st.off i { background: var(--mau); }
+.ib { all: unset; cursor: pointer; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 10px; color: var(--tx2); flex: none; }
+.ib:focus-visible, .chip:focus-visible, .env:focus-visible { outline: 2px solid var(--am); outline-offset: 2px; }
+.ib svg { width: 22px; height: 22px; }
+#lista { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 12px max(12px, env(safe-area-inset-right, 0px)) 6px max(12px, env(safe-area-inset-left, 0px)); display: flex; flex-direction: column; gap: 6px; }
+.dia { align-self: center; font: 400 11px var(--mono); color: var(--tx3); background: var(--card); border-radius: 99px; padding: 3px 10px; margin: 8px 0 2px; }
+.b { max-width: 84%; padding: 7px 10px 5px; border-radius: 12px; background: var(--card2); align-self: flex-start; word-wrap: break-word; overflow-wrap: anywhere; white-space: pre-wrap; position: relative; }
+.b.cli { align-self: flex-end; background: var(--eu); }
+.b.dono { align-self: flex-start; background: #2a2410; border: 1px solid rgba(250,204,21,.35); }
+.b.rasc { background: transparent; border: 1px dashed var(--linha); color: var(--tx2); }
+.b.narr { background: #0f1d2a; border: 1px solid rgba(147,197,253,.25); }
+.b .q { display: block; font: 700 11px var(--mono); color: var(--am); margin-bottom: 2px; letter-spacing: .03em; }
+.b .h { display: block; text-align: right; font: 400 10.5px var(--mono); color: var(--tx3); margin-top: 2px; }
+.b img, .b video { display: block; max-width: 100%; max-height: 360px; border-radius: 8px; margin: 2px 0 4px; background: #000; }
+.b audio { display: block; width: 240px; max-width: 100%; margin: 2px 0; }
+.b a { color: var(--am); }
+.b .arq { display: inline-flex; gap: 6px; align-items: center; padding: 6px 8px; border-radius: 8px; background: rgba(0,0,0,.25); text-decoration: none; }
+.b.pend { opacity: .6; }
+.b.erro { outline: 1px solid var(--mau); }
+.dig { align-self: flex-start; font: 400 12px var(--mono); color: var(--tx3); padding: 2px 4px; }
+.vazio { margin: auto; text-align: center; color: var(--tx2); padding: 20px; max-width: 34ch; display: grid; gap: 10px; }
+.vazio b { font: 800 22px/1.1 var(--disp); color: var(--tx); letter-spacing: .02em; }
+.chips { flex: none; display: flex; gap: 6px; overflow-x: auto; padding: 6px max(12px, env(safe-area-inset-right, 0px)) 6px max(12px, env(safe-area-inset-left, 0px)); scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip { all: unset; cursor: pointer; white-space: nowrap; font: 500 13px/1 var(--sys); padding: 8px 12px; border-radius: 99px; border: 1px solid var(--linha); color: var(--tx); background: var(--card); }
+.chip.pri { border-color: var(--am); color: var(--am); }
+.compor { flex: none; display: flex; gap: 6px; align-items: flex-end; padding: 6px max(10px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 8px) max(10px, env(safe-area-inset-left, 0px)); border-top: 1px solid var(--linha); background: var(--bg); }
+.caixa { flex: 1; min-width: 0; display: flex; align-items: flex-end; background: var(--card); border: 1px solid var(--linha); border-radius: 22px; padding: 0 4px 0 12px; }
+.caixa.dono { border-color: var(--am); }
+textarea { flex: 1; min-width: 0; resize: none; border: 0; background: transparent; color: var(--tx); font: 16px/1.35 var(--sys); padding: 10px 0; max-height: 132px; outline: none; }
+.env { all: unset; cursor: pointer; width: 46px; height: 46px; border-radius: 50%; background: var(--am); color: #111; display: grid; place-items: center; flex: none; }
+.env svg { width: 22px; height: 22px; } .env.grav { background: var(--mau); color: #fff; animation: pulsa 1s infinite; }
+@keyframes pulsa { 50% { transform: scale(1.06); } }
+@media (prefers-reduced-motion: reduce) { .env.grav { animation: none; } }
+.folha { position: fixed; inset: 0; background: rgba(0,0,0,.55); display: flex; align-items: flex-end; justify-content: center; z-index: 20; }
+.folha > div { width: 100%; max-width: 760px; max-height: 82%; overflow-y: auto; background: var(--card); border-radius: 18px 18px 0 0; padding: 16px max(16px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 16px) max(16px, env(safe-area-inset-left, 0px)); display: grid; gap: 8px; }
+.folha h3 { margin: 0 0 2px; font: 800 18px/1.1 var(--disp); letter-spacing: .03em; }
+.folha p { margin: 0; color: var(--tx2); font-size: 13.5px; }
+.op { all: unset; cursor: pointer; display: grid; gap: 2px; padding: 11px 12px; border-radius: 12px; background: var(--card2); border: 1px solid var(--linha); }
+.op b { font-weight: 600; } .op small { color: var(--tx2); font-size: 13px; }
+.op.at { border-color: var(--am); }
+.op:focus-visible { outline: 2px solid var(--am); }
+.lin2 { display: flex; gap: 8px; flex-wrap: wrap; }
+.lin2 .chip { flex: 1 1 auto; text-align: center; }
+.chk { display: flex; gap: 8px; align-items: center; font-size: 14px; padding: 6px 2px; }
+.chk input { width: 20px; height: 20px; accent-color: #facc15; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(env(safe-area-inset-bottom, 0px) + 84px); background: #1d2b23; border: 1px solid var(--linha); color: var(--tx); padding: 9px 14px; border-radius: 10px; font-size: 13.5px; z-index: 30; max-width: calc(100% - 32px); }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo" aria-hidden="true">A</div>
+    <div class="tit"><button id="trocaConv" aria-label="Trocar de conversa">Conversa 1</button><div class="st" id="st"><i></i><span>conectando ao PC…</span></div></div>
+    <button class="ib" id="btTestes" aria-label="O que testar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3h6M10 3v6L4.5 18.5A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-2.5L14 9V3"/><path d="M7 15h10"/></svg></button>
+    <button class="ib" id="btMais" aria-label="Opções"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button>
+  </header>
+  <div id="lista" aria-live="polite"></div>
+  <div class="chips" id="atalhos"></div>
+  <div class="compor">
+    <button class="ib" id="btAnexo" aria-label="Mandar foto, vídeo, áudio ou arquivo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 11.5 12.5 20a5 5 0 0 1-7-7L14 4.5a3.3 3.3 0 0 1 4.7 4.7l-8.5 8.5a1.7 1.7 0 0 1-2.4-2.4L15.5 7.6"/></svg></button>
+    <input type="file" id="arq" hidden accept="image/*,video/*,audio/*,application/pdf,.zip,.doc,.docx">
+    <div class="caixa" id="caixa"><textarea id="txt" rows="1" placeholder="Mensagem (você é o cliente)" aria-label="Mensagem"></textarea></div>
+    <button class="env" id="env" aria-label="Gravar áudio"><svg id="icMic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><svg id="icEnv" viewBox="0 0 24 24" fill="currentColor" hidden><path d="M3.4 20.4 21 12 3.4 3.6l.1 6.6L15 12 3.5 13.8z"/></svg></button>
+  </div>
+</div>
+
+<script>
+'use strict';
+/* Simulador da Abertura: o celular conversa com a extensão (no PC, com o WhatsApp Web aberto) por um canal com endereço
+   secreto no ntfy.sh. Tópicos: abcrm-<chave>-in (celular → PC) e abcrm-<chave>-out (PC → celular). */
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const LS = { get(k, p) { try { const v = localStorage.getItem('absim_' + k); return v == null ? p : JSON.parse(v); } catch (x) { return p; } }, set(k, v) { try { localStorage.setItem('absim_' + k, JSON.stringify(v)); } catch (x) {} } };
+const MENU_PADRAO = [
+  { chave: 'teste atendimento', txt: 'atendimento automático: você é um cliente novo' },
+  { chave: 'teste cotação', txt: 'cotação com o seu DDD' },
+  { chave: 'teste roteiro', txt: 'perguntas e texto da abertura' },
+  { chave: 'teste músicas', txt: 'trechos das músicas antes do texto' },
+  { chave: 'teste animação', txt: 'venda da animação de logo do começo' },
+  { chave: 'teste aftermovie', txt: 'aftermovie: briefing, link do Drive, amostra, prévia' },
+  { chave: 'teste inpi', txt: 'consulta de marca no INPI' }];
+const VARIACOES = [
+  ['teste cotação 71', 'cotação para Salvador (outro DDD)'], ['teste cotação portugal', 'cliente de Portugal (euro)'],
+  ['teste cotação áudio 1:30', 'só áudio, 1:30'], ['teste animação oferta', 'animação já na oferta'],
+  ['teste animação coleta', 'animação comprada: mandar logo e fotos'], ['teste animação sem logo', 'cliente sem logo']];
+
+let K = '';
+{ const m = /[#&]k=([a-z0-9]{12,40})/i.exec(location.hash); if (m) { K = m[1].toLowerCase(); LS.set('k', K); history.replaceState(null, '', location.pathname); } else K = LS.get('k', ''); }
+const URL_IN = () => 'https://ntfy.sh/abcrm-' + K + '-in', URL_OUT = () => 'https://ntfy.sh/abcrm-' + K + '-out';
+let convs = LS.get('convs', [{ id: 'c1', nome: 'Conversa 1' }]), atual = LS.get('atual', 'c1');
+if (!convs.some(c => c.id === atual)) atual = convs[0].id;
+let comoAbertura = false, menu = LS.get('menu', MENU_PADRAO), ultimoPc = 0, pingEm = 0;
+const msgs = {};   // conv -> [{id, de: 'cli'|'pc'|'dono', t, tipo, texto, url, nome, pend, erro}]
+const visto = new Set();
+
+/* ---------- canal ---------- */
+async function publicar(obj, arquivo) {
+  let r;
+  if (arquivo) r = await fetch(URL_IN() + '?filename=' + encodeURIComponent(arquivo.name || 'arquivo') + '&message=' + encodeURIComponent(JSON.stringify(obj)), { method: 'PUT', body: arquivo });
+  else {
+    const txt = JSON.stringify(obj);
+    if (new TextEncoder().encode(txt).length <= 3800) r = await fetch(URL_IN(), { method: 'POST', body: txt });
+    else r = await fetch(URL_IN() + '?filename=msg.json&message=' + encodeURIComponent(JSON.stringify({ tipo: 'grande' })), { method: 'PUT', body: new Blob([txt], { type: 'application/json' }) });
+  }
+  if (!r.ok) throw new Error(r.status === 429 ? 'limite de mensagens do canal atingido; tente mais tarde' : r.status === 413 ? 'arquivo grande demais (máx. 15 MB)' : 'o canal recusou (' + r.status + ')');
+}
+async function chegou(e) {
+  if (!e || e.event !== 'message' || visto.has(e.id)) return;
+  visto.add(e.id);
+  let p; try { p = JSON.parse(e.message); } catch (x) { return; }
+  if (p.tipo === 'grande' && e.attachment) { try { p = JSON.parse(await (await fetch(e.attachment.url)).text()); } catch (x) { return; } }
+  const doPc = e.topic && /-out$/.test(e.topic);
+  if (doPc) {
+    ultimoPc = Math.max(ultimoPc, (e.time || 0) * 1000); status();
+    if (p.tipo === 'pong') { if (p.menu && p.menu.length) { menu = p.menu; LS.set('menu', menu); atalhos(); } return; }
+    if (p.tipo === 'oi') return;
+    if (p.tipo !== 'msg') return;
+    adicionar(p.conv, { id: p.id, de: p.msg === 'rascunho' ? 'rasc' : /^\s*🧪/.test(p.texto || '') ? 'narr' : 'pc', t: (p.t || e.time) * 1000, tipo: p.msg, texto: p.texto, url: e.attachment && e.attachment.url, nome: p.nome || (e.attachment && e.attachment.name), mime: p.mime || (e.attachment && e.attachment.type) });
+    digitando(false);
+    return;
+  }
+  if (p.tipo === 'msg') {   // o que você mandou (vale também para o histórico de outro aparelho)
+    const lista = msgs[p.conv] || [], loc = lista.find(m => m.id === p.id);
+    if (loc) { loc.pend = false; loc.url = loc.url || (e.attachment && e.attachment.url); if (p.conv === atual) desenhar(); return; }
+    adicionar(p.conv, { id: p.id, de: p.comoAbertura ? 'dono' : 'cli', t: e.time * 1000, tipo: p.msg || (e.attachment ? tipoDe(e.attachment.type) : 'chat'), texto: p.texto, url: e.attachment && e.attachment.url, nome: p.nome, mime: p.mime });
+    if (p.nomeConv && !convs.some(c => c.id === p.conv)) { convs.push({ id: p.conv, nome: p.nomeConv }); LS.set('convs', convs); }
+  }
+}
+let es = null, ultimoId = '';   // só vale dentro desta visita: ao abrir, recarrega as últimas 12 h
+function conectar() {
+  if (!K) return;
+  try { es && es.close(); } catch (x) {}
+  es = new EventSource('https://ntfy.sh/abcrm-' + K + '-in,abcrm-' + K + '-out/sse?since=' + (ultimoId || '12h'));
+  es.onmessage = ev => { try { const e = JSON.parse(ev.data); if (e.id) ultimoId = e.id; chegou(e); } catch (x) {} };
+  es.onerror = () => status();
+}
+
+/* ---------- conversa ---------- */
+const tipoDe = mime => /^image\//.test(mime || '') ? 'image' : /^video\//.test(mime || '') ? 'video' : /^audio\//.test(mime || '') ? 'audio' : 'document';
+function adicionar(conv, m) {
+  conv = conv || 'c1';
+  if (!convs.some(c => c.id === conv)) { convs.push({ id: conv, nome: 'Conversa ' + (convs.length + 1) }); LS.set('convs', convs); }
+  const l = msgs[conv] = msgs[conv] || [];
+  if (m.id && l.some(x => x.id === m.id)) return;
+  l.push(m);   // na ordem em que chegou (o horário do canal é por segundo e embaralharia respostas rápidas)
+  if (conv === atual) desenhar(true); else toast('Mensagem nova em ' + ((convs.find(c => c.id === conv) || {}).nome || conv));
+}
+function formatar(t) {   // *negrito*, _itálico_, links
+  let h = esc(t);
+  h = h.replace(/(^|[\s(])\*([^*\n]+)\*/g, '$1<b>$2</b>').replace(/(^|[\s(])_([^_\n]+)_/g, '$1<i>$2</i>');
+  return h.replace(/\bhttps?:\/\/[^\s<]+/g, u => '<a href="' + u + '" target="_blank" rel="noopener">' + u + '</a>');
+}
+const hora = t => new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+function midia(m) {
+  if (!m.url) return m.tipo && m.tipo !== 'chat' && m.tipo !== 'rascunho' ? '<span class="q">' + esc(m.tipo) + ' (expirou)</span>' : '';
+  const u = esc(m.url), tp = m.tipo === 'ptt' ? 'audio' : m.tipo;
+  if (tp === 'image') return '<a href="' + u + '" target="_blank" rel="noopener"><img src="' + u + '" alt="imagem" loading="lazy"></a>';
+  if (tp === 'video') return '<video src="' + u + '" controls playsinline preload="metadata"></video>';
+  if (tp === 'audio') return '<audio src="' + u + '" controls preload="metadata"></audio>';
+  return '<a class="arq" href="' + u + '" target="_blank" rel="noopener">📄 ' + esc(m.nome || 'arquivo') + '</a>';
+}
+function desenhar(rolar) {
+  const l = msgs[atual] || [], el = $('lista'), noFim = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
+  $('trocaConv').textContent = (convs.find(c => c.id === atual) || {}).nome || 'Conversa';
+  if (!K) { el.innerHTML = '<div class="vazio"><b>Falta o link do PC</b><span>Abra esta página pelo link que a extensão mandou no seu WhatsApp (tem #k= no final). Nas configurações da extensão: 📱 Simulador pelo celular › Ligar.</span></div>'; return; }
+  if (!l.length) { el.innerHTML = '<div class="vazio"><b>O que vamos testar?</b><span>Toque no frasco lá em cima ou num atalho embaixo. Você faz o papel do cliente; a Abertura responde do PC. Nada disso passa pelo WhatsApp.</span></div>'; return; }
+  let h = '', dia = '';
+  for (const m of l) {
+    const d = new Date(m.t).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit' });
+    if (d !== dia) { h += '<div class="dia">' + esc(d) + '</div>'; dia = d; }
+    const quem = m.de === 'dono' ? '<span class="q">VOCÊ (COMO ABERTURA)</span>' : m.de === 'pc' ? '' : m.de === 'narr' ? '<span class="q">🧪 BASTIDORES DO TESTE</span>' : m.de === 'rasc' ? '<span class="q">RASCUNHO</span>' : '';
+    h += '<div class="b ' + (m.de === 'pc' ? '' : m.de) + (m.pend ? ' pend' : '') + (m.erro ? ' erro' : '') + '">' + quem + midia(m) + (m.texto ? formatar(m.texto) : '')
+      + '<span class="h">' + (m.erro ? '⚠ ' + esc(m.erro) + ' · ' : m.pend ? 'enviando… · ' : '') + hora(m.t) + '</span></div>';
+  }
+  if (digitandoAte > Date.now()) h += '<div class="dig">Abertura está respondendo…</div>';
+  el.innerHTML = h;
+  if (rolar || noFim) el.scrollTop = el.scrollHeight;
+}
+let digitandoAte = 0, digT = null;
+function digitando(on) { digitandoAte = on ? Date.now() + 90000 : 0; clearTimeout(digT); if (on) digT = setTimeout(() => desenhar(), 90500); desenhar(on); }
+
+/* ---------- enviar ---------- */
+const novoId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+async function enviar(texto, arquivo, ptt) {
+  if (!K) return toast('Abra pelo link do PC primeiro.');
+  texto = String(texto || '').trim(); if (!texto && !arquivo) return;
+  if (arquivo && arquivo.size > 15 * 1024 * 1024) return toast('Arquivo grande demais (máx. 15 MB). Para vídeos maiores, use um link do Google Drive.');
+  const id = novoId(), conv = atual, nomeConv = (convs.find(c => c.id === conv) || {}).nome;
+  const m = { id, de: comoAbertura ? 'dono' : 'cli', t: Date.now(), tipo: arquivo ? (ptt ? 'ptt' : tipoDe(arquivo.type)) : 'chat', texto, url: arquivo ? URL.createObjectURL(arquivo) : '', nome: arquivo && arquivo.name, pend: true };
+  adicionar(conv, m);
+  try {
+    await publicar({ v: 1, tipo: 'msg', conv, nomeConv, id, texto, comoAbertura, msg: ptt ? 'ptt' : '', mime: arquivo ? arquivo.type : '', nome: arquivo ? arquivo.name : '' }, arquivo);
+    if (!comoAbertura) digitando(true);
+  } catch (x) { m.erro = x.message; m.pend = false; desenhar(); }
+}
+const txt = $('txt');
+function ajustar() { txt.style.height = 'auto'; txt.style.height = Math.min(132, txt.scrollHeight) + 'px'; const tem = !!txt.value.trim(); $('icMic').hidden = tem; $('icEnv').hidden = !tem; $('env').setAttribute('aria-label', tem ? 'Enviar' : 'Gravar áudio'); }
+txt.addEventListener('input', ajustar);
+txt.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && matchMedia('(pointer:fine)').matches) { e.preventDefault(); $('env').click(); } });
+let rec = null, partes = [];
+$('env').onclick = async () => {
+  if (txt.value.trim()) { const t = txt.value; txt.value = ''; ajustar(); return enviar(t); }
+  if (rec) { rec.stop(); return; }
+  try {
+    const st = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const tipo = ['audio/ogg;codecs=opus', 'audio/webm;codecs=opus', 'audio/mp4'].find(t => window.MediaRecorder && MediaRecorder.isTypeSupported(t)) || '';
+    rec = new MediaRecorder(st, tipo ? { mimeType: tipo } : undefined); partes = [];
+    rec.ondataavailable = e => e.data.size && partes.push(e.data);
+    rec.onstop = () => {
+      st.getTracks().forEach(t => t.stop()); $('env').classList.remove('grav');
+      const mime = (rec.mimeType || 'audio/webm').split(';')[0], ext = mime.split('/')[1].replace('mp4', 'm4a'); rec = null;
+      const b = new Blob(partes, { type: mime }); if (b.size > 1500) enviar('', new File([b], 'audio.' + ext, { type: mime }), true);
+    };
+    rec.start(); $('env').classList.add('grav'); $('env').setAttribute('aria-label', 'Parar e enviar o áudio'); toast('Gravando… toque de novo para enviar');
+  } catch (x) { toast('Sem acesso ao microfone: ' + x.message); }
+};
+$('btAnexo').onclick = () => $('arq').click();
+$('arq').onchange = e => { const f = e.target.files[0]; e.target.value = ''; if (f) enviar(txt.value, f).then(() => { txt.value = ''; ajustar(); }); };
+
+/* ---------- menus ---------- */
+function folha(html, ligar) {
+  const f = document.createElement('div'); f.className = 'folha'; f.innerHTML = '<div role="dialog" aria-modal="true">' + html + '</div>';
+  f.addEventListener('click', e => { if (e.target === f) f.remove(); }); document.body.appendChild(f); if (ligar) ligar(f); return f;
+}
+function abrirTestes() {
+  folha('<h3>O que testar?</h3><p>Você é o cliente. A extensão roda o fluxo de verdade no PC e conta os bastidores em azul.</p>'
+    + menu.map((m, i) => '<button class="op" data-i="' + i + '"><b>' + esc(m.chave) + '</b><small>' + esc(m.txt) + '</small></button>').join('')
+    + '<h3 style="margin-top:8px">Variações</h3>' + VARIACOES.map(v => '<button class="op" data-v="' + esc(v[0]) + '"><b>' + esc(v[0]) + '</b><small>' + esc(v[1]) + '</small></button>').join('')
+    + '<p style="margin-top:6px">Durante o teste: <b>status</b> mostra onde está, <b>paguei</b> simula o pagamento, <b>falha: …</b> anota um defeito, <b>encerrar teste</b> termina.</p>',
+  f => f.addEventListener('click', e => { const b = e.target.closest('.op'); if (!b) return; const ch = b.dataset.v || menu[+b.dataset.i].chave; f.remove(); if (comoAbertura) alternarDono(false); enviar(ch); }));
+}
+function abrirConvs() {
+  folha('<h3>Conversas</h3><p>Cada conversa é um cliente diferente. Use uma para cada teste.</p>'
+    + convs.map(c => '<button class="op' + (c.id === atual ? ' at' : '') + '" data-c="' + esc(c.id) + '"><b>' + esc(c.nome) + '</b><small>' + ((msgs[c.id] || []).length) + ' mensagens</small></button>').join('')
+    + '<div class="lin2"><button class="chip pri" id="fNova">＋ Nova conversa</button><button class="chip" id="fApagar">Apagar esta</button></div>',
+  f => f.addEventListener('click', e => {
+    const b = e.target.closest('[data-c]');
+    if (b) { atual = b.dataset.c; LS.set('atual', atual); f.remove(); desenhar(true); return; }
+    if (e.target.id === 'fNova') { const id = 'c' + novoId().slice(-6); convs.push({ id, nome: 'Conversa ' + (convs.length + 1) }); LS.set('convs', convs); atual = id; LS.set('atual', atual); f.remove(); desenhar(true); abrirTestes(); }
+    if (e.target.id === 'fApagar') {
+      if (e.target.dataset.ok) { publicar({ v: 1, tipo: 'apagar', conv: atual }).catch(() => {}); delete msgs[atual]; convs = convs.filter(c => c.id !== atual); if (!convs.length) convs = [{ id: 'c' + novoId().slice(-6), nome: 'Conversa 1' }]; atual = convs[0].id; LS.set('convs', convs); LS.set('atual', atual); f.remove(); desenhar(true); }
+      else { e.target.dataset.ok = '1'; e.target.textContent = 'Toque de novo para apagar'; }
+    }
+  }));
+}
+function alternarDono(v) { comoAbertura = v; $('caixa').classList.toggle('dono', v); txt.placeholder = v ? 'Responder como Abertura (você)' : 'Mensagem (você é o cliente)'; atalhos(); }
+function abrirMais() {
+  folha('<h3>Opções</h3><label class="chk"><input type="checkbox" id="fDono"' + (comoAbertura ? ' checked' : '') + '> Falar como a Abertura (como se você respondesse à mão)</label>'
+    + '<button class="op" id="fPing"><b>Testar a conexão com o PC</b><small>' + (ultimoPc ? 'última resposta do PC às ' + hora(ultimoPc) : 'o PC ainda não respondeu') + '</small></button>'
+    + '<p>O PC precisa estar ligado com o WhatsApp Web aberto e o simulador ligado nas configurações da extensão. Arquivos ficam disponíveis por 3 horas.</p>',
+  f => { f.querySelector('#fDono').onchange = e => alternarDono(e.target.checked); f.querySelector('#fPing').onclick = () => { f.remove(); ping(true); }; });
+}
+function atalhos() {
+  const l = comoAbertura ? [['Voltar a ser o cliente', '!cli']] : [['🧪 O que testar?', '!menu'], ['status', 'status'], ['paguei', 'paguei'], ['encerrar teste', 'encerrar teste']];
+  $('atalhos').innerHTML = l.map((a, i) => '<button class="chip' + (i ? '' : ' pri') + '" data-a="' + esc(a[1]) + '">' + esc(a[0]) + '</button>').join('');
+}
+$('atalhos').onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; const a = b.dataset.a; if (a === '!menu') return abrirTestes(); if (a === '!cli') return alternarDono(false); enviar(a); };
+$('btTestes').onclick = abrirTestes; $('trocaConv').onclick = abrirConvs; $('btMais').onclick = abrirMais;
+
+/* ---------- estado do PC ---------- */
+function status() {
+  const el = $('st'), on = ultimoPc && Date.now() - ultimoPc < 20 * 60e3, esperando = pingEm && !on && Date.now() - pingEm < 30000;
+  el.className = 'st ' + (on ? 'on' : esperando || !pingEm ? '' : 'off');
+  el.querySelector('span').textContent = !K ? 'sem link do PC' : on ? 'PC conectado' : esperando ? 'chamando o PC…' : pingEm ? 'PC não respondeu: o WhatsApp Web está aberto?' : 'conectando…';
+}
+function ping(avisar) { pingEm = Date.now(); status(); publicar({ v: 1, tipo: 'ping' }).catch(x => avisar && toast(x.message)); setTimeout(status, 31000); }
+let toastT = null;
+function toast(t) { let el = document.querySelector('.toast'); if (!el) { el = document.createElement('div'); el.className = 'toast'; el.setAttribute('role', 'status'); document.body.appendChild(el); } el.textContent = t; clearTimeout(toastT); toastT = setTimeout(() => el.remove(), 3500); }
+
+atalhos(); ajustar(); desenhar(true); status();
+if (K) { conectar(); ping(false); }
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && K && (!es || es.readyState === 2)) conectar(); });
+</script>
+</body>
+</html>
