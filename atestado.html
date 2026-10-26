@@ -50,6 +50,8 @@
   .aviso b{color:var(--texto)}
   .ok{color:var(--ok)} .err{color:var(--erro)}
   .link-gerado{display:none;margin-top:12px}
+  .cnpj-st{display:block;font-size:12px;margin-top:4px;color:var(--suave);min-height:16px}
+  .cnpj-st.ok{color:var(--ok)} .cnpj-st.err{color:var(--erro)}
   .link-gerado input{font-size:12px}
   /* assinatura */
   .assin-wrap{border:1px dashed var(--suave);border-radius:10px;background:#fff;touch-action:none;position:relative}
@@ -100,19 +102,19 @@
     <form id="f" autocomplete="off" onsubmit="return false">
       <div class="so-dono">
         <h2>1. Quem contratou</h2>
-        <p class="sub">A empresa ou pessoa que vai assinar o atestado.</p>
+        <p class="sub">Digite o CNPJ: o nome, o endereço, a cidade, o telefone, o e-mail e o sócio são buscados sozinhos na Receita.</p>
       </div>
       <div class="so-cliente">
         <h2>Seus dados</h2>
         <p class="sub">Confira e corrija o que precisar. Os campos em amarelo no atestado ainda estão vazios.</p>
       </div>
       <fieldset>
-        <label for="cNome">Nome da empresa (razão social) ou nome completo</label>
-        <input id="cNome" data-k="cNome" placeholder="Ex.: Garden Music Festival Eventos Ltda">
         <div class="duas">
-          <div><label for="cDoc">CNPJ <small>(ou CPF)</small></label><input id="cDoc" data-k="cDoc" inputmode="numeric" placeholder="00.000.000/0000-00"></div>
+          <div><label for="cDoc">CNPJ <small>(ou CPF)</small></label><input id="cDoc" data-k="cDoc" inputmode="numeric" placeholder="00.000.000/0000-00"><small id="cnpjSt" class="cnpj-st" aria-live="polite"></small></div>
           <div><label for="cCidade">Cidade/UF</label><input id="cCidade" data-k="cCidade" placeholder="Brasília/DF"></div>
         </div>
+        <label for="cNome">Nome da empresa (razão social) ou nome completo</label>
+                <input id="cNome" data-k="cNome" placeholder="Ex.: Garden Music Festival Eventos Ltda">
         <label for="cEnd">Endereço <small>(opcional)</small></label>
         <input id="cEnd" data-k="cEnd" placeholder="Rua, número, bairro">
         <div class="duas">
@@ -306,6 +308,48 @@
   function assinUrl() { return sujo && cv ? cv.toDataURL('image/png') : ''; }
   $('#limparAssin') && $('#limparAssin').addEventListener('click', () => { sujo = false; if (ctx) ctx.clearRect(0, 0, cv.width, cv.height); $('#assinDica').style.display = ''; montar(); });
 
+
+  /* ---- busca automática do CNPJ (dados públicos da Receita: CNPJ.ws, com reserva na BrasilAPI) ---- */
+  const soDig = x => String(x || '').replace(/\D/g, '');
+  function cnpjOk(c) { c = soDig(c); if (c.length !== 14 || /^(\d)\1+$/.test(c)) return false;
+    const calc = n => { const p = n === 12 ? [5,4,3,2,9,8,7,6,5,4,3,2] : [6,5,4,3,2,9,8,7,6,5,4,3,2]; let t = 0; for (let i = 0; i < n; i++) t += +c[i] * p[i]; const r = t % 11; return r < 2 ? 0 : 11 - r; };
+    return calc(12) === +c[12] && calc(13) === +c[13]; }
+  const fmtCnpj = d => d.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+  const fmtTel = t => { t = soDig(t); if (t.length === 10) return '(' + t.slice(0, 2) + ') ' + t.slice(2, 6) + '-' + t.slice(6); if (t.length === 11) return '(' + t.slice(0, 2) + ') ' + t.slice(2, 7) + '-' + t.slice(7); return t; };
+  const titulo = x => String(x || '').toLowerCase().replace(/(^|\s)(\S)/g, (m, a, b) => a + b.toUpperCase()).replace(/\b(De|Da|Do|Das|Dos|E)\b/g, w => w.toLowerCase());
+  async function buscaCnpj(c) {
+    try { const r = await fetch('https://publica.cnpj.ws/cnpj/' + c); if (r.ok) { const j = await r.json(), e = j.estabelecimento || {}, soc = (j.socios || [])[0] || {};
+      return { nome: j.razao_social, fantasia: e.nome_fantasia, end: [[e.tipo_logradouro, e.logradouro].filter(Boolean).join(' '), e.numero, e.complemento, e.bairro].filter(Boolean).join(', '),
+        cidade: e.cidade ? titulo(e.cidade.nome) + '/' + ((e.estado || {}).sigla || '') : '', tel: (e.ddd1 || '') + (e.telefone1 || ''), email: e.email, socio: soc.nome, cargo: (soc.qualificacao_socio || {}).descricao, situacao: e.situacao_cadastral }; } } catch (e) {}
+    try { const r = await fetch('https://brasilapi.com.br/api/cnpj/v1/' + c); if (r.ok) { const j = await r.json();
+      const soc = (j.qsa || [])[0] || {};
+      return { nome: j.razao_social, fantasia: j.nome_fantasia, end: [[j.descricao_tipo_de_logradouro, j.logradouro].filter(Boolean).join(' '), j.numero, j.complemento, j.bairro].map(x => String(x || '').trim()).filter(Boolean).join(', '),
+        cidade: j.municipio ? titulo(j.municipio) + '/' + j.uf : '', tel: j.ddd_telefone_1, email: j.email, socio: soc.nome_socio, cargo: soc.qualificacao_socio, situacao: j.descricao_situacao_cadastral }; } } catch (e) {}
+    return null;
+  }
+  let ultimaBusca = '';
+  async function aoDigitarCnpj() {
+    const el = $('#cDoc'), st = $('#cnpjSt'), d = soDig(el.value);
+    if (d.length < 14) { st.textContent = d.length === 11 ? 'CPF: preencha os dados à mão.' : ''; st.className = 'cnpj-st'; return; }
+    if (!cnpjOk(d)) { st.textContent = 'Esse CNPJ não confere. Veja se digitou certo.'; st.className = 'cnpj-st err'; return; }
+    el.value = fmtCnpj(d);
+    if (d === ultimaBusca) return; ultimaBusca = d;
+    st.textContent = 'Buscando os dados na Receita…'; st.className = 'cnpj-st';
+    const r = await buscaCnpj(d);
+    if (!r || !r.nome) { st.textContent = 'Não consegui buscar agora. Preencha à mão.'; st.className = 'cnpj-st err'; ultimaBusca = ''; return; }
+    const por = (id, val, sempre) => { const e = $('#' + id); if (val && (sempre || !e.value.trim())) e.value = val; };
+    por('cNome', r.nome, true);
+    por('cEnd', r.end ? titulo(r.end) : '', true);
+    por('cCidade', r.cidade, true);
+    por('cTel', r.tel ? fmtTel(r.tel) : '');
+    por('cEmail', r.email ? String(r.email).toLowerCase() : '');
+    if (!cliente) { por('cResp', r.socio ? titulo(r.socio) : ''); por('cCargo', r.cargo ? titulo(String(r.cargo).replace(/^\d+-/, '')) : ''); }
+    st.textContent = '✓ ' + r.nome + (r.fantasia ? ' (' + r.fantasia + ')' : '') + (r.situacao && !/ATIVA/i.test(r.situacao) ? ' · situação: ' + r.situacao : '');
+    st.className = 'cnpj-st ' + (r.situacao && !/ATIVA/i.test(r.situacao) ? 'err' : 'ok');
+    montar();
+  }
+  $('#cDoc').addEventListener('input', aoDigitarCnpj);
+  $('#cDoc').addEventListener('paste', () => setTimeout(aoDigitarCnpj, 0));
   /* ---- ações ---- */
   f.addEventListener('input', montar); f.addEventListener('change', montar);
   function faltando(o, paraCliente) {
