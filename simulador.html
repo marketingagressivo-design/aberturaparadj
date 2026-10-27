@@ -191,7 +191,13 @@ const msgs = {};   // conv -> [{id, de: 'cli'|'pc'|'dono', t, tipo, texto, url, 
 const visto = new Set();
 
 /* ---------- canal ---------- */
-async function publicar(obj, arquivo) {
+async function publicar(obj, arquivo) {   // 429 (limite do canal grátis): espera e tenta de novo, até 4 vezes
+  for (let t = 0; ; t++) {
+    try { return await publicar1(obj, arquivo); }
+    catch (x) { if (!/limite de mensagens/.test(x.message) || t >= 3) throw x; await new Promise(z => setTimeout(z, 10000 * (t + 1))); }
+  }
+}
+async function publicar1(obj, arquivo) {
   let r;
   if (arquivo) r = await fetch(URL_IN() + '?filename=' + encodeURIComponent(arquivo.name || 'arquivo') + '&message=' + encodeURIComponent(JSON.stringify(obj)), { method: 'PUT', body: arquivo });
   else {
@@ -466,7 +472,15 @@ function labEvento(p, e) {   // mensagens do canal sobre efeitos (ao vivo ou do 
     const j = LABP.jobs[p.job] = LABP.jobs[p.job] || { chave: p.chave, em: e.time * 1000 };
     if (!LABP.porChave[p.chave] || (LABP.jobs[LABP.porChave[p.chave]] || {}).em <= j.em) LABP.porChave[p.chave] = p.job;
     if (p.tipo === 'efeitoStatus') { j.st = p.txt; j.erro = !!p.erro; }
-    if (p.tipo === 'efeitoPronto') { j.st = ''; j.erro = false; j.url = anexo && anexo.url; j.pronto = true; }
+    if (p.tipo === 'efeitoProntoParte') { (j.partesUrl = j.partesUrl || [])[p.i] = anexo && anexo.url; j.st = 'recebendo o resultado… ' + j.partesUrl.filter(Boolean).length + '/' + p.n; }
+    if (p.tipo === 'efeitoPronto' && p.partes) {   // resultado grande veio em partes: junta aqui
+      const urls = (j.partesUrl || []).slice(0, p.partes);
+      if (urls.filter(Boolean).length < p.partes) { j.st = '⚠ o resultado chegou incompleto (' + urls.filter(Boolean).length + '/' + p.partes + '): tente de novo'; j.erro = true; }
+      else { j.st = 'juntando o resultado…'; Promise.all(urls.map(u => fetch(u).then(r => { if (!r.ok) throw new Error('parte expirou'); return r.blob(); })))
+        .then(bs => { j.url = URL.createObjectURL(new Blob(bs, { type: 'video/mp4' })); j.st = ''; j.erro = false; j.pronto = true; labCard(p.chave); labTopo(); })
+        .catch(x => { j.st = '⚠ não consegui baixar o resultado (' + x.message + ')'; j.erro = true; labCard(p.chave); }); }
+    }
+    else if (p.tipo === 'efeitoPronto') { j.st = ''; j.erro = false; j.url = anexo && anexo.url; j.pronto = true; }
     if (p.tipo === 'efeitoSalvo') {
       j.salvando = false; j.codigo = p.codigo; j.drive = p.drive || ''; j.driveErro = p.driveErro || '';
       const m = modelos.find(x => x.codigo === p.codigo) || (modelos.push({ codigo: p.codigo }), modelos[modelos.length - 1]);
@@ -607,11 +621,11 @@ async function labEnviar(chave, arquivo, extra) {
       // o canal grátis (ntfy.sh) recusa anexo grande (413): manda em partes de 1,2 MB e o PC junta
       const PARTE = 1.2e6, n = Math.max(1, Math.ceil(f.size / PARTE));
       const putar = async (corpo, nome, msg) => {
-        for (let t = 0; t < 3; t++) {
+        for (let t = 0; t < 4; t++) {
           const r = await fetch(URL_IN() + '?filename=' + encodeURIComponent(nome) + '&message=' + encodeURIComponent(JSON.stringify(msg)), { method: 'PUT', body: corpo });
           if (r.ok) return;
           if (r.status !== 429 && r.status < 500) throw new Error(r.status === 413 ? 'o canal recusou o tamanho (413)' : 'o canal recusou (' + r.status + ')');
-          await new Promise(z => setTimeout(z, 2500 * (t + 1)));
+          aviso('o canal pediu calma (limite grátis): tentando de novo em ' + (10 * (t + 1)) + ' s…'); await new Promise(z => setTimeout(z, 10000 * (t + 1)));
         }
         throw new Error('limite de mensagens do canal; tente mais tarde');
       };
