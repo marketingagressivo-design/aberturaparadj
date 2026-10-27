@@ -1054,6 +1054,10 @@ const AB_GRUPO = (() => {
   return g;
 })();
 const DISPOSITIVO = (() => { try { return matchMedia('(pointer: coarse)').matches ? 'CELULAR' : 'COMPUTADOR'; } catch (e) { return ''; } })();
+// navegador/aparelho do visitante (a barra do WhatsApp mostra no cartão: iPhone, Android + modelo, Safari, Chrome...)
+let UA_MODELO = '';
+try { if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) navigator.userAgentData.getHighEntropyValues(['model']).then(function (v) { UA_MODELO = (v && v.model) || ''; }).catch(function () {}); } catch (e) {}
+function uaTexto() { try { return ((navigator.userAgent || '').slice(0, 240) + (UA_MODELO ? ' ;modelo=' + UA_MODELO : '')); } catch (e) { return ''; } }
 // o navegador onde o dono entrou no painel não conta nas estatísticas (dá para mudar no painel)
 function ignorarEsteAparelho() { return _ls('ap_ignorar') === '1'; }
 
@@ -1351,7 +1355,7 @@ function executeFinalRedirect(event) {
     pedido: a.pedido, data: new Date().toISOString(), servico: a.servico, finalidade: a.finalidade, nome: a.nome, genero: a.genero,
     atuacao: a.atuacao, origem: a.origem, aberturaAtual: a.aberturaAtual, duracao: a.duracao, investimento: a.investimento,
     prazoTipo: a.prazoTipo, prazoData: a.prazoData, temperatura: a.temperatura, autorizacao: a.autorizacao,
-    utm_source: UTM.source, utm_medium: UTM.medium, utm_campaign: UTM.campaign, referrer: REFERRER, dispositivo: DISPOSITIVO, sessao: SESSAO, teste: a.teste || '' } });
+    utm_source: UTM.source, utm_medium: UTM.medium, utm_campaign: UTM.campaign, referrer: REFERRER, dispositivo: DISPOSITIVO, ua: uaTexto(), sessao: SESSAO, teste: a.teste || '' } });
   try { gtag('event', 'generate_lead', { pedido: a.pedido, servico: a.servico, finalidade: a.finalidade, temperatura: a.temperatura, teste_ab: a.teste || '' }); } catch (e) {}
   // tela de carregamento
   _ldTimers.forEach(clearTimeout); _ldTimers = [];
