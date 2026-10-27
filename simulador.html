@@ -211,7 +211,7 @@ async function chegou(e) {
   if (doPc) {
     ultimoPc = Math.max(ultimoPc, (e.time || 0) * 1000); status();
     if (p.versao) versaoPc = p.versao;
-    if (p.tipo === 'pong') { if (p.menu && p.menu.length) { menu = p.menu; LS.set('menu', menu); atalhos(); } return; }
+    if (p.tipo === 'pong') { if ('ajudante' in p) { ajPc = p.ajudante; status(); } if (p.menu && p.menu.length) { menu = p.menu; LS.set('menu', menu); atalhos(); } return; }
     if (p.tipo === 'oi') return;
     if (p.tipo !== 'msg') return;
     adicionar(p.conv, { id: p.id, de: p.msg === 'rascunho' ? 'rasc' : /^\s*🧪/.test(p.texto || '') ? 'narr' : 'pc', t: (p.t || e.time) * 1000, tipo: p.msg, texto: p.texto, url: e.attachment && e.attachment.url, nome: p.nome || (e.attachment && e.attachment.name), mime: p.mime || (e.attachment && e.attachment.type) });
@@ -261,7 +261,7 @@ function midia(m) {
 function desenhar(rolar) {
   const l = msgs[atual] || [], el = $('lista'), noFim = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
   $('trocaConv').textContent = (convs.find(c => c.id === atual) || {}).nome || 'Conversa';
-  if (!K) { el.innerHTML = '<div class="vazio"><b>Falta o link do PC</b><span>Abra esta página pelo link que a extensão mandou no seu WhatsApp (tem #k= no final). Nas configurações da extensão: 📱 Simulador pelo celular › Ligar.</span></div>'; return; }
+  if (!K) { el.innerHTML = '<div class="vazio"><b>Falta a chave do simulador</b><span>Cada navegador precisa receber a chave uma vez. Abra o link que chegou no seu WhatsApp (termina com #k=…) ou cole a chave aqui.</span><button class="chip pri" onclick="pedirChave()">Colar a chave</button></div>'; return; }
   if (!l.length) { el.innerHTML = '<div class="vazio"><b>O que vamos testar?</b><span>Toque no frasco lá em cima ou num atalho embaixo. Você faz o papel do cliente; a Abertura responde do PC. Nada disso passa pelo WhatsApp.</span></div>'; return; }
   let h = '', dia = '';
   for (const m of l) {
@@ -281,7 +281,7 @@ function digitando(on) { digitandoAte = on ? Date.now() + 90000 : 0; clearTimeou
 /* ---------- enviar ---------- */
 const novoId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 async function enviar(texto, arquivo, ptt) {
-  if (!K) return toast('Abra pelo link do PC primeiro.');
+  if (!K) return pedirChave();
   texto = String(texto || '').trim(); if (!texto && !arquivo) return;
   if (arquivo && arquivo.size > 15 * 1024 * 1024) return toast('Arquivo grande demais (máx. 15 MB). Para vídeos maiores, use um link do Google Drive.');
   const id = novoId(), conv = atual, nomeConv = (convs.find(c => c.id === conv) || {}).nome;
@@ -342,12 +342,23 @@ function abrirConvs() {
     }
   }));
 }
+function pedirChave() {
+  folha('<h3>Chave do simulador</h3><p>Está nas configurações da extensão (📱 Simulador pelo celular) e no link que chegou no seu WhatsApp. Pode colar o link inteiro ou só a chave.</p>'
+    + '<input id="fChave" class="campo" placeholder="aberturaparashow.com.br/simulador.html#k=… ou só a chave" autocomplete="off" value="' + esc(K) + '"><button class="chip pri" id="fChaveOk">Usar esta chave</button>',
+  f => {
+    const ok = () => { const v = f.querySelector('#fChave').value.trim(), m = /(?:k=)?([a-z0-9]{12,40})\s*$/i.exec(v);
+      if (!m) { toast('Isso não parece a chave (12 a 40 letras e números).'); return; }
+      K = m[1].toLowerCase(); LS.set('k', K); f.remove(); toast('Chave salva ✓'); conectar(); ping(false); desenhar(true); labTopo(); status(); };
+    f.querySelector('#fChaveOk').onclick = ok; f.querySelector('#fChave').addEventListener('keydown', e => { if (e.key === 'Enter') ok(); }); f.querySelector('#fChave').focus();
+  });
+}
 function alternarDono(v) { comoAbertura = v; $('caixa').classList.toggle('dono', v); txt.placeholder = v ? 'Responder como Abertura (você)' : 'Mensagem (você é o cliente)'; atalhos(); }
 function abrirMais() {
   folha('<h3>Opções</h3><label class="chk"><input type="checkbox" id="fDono"' + (comoAbertura ? ' checked' : '') + '> Falar como a Abertura (como se você respondesse à mão)</label>'
     + '<button class="op" id="fPing"><b>Testar a conexão com o PC</b><small>' + (ultimoPc ? 'última resposta do PC às ' + hora(ultimoPc) : 'o PC ainda não respondeu') + '</small></button>'
+    + '<button class="op" id="fChaveTroca"><b>' + (K ? 'Trocar a chave do simulador' : 'Colar a chave do simulador') + '</b><small>' + (K ? 'chave atual termina em …' + esc(K.slice(-4)) : 'este navegador ainda não tem a chave') + '</small></button>'
     + '<p>O PC precisa estar ligado com o WhatsApp Web aberto e o simulador ligado nas configurações da extensão. Arquivos ficam disponíveis por 3 horas.</p>',
-  f => { f.querySelector('#fDono').onchange = e => alternarDono(e.target.checked); f.querySelector('#fPing').onclick = () => { f.remove(); ping(true); }; });
+  f => { f.querySelector('#fDono').onchange = e => alternarDono(e.target.checked); f.querySelector('#fPing').onclick = () => { f.remove(); ping(true); }; f.querySelector('#fChaveTroca').onclick = () => { f.remove(); pedirChave(); }; });
 }
 function atalhos() {
   const l = comoAbertura ? [['Voltar a ser o cliente', '!cli']] : [['🧪 O que testar?', '!menu'], ['status', 'status'], ['paguei', 'paguei'], ['encerrar teste', 'encerrar teste']];
@@ -357,10 +368,11 @@ $('atalhos').onclick = e => { const b = e.target.closest('[data-a]'); if (!b) re
 $('btTestes').onclick = abrirTestes; $('trocaConv').onclick = abrirConvs; $('btMais').onclick = abrirMais;
 
 /* ---------- estado do PC ---------- */
+let ajPc = null;   // '' = ajudante ok · texto = o que falta no PC (vem no pong)
 function status() {
   const el = $('st'), on = ultimoPc && Date.now() - ultimoPc < 20 * 60e3, esperando = pingEm && !on && Date.now() - pingEm < 30000;
   el.className = 'st ' + (on ? 'on' : esperando || !pingEm ? '' : 'off');
-  el.querySelector('span').textContent = !K ? 'sem link do PC' : on ? 'PC conectado' : esperando ? 'chamando o PC…' : pingEm ? 'PC não respondeu: o WhatsApp Web está aberto?' : 'conectando…';
+  el.querySelector('span').textContent = !K ? 'sem a chave: toque em ⋮' : on ? (ajPc ? 'PC conectado · ⚠ ' + ajPc : 'PC conectado') : esperando ? 'chamando o PC…' : pingEm ? 'PC não respondeu: o WhatsApp Web está aberto?' : 'conectando…';
 }
 function ping(avisar) { pingEm = Date.now(); status(); publicar({ v: 1, tipo: 'ping' }).catch(x => avisar && toast(x.message)); setTimeout(status, 31000); }
 let toastT = null;
@@ -504,7 +516,7 @@ const olho = 'IntersectionObserver' in window ? new IntersectionObserver(es => e
 function vigiar(v) { if (olho) olho.observe(v); else { v.src = urlPv(v.dataset.pv); v.autoplay = true; } }
 function labTopo() {
   const n = modelos.length;
-  $('labResumo').textContent = n ? n + ' modelo(s) salvo(s) no Drive' : 'Nenhum modelo salvo ainda.';
+  $('labResumo').innerHTML = !K ? '<b style="color:var(--mau)">Falta a chave do simulador.</b> <a href="#" onclick="pedirChave();return false" style="color:var(--am)">Colar a chave</a>' : esc(n ? n + ' modelo(s) salvo(s) no Drive' : 'Nenhum modelo salvo ainda.');
   $('btRel').disabled = !n && !Object.keys(LABP.jobs).length && !Object.keys(nomes).length && !Object.keys(pedidos).length;
 }
 function montarEfeitos() {
@@ -539,7 +551,7 @@ async function trecho7s(arquivo, aviso, inicio) {
   cv.width = Math.round(v.videoWidth * k / 2) * 2; cv.height = Math.round(v.videoHeight * k / 2) * 2;
   const g = cv.getContext('2d'), st = cv.captureStream(30);
   const tipo = ['video/mp4;codecs=avc1', 'video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm', 'video/mp4'].find(t => MediaRecorder.isTypeSupported(t)) || '';
-  const rec = new MediaRecorder(st, Object.assign({ videoBitsPerSecond: 6e6 }, tipo ? { mimeType: tipo } : {})), partes = [];
+  const rec = new MediaRecorder(st, Object.assign({ videoBitsPerSecond: 2.5e6 }, tipo ? { mimeType: tipo } : {})), partes = [];
   rec.ondataavailable = e => e.data.size && partes.push(e.data);
   const dur = Math.min(7, Math.max(0.5, (v.duration || 7) - (inicio || 0)));
   await v.play();
@@ -575,7 +587,7 @@ async function labEscolheu(chave, arquivo) {   // vídeo em efeito de trecho/fra
 }
 async function labEnviar(chave, arquivo, extra) {
   extra = extra || {};
-  if (!K) return toast('Abra pelo link do PC primeiro.');
+  if (!K) return pedirChave();
   const job = chave.slice(0, 10).replace(/_/g, '') + '-' + novoId();
   const j = LABP.jobs[job] = { chave, st: 'preparando…', em: Date.now(), enviando: true }; LABP.porChave[chave] = job; labCard(chave);
   const aviso = t => { j.st = t; labCard(chave); };
@@ -590,11 +602,24 @@ async function labEnviar(chave, arquivo, extra) {
       let f = arquivo, inicio = Number(extra.inicio) || 0;
       if (extra.frame) { aviso('pegando o frame…'); f = await frameJpg(arquivo, inicio); inicio = 0; }
       else if (/^image\//.test(arquivo.type) && arquivo.size > 1.5e6 && !precisaLogo(chave)) f = await fotoMenor(arquivo);
-      else if (/^video\//.test(arquivo.type) && arquivo.size > 12e6) { try { f = await trecho7s(arquivo, aviso, inicio); inicio = 0; } catch (x) { throw new Error('vídeo grande demais e não consegui cortar aqui (' + x.message + '). Corte para 7 s no app de fotos e mande de novo.'); } }
+      else if (/^video\//.test(arquivo.type) && (arquivo.size > 1.4e6 || (await duracaoDe(arquivo)) > 7.5)) { try { f = await trecho7s(arquivo, aviso, inicio); inicio = 0; } catch (x) { throw new Error('vídeo grande demais e não consegui cortar aqui (' + x.message + '). Corte para 7 s no app de fotos e mande de novo.'); } }
       if (f.size > 15e6) throw new Error('ainda passou de 15 MB: corte o vídeo para 7 s no app de fotos');
-      aviso('enviando para o PC…');
-      const r = await fetch(URL_IN() + '?filename=' + encodeURIComponent(f.name || 'arquivo') + '&message=' + encodeURIComponent(JSON.stringify({ v: 1, tipo: 'efeito', job, chave, formato, inicio, opcoes })), { method: 'PUT', body: f });
-      if (!r.ok) throw new Error(r.status === 429 ? 'limite de mensagens do canal; tente mais tarde' : 'o canal recusou (' + r.status + ')');
+      // o canal grátis (ntfy.sh) recusa anexo grande (413): manda em partes de 1,2 MB e o PC junta
+      const PARTE = 1.2e6, n = Math.max(1, Math.ceil(f.size / PARTE));
+      const putar = async (corpo, nome, msg) => {
+        for (let t = 0; t < 3; t++) {
+          const r = await fetch(URL_IN() + '?filename=' + encodeURIComponent(nome) + '&message=' + encodeURIComponent(JSON.stringify(msg)), { method: 'PUT', body: corpo });
+          if (r.ok) return;
+          if (r.status !== 429 && r.status < 500) throw new Error(r.status === 413 ? 'o canal recusou o tamanho (413)' : 'o canal recusou (' + r.status + ')');
+          await new Promise(z => setTimeout(z, 2500 * (t + 1)));
+        }
+        throw new Error('limite de mensagens do canal; tente mais tarde');
+      };
+      if (n === 1) { aviso('enviando para o PC…'); await putar(f, f.name || 'arquivo', { v: 1, tipo: 'efeito', job, chave, formato, inicio, opcoes }); }
+      else {
+        for (let i = 0; i < n; i++) { aviso('enviando para o PC… parte ' + (i + 1) + '/' + n); await putar(f.slice(i * PARTE, (i + 1) * PARTE), 'parte' + i + '.bin', { v: 1, tipo: 'efeitoParte', job, i, n }); }
+        await publicar({ v: 1, tipo: 'efeito', job, chave, formato, inicio, opcoes, partes: n, nome: f.name || 'arquivo', mime: f.type || '' });
+      }
     }
     j.enviando = false; aviso('enviado, esperando o PC…');
     setTimeout(() => { if (LABP.jobs[job] && !LABP.jobs[job].pronto && /esperando o PC/.test(LABP.jobs[job].st || '')) aviso('o PC ainda não pegou (ele confere a cada 6 s; o WhatsApp Web está aberto?)'); }, 45000);
