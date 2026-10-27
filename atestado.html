@@ -74,6 +74,23 @@
   .folha .ass img{display:block;max-height:80px;margin:0 auto -6px}
   .folha .ass .tr{border-top:1px solid #111;padding-top:6px}
   .folha .rod{margin-top:40px;border-top:1px solid #ddd;padding-top:8px;font:11px/1.4 Inter,sans-serif;color:#777;text-align:center}
+  /* logo / papel timbrado */
+  .papel-int{position:relative;container-type:inline-size}
+  #espaco{height:calc(var(--esp,0) * 1cqw)}
+  @media screen{#miolo{min-height:calc(149cqw - var(--esp,0) * 1cqw)}}
+  #logoBox{position:absolute;left:calc(var(--lx,0) * 1cqw);top:calc(var(--ly,0) * 1cqw);width:calc(var(--lw,30) * 1cqw);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;outline:1px dashed #8a9a94;outline-offset:2px;z-index:2;line-height:0}
+  #logoBox:focus-visible,#logoBox.arrastando{outline:2px solid #f5c518}
+  #logoBox.arrastando{cursor:grabbing}
+  #logoBox img{width:100%;height:auto;display:block;pointer-events:none;-webkit-user-drag:none;opacity:var(--lo,1)}
+  #logoBox .alca{position:absolute;right:-9px;bottom:-9px;width:18px;height:18px;border-radius:50%;background:#f5c518;border:2px solid #111;cursor:nwse-resize;touch-action:none}
+  @media (pointer:coarse){#logoBox .alca{width:28px;height:28px;right:-14px;bottom:-14px}}
+  .folha.soltando{outline:3px dashed var(--ouro);outline-offset:6px}
+  .linha-range{display:grid;grid-template-columns:90px 1fr 44px;gap:10px;align-items:center;margin:8px 0}
+  .linha-range label{margin:0}
+  .linha-range input[type=range]{padding:0;accent-color:#f5c518}
+  .linha-range output{font-size:12px;color:var(--suave);text-align:right}
+  .pos-rapida{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .pos-rapida button{padding:8px 11px;font-size:12px}
   .vazio{background:#fff3c4;border-radius:3px;padding:0 3px;color:#7a5b00}
   .modo-cliente .so-dono{display:none}
   .modo-dono .so-cliente{display:none}
@@ -85,6 +102,9 @@
     .folha-area{position:static}
     .folha{box-shadow:none;border-radius:0;padding:0;max-width:none}
     .vazio{background:none;color:#1b1b1b}
+    #logoBox{outline:none!important;cursor:auto}
+    #logoBox .alca{display:none!important}
+    #logoBox img{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   }
 </style>
 </head>
@@ -124,6 +144,24 @@
         <div class="duas">
           <div><label for="cTel">Telefone <small>(opcional)</small></label><input id="cTel" data-k="cTel" inputmode="tel"></div>
           <div><label for="cEmail">E-mail <small>(opcional)</small></label><input id="cEmail" data-k="cEmail" inputmode="email"></div>
+        </div>
+      </fieldset>
+
+      <fieldset id="timbre">
+        <legend>Logo e papel timbrado</legend>
+        <p class="sub" style="margin:0 0 8px">Envie a logo da empresa e arraste direto na folha ao lado até o lugar certo. Ela sai na impressão e no PDF.</p>
+        <input type="file" id="logoArq" accept="image/*">
+        <div id="logoCtl" style="display:none">
+          <div class="pos-rapida">
+            <button type="button" class="sec" data-pos="esq">Topo à esquerda</button>
+            <button type="button" class="sec" data-pos="cen">Topo ao centro</button>
+            <button type="button" class="sec" data-pos="dir">Topo à direita</button>
+            <button type="button" class="sec" data-pos="marca">Marca d'água</button>
+          </div>
+          <div class="linha-range"><label for="logoTam">Tamanho</label><input type="range" id="logoTam" min="8" max="100" step="1"><output id="logoTamO"></output></div>
+          <div class="linha-range"><label for="logoOp">Opacidade</label><input type="range" id="logoOp" min="5" max="100" step="1"><output id="logoOpO"></output></div>
+          <label for="logoReserva" style="display:flex;gap:8px;align-items:flex-start;font-weight:500"><input type="checkbox" id="logoReserva" style="width:auto;margin-top:3px" checked> Abrir espaço no topo do texto quando a logo estiver no alto da folha</label>
+          <div class="btns" style="margin-top:8px"><button type="button" class="sec" id="logoRemover">Remover logo</button></div>
         </div>
       </fieldset>
 
@@ -198,7 +236,7 @@
   </section>
 
   <section class="folha-area" aria-label="Prévia do atestado">
-    <article class="folha" id="folha"></article>
+    <article class="folha" id="folha"><div class="papel-int" id="papel"><div id="espaco"></div><div id="miolo"></div><div id="logoBox" tabindex="0" role="img" aria-label="Logo da empresa. Arraste para mover, use as setas do teclado para ajustar." hidden><img id="logoImg" alt="Logo da empresa"><span class="alca nao-imprimir" id="logoAlca" title="Arraste para mudar o tamanho"></span></div></div></article>
   </section>
 </main>
 
@@ -270,7 +308,7 @@
       : 'a empresa <b>' + EU.razao + '</b> (nome fantasia <b>' + EU.fantasia + '</b>), inscrita no CNPJ nº <b>' + EU.cnpj + '</b>';
     const contratante = v(o.cNome, 'nome da empresa contratante') + ', inscrita no ' + docTipo(o.cDoc) + ' nº ' + v(o.cDoc, '00.000.000/0000-00') + (o.cEnd ? ', com endereço em ' + esc(o.cEnd) : '') + (o.cCidade ? ', ' + esc(o.cCidade) : '');
     const img = assinUrl();
-    $('#folha').innerHTML =
+    $('#miolo').innerHTML =
       '<div class="cab"><div><div class="contratante">' + v(o.cNome, 'Nome da contratante') + '</div><div class="dados">' + docTipo(o.cDoc) + ': ' + v(o.cDoc, '—') + (o.cCidade ? ' · ' + esc(o.cCidade) : '') + (o.cTel ? '<br>Tel.: ' + esc(o.cTel) : '') + (o.cEmail ? (o.cTel ? ' · ' : '<br>') + esc(o.cEmail) : '') + '</div></div><div class="dados" style="text-align:right">Documento emitido<br>pela contratante</div></div>'
       + '<h3>ATESTADO DE CAPACIDADE TÉCNICA</h3>'
       + '<p>Atestamos, para os devidos fins, que ' + contratada + ', prestou para ' + contratante + ', os seguintes serviços:</p>'
@@ -350,6 +388,104 @@
   }
   $('#cDoc').addEventListener('input', aoDigitarCnpj);
   $('#cDoc').addEventListener('paste', () => setTimeout(aoDigitarCnpj, 0));
+
+  /* ---- logo / papel timbrado: arrastar, redimensionar, imprimir ---- */
+  const CHL = 'abertura-atestado-logo';
+  const papel = $('#papel'), lbox = $('#logoBox'), limg = $('#logoImg'), lctl = $('#logoCtl');
+  let L = null; // {src, ar (altura/largura), x, y, w, op, reserva}
+  const ALTURA_PAG = 146; // altura útil da folha A4 em unidades de largura (cqw)
+  function larg() { return papel.getBoundingClientRect().width || 1; }
+  function altMax() { return Math.max(papel.getBoundingClientRect().height / larg() * 100, ALTURA_PAG); }
+  function limitar() {
+    if (!L) return;
+    L.w = Math.min(100, Math.max(8, L.w));
+    const h = L.w * L.ar;
+    L.x = Math.min(100 - L.w, Math.max(0, L.x));
+    L.y = Math.min(Math.max(0, ALTURA_PAG - h), Math.max(0, L.y));
+  }
+  function salvaLogo() { try { if (L) localStorage.setItem(CHL, JSON.stringify(L)); else localStorage.removeItem(CHL); } catch (e) {} }
+  function aplicaLogo(salvar) {
+    if (!L) { lbox.hidden = true; lctl.style.display = 'none'; papel.style.setProperty('--esp', '0'); return; }
+    limitar();
+    lbox.hidden = false; lctl.style.display = 'block';
+    if (limg.getAttribute('src') !== L.src) limg.src = L.src;
+    lbox.style.setProperty('--lx', L.x.toFixed(2)); lbox.style.setProperty('--ly', L.y.toFixed(2));
+    lbox.style.setProperty('--lw', L.w.toFixed(2)); lbox.style.setProperty('--lo', (L.op / 100).toFixed(2));
+    $('#logoTam').value = Math.round(L.w); $('#logoTamO').textContent = Math.round(L.w) + '%';
+    $('#logoOp').value = Math.round(L.op); $('#logoOpO').textContent = Math.round(L.op) + '%';
+    $('#logoReserva').checked = !!L.reserva;
+    const h = L.w * L.ar, noAlto = (L.y + h / 2) < 38;
+    papel.style.setProperty('--esp', (L.reserva && noAlto) ? (L.y + h + 2).toFixed(2) : '0');
+    if (salvar) salvaLogo();
+  }
+  function carregaImagem(file) {
+    if (!file || !/^image\//.test(file.type)) return;
+    const rd = new FileReader();
+    rd.onload = () => {
+      const im = new Image();
+      im.onload = () => {
+        const nw = im.naturalWidth || 600, nh = im.naturalHeight || 300, esc2 = Math.min(1, 900 / nw);
+        const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(nw * esc2)); c.height = Math.max(1, Math.round(nh * esc2));
+        const g = c.getContext('2d'); g.drawImage(im, 0, 0, c.width, c.height);
+        const png = /png|svg|webp|gif/.test(file.type);
+        const src = png ? c.toDataURL('image/png') : c.toDataURL('image/jpeg', 0.9);
+        L = { src: src, ar: c.height / c.width, x: 0, y: 0, w: 30, op: 100, reserva: true };
+        aplicaLogo(true);
+        const folha = $('#folha'); if (folha.scrollIntoView && window.innerWidth <= 900) folha.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      };
+      im.onerror = () => alertaLogo('Não consegui abrir essa imagem. Tente PNG ou JPG.');
+      im.src = rd.result;
+    };
+    rd.readAsDataURL(file);
+  }
+  function alertaLogo(t) { msgAviso(t); }
+  function msgAviso(t) { let p = $('#avisoLogo'); if (!p) { p = document.createElement('p'); p.id = 'avisoLogo'; p.className = 'aviso err'; $('#logoArq').after(p); } p.textContent = t; }
+  $('#logoArq').addEventListener('change', e => { const a = $('#avisoLogo'); if (a) a.remove(); carregaImagem(e.target.files[0]); e.target.value = ''; });
+  // soltar uma imagem em cima da folha
+  const folhaEl = $('#folha');
+  ['dragenter', 'dragover'].forEach(ev => folhaEl.addEventListener(ev, e => { if (e.dataTransfer && [...e.dataTransfer.types].indexOf('Files') >= 0) { e.preventDefault(); folhaEl.classList.add('soltando'); } }));
+  ['dragleave', 'drop'].forEach(ev => folhaEl.addEventListener(ev, e => { folhaEl.classList.remove('soltando'); }));
+  folhaEl.addEventListener('drop', e => { if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) { e.preventDefault(); carregaImagem(e.dataTransfer.files[0]); } });
+  // arrastar
+  let arr = null;
+  lbox.addEventListener('pointerdown', e => {
+    if (!L || e.target.id === 'logoAlca') return;
+    arr = { t: 'mover', px: e.clientX, py: e.clientY, x: L.x, y: L.y, W: larg() };
+    lbox.setPointerCapture(e.pointerId); lbox.classList.add('arrastando'); e.preventDefault();
+  });
+  $('#logoAlca').addEventListener('pointerdown', e => {
+    if (!L) return;
+    arr = { t: 'tam', px: e.clientX, py: e.clientY, w: L.w, W: larg() };
+    $('#logoAlca').setPointerCapture(e.pointerId); lbox.classList.add('arrastando'); e.preventDefault(); e.stopPropagation();
+  });
+  function mover(e) {
+    if (!arr || !L) return;
+    const dx = (e.clientX - arr.px) / arr.W * 100, dy = (e.clientY - arr.py) / arr.W * 100;
+    if (arr.t === 'mover') { L.x = arr.x + dx; L.y = arr.y + dy; } else { L.w = arr.w + dx; }
+    aplicaLogo(false);
+  }
+  function soltar() { if (!arr) return; arr = null; lbox.classList.remove('arrastando'); aplicaLogo(true); }
+  [lbox, $('#logoAlca')].forEach(el => { el.addEventListener('pointermove', mover); el.addEventListener('pointerup', soltar); el.addEventListener('pointercancel', soltar); });
+  // setas do teclado
+  lbox.addEventListener('keydown', e => {
+    if (!L) return; const passo = e.shiftKey ? 3 : 0.6;
+    const m = { ArrowLeft: [-passo, 0], ArrowRight: [passo, 0], ArrowUp: [0, -passo], ArrowDown: [0, passo] }[e.key];
+    if (!m) return; e.preventDefault(); L.x += m[0]; L.y += m[1]; aplicaLogo(true);
+  });
+  $('#logoTam').addEventListener('input', e => { if (!L) return; L.w = +e.target.value; aplicaLogo(true); });
+  $('#logoOp').addEventListener('input', e => { if (!L) return; L.op = +e.target.value; aplicaLogo(true); });
+  $('#logoReserva').addEventListener('change', e => { if (!L) return; L.reserva = e.target.checked; aplicaLogo(true); });
+  $('#logoRemover').addEventListener('click', () => { L = null; aplicaLogo(true); });
+  lctl.querySelectorAll('[data-pos]').forEach(b => b.addEventListener('click', () => {
+    if (!L) return; const h = L.w * L.ar, k = b.dataset.pos;
+    if (k === 'marca') { L.w = Math.max(L.w, 60); L.op = Math.min(L.op, 15); L.x = (100 - L.w) / 2; L.y = ALTURA_PAG / 2 - (L.w * L.ar) / 2; L.reserva = false; }
+    else { if (L.op < 40) L.op = 100; L.y = 0; L.reserva = true; L.x = k === 'esq' ? 0 : k === 'dir' ? 100 - L.w : (100 - L.w) / 2; }
+    aplicaLogo(true);
+  }));
+  try { const salvo = JSON.parse(localStorage.getItem(CHL) || 'null'); if (salvo && salvo.src) L = salvo; } catch (e) {}
+  window.addEventListener('resize', () => aplicaLogo(false));
+  window.addEventListener('beforeprint', () => aplicaLogo(false));
+  aplicaLogo(false);
   /* ---- ações ---- */
   f.addEventListener('input', montar); f.addEventListener('change', montar);
   function faltando(o, paraCliente) {
@@ -372,7 +508,7 @@
     else $('#copiado').style.display = 'none';
   });
   $('#copiar').addEventListener('click', async () => { try { await navigator.clipboard.writeText($('#link').value); msg('Link copiado ✓', true); } catch (e) { $('#link').select(); msg('Selecionei o link: use Ctrl+C para copiar.', true); } });
-  $('#limpar').addEventListener('click', () => { escrever({ cNome: '', cDoc: '', cCidade: '', cEnd: '', cResp: '', cCargo: '', cTel: '', cEmail: '', sOutro: '', evento: '', data: '', local: '', qtd: '', valor: '', publico: '', antes: false, aval: 'excelente', serv: [] }); $('#linkBox').style.display = 'none'; montar(); });
+  $('#limpar').addEventListener('click', () => { escrever({ cNome: '', cDoc: '', cCidade: '', cEnd: '', cResp: '', cCargo: '', cTel: '', cEmail: '', sOutro: '', evento: '', data: '', local: '', qtd: '', valor: '', publico: '', antes: false, aval: 'excelente', serv: [] }); $('#linkBox').style.display = 'none'; L = null; aplicaLogo(true); montar(); });
   $('#imprimir1').addEventListener('click', () => { montar(); window.print(); });
   $('#imprimir2').addEventListener('click', () => {
     const o = montar(), falta = faltando(o, true);
