@@ -1,12 +1,10 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex">
 <title>Animações para painel de LED · Abertura para Shows</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Unbounded:wght@700;800&display=swap">
 <style>
 :root{--bg:#07090a;--card:#111614;--line:#222b27;--fg:#eef3f0;--mut:#8b9a93;--acc:#f5c518}
 *{box-sizing:border-box}
@@ -48,11 +46,11 @@ button.okb:disabled{opacity:.35;cursor:default}
 .esc .passos{display:none}
 </style>
 </head>
-<body>
+<body class="esc">
 <header>
   <div class="marca">ABERTURA PARA SHOWS</div>
-  <h1 id="tit">Animações profissionais para painel de LED</h1>
-  <p class="sub" id="sub">Visual no padrão dos grandes festivais internacionais, feito com a sua logo e as suas fotos e sincronizado no BPM que você toca. Você escolhe as cenas e a gente monta a animação do seu show. As prévias usam uma logo de exemplo: imagina a sua no lugar.</p>
+  <h1 id="tit">Escolha as cenas da sua animação</h1>
+  <p class="sub" id="sub">Toque nas cenas que você quer (fica marcado, igual selecionar fotos na galeria) e aperte OK. Quanto mais cenas, mais longa e variada fica a sua animação no painel.</p>
   <div class="oferta" id="oferta"></div>
 </header>
 <main id="main">
@@ -72,13 +70,14 @@ button.okb:disabled{opacity:.35;cursor:default}
     </div>
   </div>
 </main>
-<div class="barra"><div class="in"><div class="tot" id="tot"></div><button class="okb" id="ok" disabled>OK</button></div></div>
+<div class="barra"><div class="in"><div class="tot" id="tot"><b>Toque nas cenas que você quer</b><small>Elas ficam marcadas. Depois aperte OK.</small></div><button class="okb" id="ok" disabled="">OK</button></div></div>
 <script>
 (function () {
   var LOGO = [['chrome','CROMO 3D'],['neon','NEON'],['totem','TOTEM'],['outline','TRAÇO'],['dots','DOT MATRIX'],['scan','SCANLINES'],['rings','ANÉIS'],['slats','PERSIANA'],['echo','ECO'],['holo','HOLO 3D'],['grid','GRADE'],['tunnel','TÚNEL'],['glitch','GLITCH'],['contrast','CONTRASTE'],['quad','QUADRANTES'],['stack','SANFONA'],['wave','ONDA'],['punch','SOCO'],['coin','MOEDA'],['laser','LASER'],['particles','PARTÍCULAS'],['blocks','BLOCOS'],['neon2','NEON DUPLO'],['mirrorx','ESPELHO'],['radar','RADAR'],['barcode','CÓDIGO'],['circuit','CIRCUITO'],['sweep','VARREDURA'],['layers','CAMADAS'],['wall','PAREDE'],['ripple','ONDAS']];
   var FOTO = [['flash','FLASH'],['neonline','CONTORNO NEON'],['halftone','RETÍCULA'],['scanph','SCANLINES'],['echoph','ECO'],['totemph','TOTEM'],['holoph','HOLOGRAMA']];
   var q = new URLSearchParams(location.search), modo = q.get('m') === 'escolher' ? 'escolher' : 'ver', pedido = (q.get('p') || '').replace(/[^\w-]/g, ''), zap = (q.get('w') || '').replace(/\D/g, '');
   var promo = q.get('pr') === '1', ate = Number(q.get('ate')) || 0;
+  var brinde = q.get('b') === '1', maxB = Math.max(1, Number(q.get('max')) || 3), EXTRA = 50;   // brinde: até maxB cenas grátis; cada cena a mais = R$ 50
   var tabela = (q.get('t') || '8-150-450_12-200-550_16-250-650_20-300-750_31-400-950').split('_').map(function (x) { return x.split('-').map(Number); }).filter(function (x) { return x.length === 3; });
   if (promo && ate && Date.now() > ate) promo = false;   // passou do prazo: volta o preço normal
   document.body.className = modo === 'escolher' ? 'esc' : 'ver';
@@ -97,6 +96,11 @@ button.okb:disabled{opacity:.35;cursor:default}
     if (modo !== 'escolher') { tot.innerHTML = '<b>Gostou?</b><small>Me responde lá no WhatsApp com a sua nota de 0 a 10.</small>'; return; }
     document.getElementById('ok').disabled = !n;
     if (!n) { tot.innerHTML = '<b>Toque nas cenas que você quer</b><small>Elas ficam marcadas. Depois aperte OK.</small>'; return; }
+    if (brinde) {
+      var ex = Math.max(0, n - maxB), vb = ex * EXTRA;
+      tot.innerHTML = '<b>' + n + (n === 1 ? ' cena' : ' cenas') + ' · ' + (vb ? brl(vb) : 'R$ 0 (presente)') + '</b><small>' + (ex ? '🎁 ' + maxB + ' cenas grátis + ' + ex + (ex === 1 ? ' extra' : ' extras') + ' × R$ ' + EXTRA : '🎁 Presente: até ' + maxB + ' cenas grátis · cada cena a mais soma R$ ' + EXTRA) + '</small>';
+      return;
+    }
     var p = preco(n), v = promo ? p[1] : p[2];
     tot.innerHTML = '<b>' + n + (n === 1 ? ' cena' : ' cenas') + ' · ' + brl(v) + '</b>' + (promo ? '<s>' + brl(p[2]) + '</s>' : '') + '<small>Pacote de até ' + p[0] + ' cenas · Pix ou cartão, sem acréscimo</small>';
   }
@@ -109,12 +113,11 @@ button.okb:disabled{opacity:.35;cursor:default}
   document.getElementById('ok').onclick = function () {
     var ks = Object.keys(sel); if (!ks.length) return;
     var c = ks.filter(function (k) { return k.indexOf('logo:') === 0; }).map(function (k) { return k.slice(5); }), f = ks.filter(function (k) { return k.indexOf('photo:') === 0; }).map(function (k) { return k.slice(6); });
-    var p = preco(ks.length), v = promo ? p[1] : p[2];
+    var p = preco(ks.length), v = brinde ? Math.max(0, ks.length - maxB) * EXTRA : (promo ? p[1] : p[2]);
     var txt = 'Quero a animação para o telão! ' + (pedido ? '#' + pedido + ' ' : '') + '\n' + ks.length + ' cenas · ' + brl(v) + '\nLogo: ' + c.map(function (k) { return sel['logo:' + k]; }).join(', ') + (f.length ? '\nFoto: ' + f.map(function (k) { return sel['photo:' + k]; }).join(', ') : '') + '\n[c:' + c.join(',') + '|f:' + f.join(',') + ']';
     location.href = 'https://wa.me/' + zap + '?text=' + encodeURIComponent(txt);
   };
   atualizar();
 })();
 </script>
-</body>
-</html>
+</body></html>
