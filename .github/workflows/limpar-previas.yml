@@ -1,0 +1,88 @@
+name: limpar previas do site
+
+# Apaga somente pastas previa/NOME/ cujo index.html tem
+# <meta name="abertura-previa" content="MILISSEGUNDOS"> com mais de 24 h.
+# Pastas sem essa marca (ex.: previa/psyzone) nunca são apagadas.
+on:
+  workflow_dispatch:
+    inputs:
+      teste:
+        description: "Modo de teste: só lista, não apaga"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: limpar-previas
+  cancel-in-progress: false
+
+jobs:
+  limpar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: conferir previa/
+        env:
+          TESTE: ${{ github.event_name == 'workflow_dispatch' && inputs.teste && 'true' || 'false' }}
+        shell: python
+        run: |
+          import os, re, time, pathlib, subprocess
+          teste = os.environ["TESTE"] == "true"
+          agora = int(time.time() * 1000)
+          LIMITE = 24 * 60 * 60 * 1000
+          raiz = pathlib.Path("previa")
+          tag_re = re.compile(r"<meta\b[^>]*>", re.I)
+          nome_re = re.compile(r"""\bname\s*=\s*["']abertura-previa["']""", re.I)
+          num_re = re.compile(r"""\bcontent\s*=\s*["'](\d{12,14})["']""", re.I)
+
+          def marca(idx):
+              if not idx.is_file() or idx.is_symlink():
+                  return None
+              for m in tag_re.finditer(idx.read_text(errors="ignore")):
+                  t = m.group(0)
+                  if nome_re.search(t):
+                      n = num_re.search(t)
+                      return int(n.group(1)) if n else None
+              return None
+
+          linhas, apagar = [], []
+          if raiz.is_dir() and not raiz.is_symlink():
+              for d in sorted(raiz.iterdir()):
+                  if not d.is_dir() or d.is_symlink():
+                      continue
+                  n = marca(d / "index.html")
+                  if n is None:
+                      linhas.append(f"MANTER  {d}/  (sem a marca abertura-previa)")
+                  elif n > agora:
+                      linhas.append(f"MANTER  {d}/  (data no futuro)")
+                  elif agora - n > LIMITE:
+                      linhas.append(f"APAGAR  {d}/  (publicada há {(agora - n) // 3600000} h)")
+                      apagar.append(str(d))
+                  else:
+                      linhas.append(f"MANTER  {d}/  (publicada há {(agora - n) // 60000} min)")
+
+          modo = "TESTE (nada foi apagado)" if teste else "REAL"
+          texto = f"Modo: {modo}\n" + ("\n".join(linhas) or "previa/ vazia") + f"\nTotal a apagar: {len(apagar)}"
+          print(texto)
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as s:
+              s.write("```\n" + texto + "\n```\n")
+
+          if teste or not apagar:
+              raise SystemExit(0)
+          for p in apagar:
+              assert p.startswith("previa/") and p.count("/") == 1 and ".." not in p
+              subprocess.run(["git", "rm", "-r", "-q", "--", p], check=True)
+          r = lambda *a: subprocess.run(list(a), check=True)
+          r("git", "config", "user.name", "limpeza")
+          r("git", "config", "user.email", "limpeza@users.noreply.github.com")
+          r("git", "commit", "-q", "-m", f"limpeza: {len(apagar)} prévia(s) com mais de 24h")
+          for tentativa in range(4):
+              if subprocess.run(["git", "push", "-q"]).returncode == 0:
+                  break
+              time.sleep(5)
+              r("git", "pull", "-q", "--rebase")
+          else:
+              raise SystemExit("não consegui enviar a limpeza")
