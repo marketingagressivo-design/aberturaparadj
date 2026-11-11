@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#07090a">
+<title>Gravar agora · Abertura para Shows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Unbounded:wght@700;800&display=swap">
+<style>
+:root{--bg:#07090a;--card:#111614;--line:#222b27;--fg:#eef3f0;--mut:#8b9a93;--acc:#f5c518;--rec:#ff4d4f;--ok:#3ddc84;--teal:#20f0cf}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 Inter,system-ui,sans-serif}
+header{position:sticky;top:0;z-index:5;background:rgba(7,9,10,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 10px;display:flex;align-items:center;gap:10px}
+.marca{color:var(--acc);font:800 11px Unbounded,system-ui;letter-spacing:.12em}
+header h1{font:800 15px Unbounded,system-ui;margin:2px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header .t{flex:1;min-width:0}
+.mic{display:flex;align-items:center;gap:8px}
+.meter{width:64px;height:8px;border-radius:4px;background:#1a211e;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ok),var(--acc) 70%,var(--rec))}
+button{font:inherit;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:10px 14px;cursor:pointer}
+button:disabled{opacity:.35;cursor:default}
+button.pri{background:var(--acc);border-color:var(--acc);color:#111;font-weight:800}
+button.sm{padding:7px 11px;font-size:13px;border-radius:9px}
+main{max-width:760px;margin:0 auto;padding:14px 16px calc(150px + env(safe-area-inset-bottom))}
+.dica{color:var(--mut);font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 10px}
+.cli{display:flex;align-items:center;gap:12px;cursor:pointer}
+.cli b{display:block;font-weight:800}
+.cli small{color:var(--mut);display:block}
+.cli .pg{margin-left:auto;font:800 12px Unbounded,system-ui;color:var(--acc);white-space:nowrap}
+h2{font:700 12px Inter;letter-spacing:.12em;color:var(--mut);margin:18px 0 8px}
+.s{position:relative;padding:12px 12px 12px 38px;margin:6px 0;border-radius:12px;border:1px solid transparent;font-size:20px;line-height:1.45;color:#c4d0ca;cursor:pointer}
+.s::before{content:"";position:absolute;left:12px;top:20px;width:14px;height:14px;border-radius:50%;border:2px solid #3b4a44}
+.s.ok{color:#8fa39a}.s.ok::before{background:var(--ok);border-color:var(--ok)}
+.s.cur{color:#fff;font-weight:700;background:#16201c;border-color:var(--acc)}
+.s.rec{color:#fff;font-weight:700;background:#2a1212;border-color:var(--rec)}
+.s.rec::before{background:var(--rec);border-color:var(--rec);animation:p 1s infinite}
+.mk{margin:12px 0;color:var(--teal);font:700 12px Inter;letter-spacing:.1em;text-align:center;border-top:1px dashed #234;padding-top:8px}
+@keyframes p{50%{opacity:.5}}
+.s .ctl{display:none;gap:8px;align-items:center;margin:10px 0 2px;flex-wrap:wrap;font-weight:400}
+.s.cur .ctl,.s.rec .ctl{display:flex}
+.s .ctl button{font-size:15px;padding:9px 16px;font-weight:800}
+.s .ctl .crb{background:var(--rec);border-color:var(--rec);color:#fff;min-width:150px}
+.s .ctl .crb.on{animation:p 1s infinite}
+.s .ctl .cnx{background:#123d2a;border-color:#1f6b47;color:#c8ffe1}
+.s .ctl .cinfo{font-size:13px;color:var(--mut)}
+.opc{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--mut);margin:0 0 6px}
+.opc select{font:inherit;font-size:13px;background:#0c100f;color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:5px 8px;max-width:220px}
+@media (min-width:760px){.barra{display:none}main{padding-bottom:60px}}
+@media (max-width:759px){.s .ctl{display:none!important}}
+.barra{position:fixed;left:0;right:0;bottom:0;z-index:6;background:rgba(10,13,12,.97);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
+.barra .in{max-width:760px;margin:0 auto}
+.info{font-size:13px;color:var(--mut);text-align:center;min-height:18px;margin-bottom:8px}
+.ctl{display:grid;grid-template-columns:1fr 1.6fr 1fr;gap:10px;align-items:center}
+.rb{height:64px;border-radius:32px;background:var(--rec);border-color:var(--rec);color:#fff;font:800 16px Unbounded,system-ui;letter-spacing:.04em}
+.rb.on{animation:p 1s infinite}
+.ctl .lado{height:52px;font-weight:700;white-space:nowrap;padding:10px 8px;font-size:15px}
+.nx{background:#123d2a;border-color:#1f6b47;color:#c8ffe1}
+.topo{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:4px 0 6px}
+.prog{font-size:13px;color:var(--mut);margin-left:auto}
+.envio{height:6px;border-radius:3px;background:#1a211e;overflow:hidden;margin:8px 0 0}.envio i{display:block;height:100%;width:0;background:var(--teal);transition:width .3s}
+.err{color:#ff9aa2;font-size:14px}
+textarea{width:100%;min-height:160px;font:inherit;background:#0c100f;color:var(--fg);border:1px solid var(--line);border-radius:12px;padding:12px}
+.ok-msg{color:var(--ok);font-weight:700}
+.vazio{text-align:center;color:var(--mut);padding:40px 10px}
+kbd{background:#1a211e;border:1px solid var(--line);border-radius:4px;padding:0 5px;font-size:12px}
+@media (min-width:900px){.s{font-size:21px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="t"><div class="marca">ABERTURA PARA SHOWS</div><h1 id="tit">Gravar agora</h1></div>
+  <div class="mic"><div class="meter" title="Nível do microfone"><i id="lvl"></i></div><button class="sm" id="voltar" hidden>‹ Lista</button></div>
+</header>
+<main id="main"></main>
+<div class="barra" id="barra" hidden><div class="in">
+  <div class="info" id="info"></div>
+  <div class="ctl"><button class="lado" id="ouvir">▶ Ouvir</button><button class="rb" id="rec">● REC</button><button class="lado nx" id="prox">Próxima ›</button></div>
+</div></div>
+<script>
+(function () {
+  'use strict';
+  const $ = id => document.getElementById(id), esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  // ---------- ligação com a extensão (Apps Script no seu Google Drive) ----------
+  const H = new URLSearchParams(location.hash.slice(1));
+  if (H.get('u')) localStorage.setItem('ga_u', H.get('u'));
+  if (H.get('k')) localStorage.setItem('ga_k', H.get('k'));
+  const URLS = localStorage.getItem('ga_u') || '', CHAVE = localStorage.getItem('ga_k') || '';
+  const avulso = H.get('t') ? { pedido: H.get('p') || '', nome: H.get('n') || 'Texto', texto: b64d(H.get('t')) } : null;
+  if (H.get('u') || H.get('k') || H.get('t')) history.replaceState(null, '', location.pathname + (H.get('p') && !H.get('t') ? '#p=' + encodeURIComponent(H.get('p')) : ''));
+  function b64d(s) { try { s = s.replace(/-/g, '+').replace(/_/g, '/'); return decodeURIComponent(escape(atob(s))); } catch (e) { return ''; } }
+  async function api(params, corpo) {
+    if (!URLS) throw new Error('sem ligação com a extensão');
+    const u = URLS + '?' + new URLSearchParams(Object.assign({ k: CHAVE }, params));
+    const r = corpo ? await fetch(URLS, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ k: CHAVE }, corpo)) }) : await fetch(u);
+    const j = await r.json(); if (!j.ok) throw new Error(j.erro || 'erro'); return j;
+  }
+  // ---------- armazenamento local (os takes não se perdem se fechar a página) ----------
+  let db = null; const dbPronto = new Promise(res => { try { const r = indexedDB.open('abertura-gravar', 1); r.onupgradeneeded = () => r.result.createObjectStore('t'); r.onsuccess = () => { db = r.result; res(); }; r.onerror = () => res(); } catch (e) { res(); } });
+  const idb = (modo, fn) => new Promise(res => { if (!db) return res(null); try { const tx = db.transaction('t', modo), q = fn(tx.objectStore('t')); tx.oncomplete = () => res(q && q.result); tx.onerror = () => res(null); } catch (e) { res(null); } });
+  const put = (k, v) => idb('readwrite', s => v ? s.put(v, k) : s.delete(k)), get = k => idb('readonly', s => s.get(k));
+  // ---------- microfone (PCM direto, sem redução de ruído nem ganho automático) ----------
+  let ctx = null, stream = null, node = null, src = null, SR = 48000, peak = 0, recBuf = null, wake = null;
+  async function abrirMic() {
+    if (ctx && stream) { await ctx.resume(); return; }
+    const dv = localStorage.getItem('ga_dev') || '';
+    stream = await navigator.mediaDevices.getUserMedia({ audio: { deviceId: dv ? { exact: dv } : undefined, echoCancellation: false, noiseSuppression: false, autoGainControl: false, channelCount: 1 } });
+    listarMics();
+    if (ctx) { src = ctx.createMediaStreamSource(stream); src.connect(node); await ctx.resume(); return; }
+    ctx = new (window.AudioContext || window.webkitAudioContext)(); SR = ctx.sampleRate;
+    node = ctx.createScriptProcessor(2048, 1, 1); node.onaudioprocess = e => { const x = new Float32Array(e.inputBuffer.getChannelData(0)); e.outputBuffer.getChannelData(0).fill(0); let p = 0; for (let i = 0; i < x.length; i++) { const a = Math.abs(x[i]); if (a > p) p = a; } peak = Math.max(p, peak * 0.9); if (recBuf) recBuf.push(x); };
+    src = ctx.createMediaStreamSource(stream); src.connect(node); node.connect(ctx.destination); await ctx.resume();
+    try { wake = await navigator.wakeLock.request('screen'); } catch (e) {}
+  }
+  async function listarMics() { const s = $('dev'); if (!s || !navigator.mediaDevices.enumerateDevices) return; try { const ds = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind === 'audioinput'), atual = localStorage.getItem('ga_dev') || ''; s.innerHTML = '<option value="">Microfone padrão</option>' + ds.map(d => '<option value="' + esc(d.deviceId) + '"' + (d.deviceId === atual ? ' selected' : '') + '>' + esc(d.label || 'Microfone') + '</option>').join(''); } catch (e) {} }
+  document.addEventListener('visibilitychange', async () => { if (document.visibilityState === 'visible' && ctx) { try { wake = await navigator.wakeLock.request('screen'); } catch (e) {} } });
+  (function meter() { $('lvl').style.width = Math.min(100, peak * 110) + '%'; requestAnimationFrame(meter); })();
+  // ---------- texto → frases ----------
+  function frases(texto) {
+    const out = [];
+    String(texto || '').split(/\n+/).map(l => l.trim()).filter(Boolean).forEach(l => {
+      const mk = /^\[(M[ÚU]SICA[^\]]*|EFEITO[^\]]*)\]$/i.exec(l); if (mk) { out.push({ mk: mk[1].toUpperCase() }); return; }
+      l.replace(/\[(M[ÚU]SICA[^\]]*|EFEITO[^\]]*)\]/gi, m => '\n' + m + '\n').split('\n').map(x => x.trim()).filter(Boolean).forEach(x => {
+        const m2 = /^\[(.*)\]$/.exec(x); if (m2) { out.push({ mk: m2[1].toUpperCase() }); return; }
+        (x.match(/[^.!?…]+[.!?…]+["”']?|[^.!?…]+$/g) || [x]).map(z => z.trim()).filter(Boolean).forEach(z => out.push({ t: z }));
+      });
+    });
+    return out;
+  }
+  // ---------- telas ----------
+  let job = null, F = [], takes = {}, cur = 0, recIdx = -1, player = null;
+  async function lista() {
+    job = null; $('barra').hidden = true; $('voltar').hidden = true; $('tit').textContent = 'Gravar agora';
+    const m = $('main');
+    if (!URLS) {
+      m.innerHTML = '<div class="card"><b>Abra pelo link da extensão</b><p class="dica">Na barra do WhatsApp, aba CLIENTE, toque em ⏺ REC → 📱 NO CELULAR e copie o link. Abrindo uma vez por ele, este aparelho fica ligado e os textos aparecem aqui sozinhos.</p></div>' + htmlAvulso();
+      ligarAvulso(); return;
+    }
+    m.innerHTML = '<p class="dica">Carregando os textos aprovados…</p>';
+    let L = [];
+    try { L = (await api({ acao: 'textos' })).lista || []; localStorage.setItem('ga_cache', JSON.stringify(L)); }
+    catch (e) { L = JSON.parse(localStorage.getItem('ga_cache') || '[]'); m.insertAdjacentHTML('afterbegin', '<p class="err">Sem internet ou sem resposta (' + esc(e.message) + '). Mostrando a última lista salva.</p>'); }
+    const pd = new URLSearchParams(location.hash.slice(1)).get('p'); if (pd) { const x = L.find(z => z.pedido === pd); if (x) return abrir(x); }
+    let h = '<h2>TEXTOS PARA GRAVAR (' + L.length + ')</h2>';
+    if (!L.length) h += '<div class="vazio">Nenhum texto aprovado esperando gravação.</div>';
+    for (const x of L) {
+      const fs = frases(x.texto).filter(f => f.t), ts = await get('job:' + x.pedido), feitas = ts ? Object.keys(ts.takes || {}).length : 0;
+      h += '<div class="card cli" data-p="' + esc(x.pedido) + '"><span><b>' + esc(x.nome || x.pedido) + '</b><small>#' + esc(x.pedido) + (x.duracao ? ' · ' + esc(x.duracao) : '') + (x.entrega ? ' · entrega ' + esc(x.entrega) : '') + (x.enviado ? ' · <span class="ok-msg">enviado ✓</span>' : '') + '</small></span><span class="pg">' + feitas + '/' + fs.length + '</span></div>';
+    }
+    m.innerHTML = h + htmlAvulso();
+    [].forEach.call(m.querySelectorAll('.cli'), c => c.onclick = () => abrir(L.find(z => z.pedido === c.getAttribute('data-p'))));
+    ligarAvulso();
+  }
+  function htmlAvulso() { return '<h2>TEXTO AVULSO</h2><div class="card"><textarea id="txAv" placeholder="Cole aqui um texto para gravar frase a frase"></textarea><div class="topo"><button class="pri sm" id="btAv">Gravar este texto</button></div></div>'; }
+  function ligarAvulso() { const b = $('btAv'); if (b) b.onclick = () => { const t = $('txAv').value.trim(); if (t) abrir({ pedido: 'avulso-' + Date.now().toString(36), nome: 'Texto avulso', texto: t }); }; }
+  async function abrir(x) {
+    job = x; F = frases(x.texto); const salvo = await get('job:' + x.pedido); takes = (salvo && salvo.takes) || {}; cur = Math.max(0, F.findIndex((f, i) => f.t && !takes[i]));
+    if (cur < 0 || !F[cur] || !F[cur].t) cur = F.findIndex(f => f.t);
+    $('tit').textContent = x.nome || x.pedido; $('voltar').hidden = false; $('barra').hidden = false;
+    let h = '<div class="topo"><span class="dica">#' + esc(x.pedido) + (x.duracao ? ' · ' + esc(x.duracao) : '') + '</span><span class="prog" id="prog"></span></div>'
+      + '<div class="opc"><select id="dev"><option value="">Microfone padrão</option></select><label><input type="checkbox" id="autoplay"' + (localStorage.getItem('ga_auto') === '0' ? '' : ' checked') + '> ouvir o take ao parar</label></div>'
+      + '<p class="dica" id="dicaMic">A frase da vez fica em destaque com os botões embaixo. <b>● REC</b>, leia e <b>■ PARAR</b>: o take toca para você conferir. Não gostou? <b>● REGRAVAR</b> (o novo substitui o anterior). Gostou? <b>PRÓXIMA ›</b>. Para refazer uma frase antiga, toque nela e regrave. Atalhos no PC: <kbd>Espaço</kbd> REC/PARAR · <kbd>P</kbd> ouvir · <kbd>Enter</kbd> próxima · <kbd>Esc</kbd> descarta · <kbd>↑</kbd><kbd>↓</kbd> trocam de frase.</p><div id="fr">';
+    F.forEach((f, i) => { h += f.mk ? '<div class="mk">🎵 ' + esc(f.mk) + '</div>' : '<div class="s" id="s' + i + '">' + esc(f.t) + '<div class="ctl"><button class="crb">● REC</button><button class="cpb">▶ OUVIR</button><button class="cnx">PRÓXIMA ›</button><span class="cinfo"></span></div></div>'; });
+    h += '</div><div class="card" style="margin-top:16px"><b>Terminou?</b><p class="dica">Junta só os takes finais num WAV, tira os silêncios das pontas e coloca uma pausa curta entre as frases.</p>'
+      + '<div class="topo"><span class="dica">pausa entre frases</span><input id="gap" type="number" min="0" max="2000" step="50" value="' + (localStorage.getItem('ga_gap') || 350) + '" style="width:80px;font:inherit;background:#0c100f;color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:6px"> <span class="dica">ms</span></div>'
+      + '<div class="topo"><button class="pri" id="enviar"' + (URLS ? '' : ' hidden') + '>☁ Concluir e enviar para o Drive</button><button id="baixar">⬇ Baixar WAV</button><button id="ouvirTudo">▶ Ouvir tudo</button></div><div class="envio" id="envio" hidden><i></i></div><p id="envSt" class="dica"></p></div>';
+    $('main').innerHTML = h;
+    F.forEach((f, i) => { if (!f.t) return; const el = $('s' + i), ct = el.querySelector('.ctl'); el.onclick = () => { if (recIdx < 0) setCur(i); }; ct.onclick = e => e.stopPropagation();
+      ct.querySelector('.crb').onclick = () => { if (recIdx < 0 && cur !== i) setCur(i); $('rec').click(); }; ct.querySelector('.cpb').onclick = () => $('ouvir').click(); ct.querySelector('.cnx').onclick = () => $('prox').click(); });
+    $('autoplay').onchange = () => localStorage.setItem('ga_auto', $('autoplay').checked ? '1' : '0');
+    $('dev').onchange = async () => { localStorage.setItem('ga_dev', $('dev').value); if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; if (src) src.disconnect(); try { await abrirMic(); } catch (e) { $('info').textContent = 'Não consegui abrir esse microfone.'; } } };
+    listarMics();
+    $('gap').onchange = () => localStorage.setItem('ga_gap', $('gap').value);
+    $('enviar').onclick = enviar; $('baixar').onclick = () => { const r = montar(); if (r) baixarBlob(wav(r.sr, r.pcm), nomeArq()); }; $('ouvirTudo').onclick = () => { const r = montar(); if (r) tocar(r.sr, r.pcm); };
+    setCur(cur); window.scrollTo(0, 0);
+  }
+  function setCur(i) { cur = i; refresh(); const el = $('s' + i); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+  function refresh() {
+    if (!job) return; let feitas = 0, tot = 0;
+    F.forEach((f, i) => { if (!f.t) return; tot++; if (takes[i]) feitas++; $('s' + i).className = 's' + (takes[i] ? ' ok' : '') + (i === recIdx ? ' rec' : i === cur && recIdx < 0 ? ' cur' : ''); });
+    $('prog').textContent = feitas + ' de ' + tot + ' frases';
+    const r = recIdx >= 0, t = takes[cur];
+    $('rec').textContent = r ? '■ PARAR' : t ? '● REGRAVAR' : '● REC'; $('rec').classList.toggle('on', r);
+    $('ouvir').disabled = r || !t; $('prox').disabled = r;
+    $('info').innerHTML = r ? 'gravando… toque em PARAR quando terminar' : t ? 'take de ' + (t.pcm.length / t.sr).toFixed(1) + ' s · gostou? Próxima' : ctx ? 'pronto para gravar a frase em destaque' : 'na 1ª gravação o navegador pede o microfone';
+    const i0 = r ? recIdx : cur, el = $('s' + i0);
+    if (el) { const ct = el.querySelector('.ctl'), tk = takes[i0]; ct.querySelector('.crb').textContent = r ? '■ PARAR' : tk ? '● REGRAVAR' : '● REC'; ct.querySelector('.crb').classList.toggle('on', r); ct.querySelector('.cpb').disabled = r || !tk; ct.querySelector('.cnx').disabled = r;
+      ct.querySelector('.cinfo').innerHTML = r ? 'gravando… <kbd>Espaço</kbd> para parar · <kbd>Esc</kbd> descarta' : tk ? 'take de ' + (tk.pcm.length / tk.sr).toFixed(1) + ' s · gostou? <kbd>Enter</kbd> vai para a próxima' : '<kbd>Espaço</kbd> grava'; }
+  }
+  async function salvarJob() { const o = {}; Object.keys(takes).forEach(k => o[k] = takes[k]); await put('job:' + job.pedido, { pedido: job.pedido, takes: o, em: Date.now() }); }
+  $('rec').onclick = async () => {
+    if (recIdx >= 0) {   // parar
+      const i = recIdx, ch = recBuf; recBuf = null; recIdx = -1; let n = 0; ch.forEach(c => n += c.length); const a = new Float32Array(n); let o = 0; ch.forEach(c => { a.set(c, o); o += c.length; });
+      if (n > SR * 0.3) { takes[i] = { sr: SR, pcm: a }; await salvarJob(); if (!$('autoplay') || $('autoplay').checked) tocar(SR, limpar(takes[i])); }
+      refresh(); return;
+    }
+    try { await abrirMic(); } catch (e) { $('info').innerHTML = '<span class="err">O microfone foi bloqueado. Libere nas permissões do navegador (cadeado na barra de endereço) e tente de novo.</span>'; return; }
+    if (player) try { player.stop(); } catch (e) {}
+    if (!F[cur] || !F[cur].t) return;
+    recIdx = cur; recBuf = []; refresh();
+  };
+  $('ouvir').onclick = () => { const t = takes[cur]; if (t) tocar(t.sr, limpar(t)); };
+  $('prox').onclick = () => { let i = cur + 1; while (i < F.length && !F[i].t) i++; if (i < F.length) setCur(i); else { $('enviar').scrollIntoView({ behavior: 'smooth', block: 'center' }); } };
+  $('voltar').onclick = () => { if (recIdx >= 0) return; history.replaceState(null, '', location.pathname); lista(); };
+  document.addEventListener('keydown', e => { if (!job || /INPUT|TEXTAREA/.test(e.target.tagName)) return; if (e.code === 'Space') { e.preventDefault(); if (!e.repeat) $('rec').click(); } else if (e.code === 'Enter' || e.code === 'ArrowRight') { e.preventDefault(); $('prox').click(); } else if (e.code === 'KeyP') { e.preventDefault(); $('ouvir').click(); } else if (e.code === 'Escape' && recIdx >= 0) { e.preventDefault(); recBuf = null; recIdx = -1; refresh(); } else if ((e.code === 'ArrowDown' || e.code === 'ArrowUp') && recIdx < 0) { e.preventDefault(); let i = cur + (e.code === 'ArrowDown' ? 1 : -1); while (i >= 0 && i < F.length && !F[i].t) i += e.code === 'ArrowDown' ? 1 : -1; if (i >= 0 && i < F.length) setCur(i); } });
+  // ---------- montagem do WAV ----------
+  function limpar(t) {
+    const sr = t.sr, x = t.pcm; let a = Math.round(0.12 * sr), b = Math.max(a + 1, x.length - Math.round(0.10 * sr));
+    const fr = Math.round(0.01 * sr), th = Math.pow(10, -45 / 20); let first = -1, last = -1;
+    for (let i = a; i + fr <= b; i += fr) { let s = 0; for (let k = 0; k < fr; k++) s += x[i + k] * x[i + k]; if (Math.sqrt(s / fr) > th) { if (first < 0) first = i; last = i + fr; } }
+    if (first >= 0) { a = Math.max(a, first - Math.round(0.12 * sr)); b = Math.min(b, last + Math.round(0.20 * sr)); }
+    const y = x.slice(a, b), f = Math.min(Math.round(0.008 * sr), y.length >> 1); for (let k = 0; k < f; k++) { y[k] *= k / f; y[y.length - 1 - k] *= k / f; }
+    return y;
+  }
+  function montar() {
+    const gap = Math.max(0, +$('gap').value || 0) / 1000, idx = F.map((f, i) => f.t && takes[i] ? i : -1).filter(i => i >= 0); if (!idx.length) { $('envSt').textContent = 'Nenhuma frase gravada ainda.'; return null; }
+    const sr = takes[idx[0]].sr, parts = [];
+    idx.forEach((i, k) => { if (k) { const marca = F.slice(idx[k - 1] + 1, i).some(f => f.mk); parts.push(new Float32Array(Math.round((marca ? gap * 2.5 : gap) * sr))); } parts.push(limpar(takes[i])); });
+    let n = 0; parts.forEach(p => n += p.length); const out = new Float32Array(n); let o = 0; parts.forEach(p => { out.set(p, o); o += p.length; });
+    return { sr, pcm: out, faltam: F.filter(f => f.t).length - idx.length };
+  }
+  function reamostrar(x, de, para) { if (de === para) return x; const n = Math.floor(x.length * para / de), y = new Float32Array(n), k = de / para; for (let i = 0; i < n; i++) { const p = i * k, a = Math.floor(p), f = p - a; y[i] = (x[a] || 0) * (1 - f) + (x[a + 1] || 0) * f; } return y; }
+  function wav(sr, pcm) {
+    const b = new ArrayBuffer(44 + pcm.length * 2), v = new DataView(b), w = (o, s) => { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
+    w(0, 'RIFF'); v.setUint32(4, 36 + pcm.length * 2, true); w(8, 'WAVE'); w(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true); v.setUint32(24, sr, true); v.setUint32(28, sr * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); w(36, 'data'); v.setUint32(40, pcm.length * 2, true);
+    for (let i = 0; i < pcm.length; i++) { const s = Math.max(-1, Math.min(1, pcm[i])); v.setInt16(44 + i * 2, s < 0 ? s * 0x8000 : s * 0x7FFF, true); }
+    return new Blob([b], { type: 'audio/wav' });
+  }
+  const nomeArq = () => String((job.nome || 'gravacao') + ' - Locução (celular)').replace(/[\\/:*?"<>|]+/g, ' ').trim() + '.wav';
+  function baixarBlob(bl, nome) { const a = document.createElement('a'); a.href = URL.createObjectURL(bl); a.download = nome; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000); }
+  function tocar(sr, pcm) { if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); if (player) try { player.stop(); } catch (e) {} const ab = ctx.createBuffer(1, pcm.length, sr); ab.copyToChannel ? ab.copyToChannel(pcm, 0) : ab.getChannelData(0).set(pcm); player = ctx.createBufferSource(); player.buffer = ab; player.connect(ctx.destination); ctx.resume(); player.start(); }
+  async function enviar() {
+    const r = montar(); if (!r) return;
+    if (r.faltam && !confirm('Faltam ' + r.faltam + ' frase(s). Enviar assim mesmo?')) return;
+    const bl = wav(r.sr, r.pcm), seg = r.pcm.length / r.sr, bar = $('envio'); bar.hidden = false; bar.firstChild.style.width = '15%'; $('envSt').textContent = 'Enviando para o Drive… (' + (bl.size / 1048576).toFixed(1) + ' MB)';
+    try {
+      const b64 = await new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result).split(',')[1]); fr.onerror = rej; fr.readAsDataURL(bl); });
+      bar.firstChild.style.width = '45%';
+      // cópia leve (16 kHz) só para o Whisper gerar a legenda — o WAV original vai inteiro
+      const w16 = wav(16000, reamostrar(r.pcm, r.sr, 16000)), b64w = w16.size < 24e6 ? await new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result).split(',')[1]); fr.onerror = rej; fr.readAsDataURL(w16); }) : '';
+      $('envSt').textContent = 'Enviando para o Drive e gerando a legenda (SRT)…';
+      const j = await api(null, { acao: 'audio', pedido: job.pedido, pasta: (job.pedido ? job.pedido + ' ' : '') + (job.nome || ''), nome: nomeArq(), mime: 'audio/wav', b64, seg: Math.round(seg * 10) / 10, b64whisper: b64w, dica: F.filter(f => f.t).map(f => f.t).join(' ').slice(0, 600) });
+      bar.firstChild.style.width = '100%';
+      const sr = j.srt || {};
+      $('envSt').innerHTML = '<span class="ok-msg">Enviado ✓</span> ' + seg.toFixed(1) + ' s · <a href="' + esc(j.url) + '" target="_blank" style="color:var(--teal)">abrir no Drive</a>'
+        + (sr.url ? ' · <a href="' + esc(sr.url) + '" target="_blank" style="color:var(--teal)">legenda (SRT)</a>' + (sr.texto ? ' · <a href="#" id="srtBaixar" style="color:var(--teal)">baixar SRT</a>' : '') : sr.erro ? '<br><span class="dica">Legenda não saiu: ' + esc(sr.erro) + '</span>' : '') + '. A extensão registra a gravação sozinha.';
+      if (sr.texto && $('srtBaixar')) $('srtBaixar').onclick = e => { e.preventDefault(); baixarBlob(new Blob([sr.texto], { type: 'application/x-subrip' }), nomeArq().replace(/\.wav$/, '.srt')); };
+      job.enviado = true; try { const L = JSON.parse(localStorage.getItem('ga_cache') || '[]'); L.forEach(z => { if (z.pedido === job.pedido) z.enviado = true; }); localStorage.setItem('ga_cache', JSON.stringify(L)); } catch (e) {}
+    } catch (e) { bar.hidden = true; $('envSt').innerHTML = '<span class="err">Não enviou (' + esc(e.message) + '). Os takes continuam salvos neste aparelho: tente de novo com internet ou use ⬇ Baixar WAV.</span>'; }
+  }
+  dbPronto.then(() => avulso ? abrir(avulso) : lista());
+})();
+</script>
+</body>
+</html>
