@@ -44,6 +44,12 @@ button.okb:disabled{opacity:.35;cursor:default}
 .passos b{display:block;font:800 12px Unbounded,system-ui;color:var(--acc);margin-bottom:2px}
 .passos span{color:var(--mut);font-size:12px;line-height:1.3;display:block}
 .esc .passos{display:none}
+.rl{margin-top:14px;display:none;background:linear-gradient(90deg,#3a0d0d,#111614);border:1px solid #7a1f1f;border-radius:12px;padding:12px 14px}
+.rl .tt{font:800 15px Unbounded,system-ui;color:#ff5a4e;letter-spacing:.04em}.rl .hd{display:inline-block;margin-left:6px;background:var(--acc);color:#111;border-radius:6px;padding:1px 7px;font:800 11px Unbounded,system-ui}
+.rl .ops{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.rl .op{flex:1 1 200px;border:2px solid var(--line);background:var(--card);border-radius:10px;padding:10px 12px;color:var(--fg);text-align:left;cursor:pointer;font:600 13px Inter}
+.rl .op b{display:block;font:800 20px Unbounded,system-ui;color:var(--acc)}.rl .op.on{border-color:var(--acc)}
+.rl small{display:block;color:var(--mut);margin-top:6px}
 </style>
 </head>
 <body class="esc">
@@ -52,6 +58,7 @@ button.okb:disabled{opacity:.35;cursor:default}
   <h1 id="tit">Escolha as cenas da sua animação</h1>
   <p class="sub" id="sub">Toque nas cenas que você quer (fica marcado, igual selecionar fotos na galeria) e aperte OK. Quanto mais cenas, mais longa e variada fica a sua animação no painel.</p>
   <div class="oferta" id="oferta"></div>
+  <div class="rl" id="rl"></div>
 </header>
 <main id="main">
   <h2>CENAS COM A LOGO</h2><div class="grade" id="gLogo"></div>
@@ -80,12 +87,15 @@ button.okb:disabled{opacity:.35;cursor:default}
   var brinde = q.get('b') === '1', maxB = Math.max(1, Number(q.get('max')) || 3), EXTRA = 50;   // brinde: até maxB cenas grátis; cada cena a mais = R$ 50
   var tabela = (q.get('t') || '8-150-450_12-200-550_16-250-650_20-300-750_31-400-950').split('_').map(function (x) { return x.split('-').map(Number); }).filter(function (x) { return x.length === 3; });
   if (promo && ate && Date.now() > ate) promo = false;   // passou do prazo: volta o preço normal
+  // PROMOÇÃO RELÂMPAGO (só hoje, Ultra HD): preço fechado por painel — só o central (rc) ou central + laterais (rlat), até rlmax cenas
+  var rl = q.get('rl') === '1' && !brinde && (!ate || Date.now() <= ate), rc = Number(q.get('rc')) || 100, rlat = Number(q.get('rlat')) || 150, rlMax = Math.max(1, Number(q.get('rlmax')) || 8), painel = 'central';
+  if (rl) promo = false;
   document.body.className = modo === 'escolher' ? 'esc' : 'ver';
   var sel = {}, brl = function (v) { return 'R$ ' + Number(v).toLocaleString('pt-BR'); };
   function card(id, nome, tipo, grade) {
     var b = document.createElement('button'); b.className = 'c'; b.type = 'button'; b.setAttribute('aria-pressed', 'false'); b.setAttribute('aria-label', nome);
     b.innerHTML = '<img loading="lazy" alt="" src="anim-' + tipo + '_' + id + '.gif"><span class="n">' + nome + '</span><span class="ok"></span>';
-    b.onclick = function () { if (modo !== 'escolher') return; var k = tipo + ':' + id; if (sel[k]) delete sel[k]; else sel[k] = nome; b.classList.toggle('on', !!sel[k]); b.setAttribute('aria-pressed', String(!!sel[k])); atualizar(); };
+    b.onclick = function () { if (modo !== 'escolher') return; var k = tipo + ':' + id; if (sel[k]) delete sel[k]; else { if (rl && Object.keys(sel).length >= rlMax) { alert('Na promoção relâmpago entram até ' + rlMax + ' cenas.'); return; } sel[k] = nome; } b.classList.toggle('on', !!sel[k]); b.setAttribute('aria-pressed', String(!!sel[k])); atualizar(); };
     grade.appendChild(b);
   }
   LOGO.forEach(function (x) { card(x[0], x[1], 'logo', document.getElementById('gLogo')); });
@@ -101,6 +111,7 @@ button.okb:disabled{opacity:.35;cursor:default}
       tot.innerHTML = '<b>' + n + (n === 1 ? ' cena' : ' cenas') + ' · ' + (vb ? brl(vb) : 'R$ 0 (presente)') + '</b><small>' + (ex ? '🎁 ' + maxB + ' cenas grátis + ' + ex + (ex === 1 ? ' extra' : ' extras') + ' × R$ ' + EXTRA : '🎁 Presente: até ' + maxB + ' cenas grátis · cada cena a mais soma R$ ' + EXTRA) + '</small>';
       return;
     }
+    if (rl) { var vr = painel === 'laterais' ? rlat : rc; tot.innerHTML = '<b>' + n + (n === 1 ? ' cena' : ' cenas') + ' · ' + brl(vr) + '</b><s>' + brl(preco(n)[2]) + '</s><small>Promoção relâmpago · Ultra HD · ' + (painel === 'laterais' ? 'painel central + laterais' : 'só o painel central') + ' · até ' + rlMax + ' cenas</small>'; return; }
     var p = preco(n), v = promo ? p[1] : p[2];
     tot.innerHTML = '<b>' + n + (n === 1 ? ' cena' : ' cenas') + ' · ' + brl(v) + '</b>' + (promo ? '<s>' + brl(p[2]) + '</s>' : '') + '<small>Pacote de até ' + p[0] + ' cenas · Pix ou cartão, sem acréscimo</small>';
   }
@@ -108,13 +119,20 @@ button.okb:disabled{opacity:.35;cursor:default}
     document.getElementById('tit').textContent = 'Escolha as cenas da sua animação';
     document.getElementById('sub').textContent = 'Toque nas cenas que você quer (fica marcado, igual selecionar fotos na galeria) e aperte OK. Quanto mais cenas, mais longa e variada fica a sua animação no painel.';
     var of = document.getElementById('oferta');
+    if (rl) {
+      var box = document.getElementById('rl'); box.style.display = 'block';
+      box.innerHTML = '<div class="tt">PROMOÇÃO RELÂMPAGO · SÓ HOJE<span class="hd">ULTRA HD</span></div><div class="ops"><button type="button" class="op on" data-p="central">Só o painel central<b>' + brl(rc) + '</b></button><button type="button" class="op" data-p="laterais">Central + painéis laterais<b>' + brl(rlat) + '</b></button></div>'
+        + '<small>Até ' + rlMax + ' cenas' + (ate ? ' · link liberado até ' + new Date(ate).toLocaleString('pt-BR', { weekday: 'long', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '') + '. Depois volta o valor normal.</small>';
+      [].forEach.call(box.querySelectorAll('.op'), function (o) { o.onclick = function () { painel = o.getAttribute('data-p'); [].forEach.call(box.querySelectorAll('.op'), function (x) { x.classList.toggle('on', x === o); }); atualizar(); }; });
+      var ch = document.querySelector('.chips li:nth-child(3)'); if (ch) ch.innerHTML = 'Entrega em <b>Ultra HD</b>';
+    }
     if (promo) { of.style.display = 'block'; of.innerHTML = '<b>Condição especial</b> até ' + new Date(ate).toLocaleString('pt-BR', { weekday: 'long', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) + '. Depois volta o valor normal:<br>' + tabela.map(function (t) { return 'até ' + t[0] + ' cenas: <b>' + brl(t[1]) + '</b> <s style="color:#8b9a93">' + brl(t[2]) + '</s>'; }).join(' · '); }
   }
   document.getElementById('ok').onclick = function () {
     var ks = Object.keys(sel); if (!ks.length) return;
     var c = ks.filter(function (k) { return k.indexOf('logo:') === 0; }).map(function (k) { return k.slice(5); }), f = ks.filter(function (k) { return k.indexOf('photo:') === 0; }).map(function (k) { return k.slice(6); });
-    var p = preco(ks.length), v = brinde ? Math.max(0, ks.length - maxB) * EXTRA : (promo ? p[1] : p[2]);
-    var txt = 'Quero a animação para o telão! ' + (pedido ? '#' + pedido + ' ' : '') + '\n' + ks.length + ' cenas · ' + brl(v) + '\nLogo: ' + c.map(function (k) { return sel['logo:' + k]; }).join(', ') + (f.length ? '\nFoto: ' + f.map(function (k) { return sel['photo:' + k]; }).join(', ') : '') + '\n[c:' + c.join(',') + '|f:' + f.join(',') + ']';
+    var p = preco(ks.length), v = brinde ? Math.max(0, ks.length - maxB) * EXTRA : rl ? (painel === 'laterais' ? rlat : rc) : (promo ? p[1] : p[2]);
+    var txt = 'Quero a animação para o telão! ' + (pedido ? '#' + pedido + ' ' : '') + '\n' + ks.length + ' cenas · ' + brl(v) + (rl ? ' (promoção relâmpago, Ultra HD, ' + (painel === 'laterais' ? 'painel central + laterais' : 'só o painel central') + ')\n[rl:' + painel + ']' : '') + '\nLogo: ' + c.map(function (k) { return sel['logo:' + k]; }).join(', ') + (f.length ? '\nFoto: ' + f.map(function (k) { return sel['photo:' + k]; }).join(', ') : '') + '\n[c:' + c.join(',') + '|f:' + f.join(',') + ']';
     location.href = 'https://wa.me/' + zap + '?text=' + encodeURIComponent(txt);
   };
   atualizar();
