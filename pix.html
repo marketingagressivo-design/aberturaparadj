@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pagamento via Pix · Abertura para Show</title>
+<meta property="og:title" content="Pagamento via Pix · Abertura para Show">
+<meta property="og:description" content="QR Code e Pix copia e cola">
+<meta property="og:site_name" content="Abertura para Show">
+<meta name="robots" content="noindex">
+<style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;background:#111;color:#eee;text-align:center}a{color:#7fd1ff}</style>
+</head>
+<body>
+<p id="m">Abrindo o pagamento…</p>
+<script>
+// a extensão troca o marcador abaixo pelo endereço do Apps Script de Pagamentos ao publicar (background.js, siteAtualizar)
+var EXEC = 'https://script.google.com/macros/s/AKfycbxPgkTMNmRUJjY1fXa51Ayb1NTOrCAXBE0rmk9SdcMRsefQQT7kakiibOEK27ZW_NRtUg/exec';
+var p = new URLSearchParams(location.search), q = ['a=pix'];
+['v', 'e', 'r'].forEach(function (k) { var x = p.get(k); if (x && /^[A-Za-z0-9.\-]{1,40}$/.test(x)) q.push(k + '=' + encodeURIComponent(x)); });
+if (/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(EXEC) && p.get('v')) {
+  var u = EXEC + '?' + q.join('&');
+  document.getElementById('m').innerHTML = 'Abrindo o pagamento… <br><br><a href="' + u + '">Toque aqui se não abrir</a>';
+  location.replace(u);
+} else {
+  document.getElementById('m').textContent = 'Link de pagamento inválido. Fale com a gente no WhatsApp.';
+}
+</script>
+</body>
+</html>
