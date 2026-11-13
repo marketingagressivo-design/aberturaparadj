@@ -139,9 +139,9 @@ kbd{background:#1a211e;border:1px solid var(--line);border-radius:4px;padding:0 
       ligarAvulso(); return;
     }
     m.innerHTML = '<p class="dica">Carregando os textos aprovados…</p>';
-    let L = [];
-    try { L = (await api({ acao: 'textos' })).lista || []; localStorage.setItem('ga_cache', JSON.stringify(L)); }
-    catch (e) { L = JSON.parse(localStorage.getItem('ga_cache') || '[]'); m.insertAdjacentHTML('afterbegin', '<p class="err">Sem internet ou sem resposta (' + esc(e.message) + '). Mostrando a última lista salva.</p>'); }
+    let L = [], AG = [];
+    try { const rr = await api({ acao: 'textos' }); L = rr.lista || []; AG = rr.agenda || []; localStorage.setItem('ga_cache', JSON.stringify(L)); localStorage.setItem('ga_agenda', JSON.stringify(AG)); }
+    catch (e) { L = JSON.parse(localStorage.getItem('ga_cache') || '[]'); AG = JSON.parse(localStorage.getItem('ga_agenda') || '[]'); m.insertAdjacentHTML('afterbegin', '<p class="err">Sem internet ou sem resposta (' + esc(e.message) + '). Mostrando a última lista salva.</p>'); }
     const pd = new URLSearchParams(location.hash.slice(1)).get('p'); if (pd) { const x = L.find(z => z.pedido === pd); if (x) return abrir(x); }
     let h = '<h2>TEXTOS PARA GRAVAR (' + L.length + ')</h2>';
     if (!L.length) h += '<div class="vazio">Nenhum texto aprovado esperando gravação.</div>';
@@ -149,8 +149,16 @@ kbd{background:#1a211e;border:1px solid var(--line);border-radius:4px;padding:0 
       const fs = frases(x.texto).filter(f => f.t), ts = await get('job:' + x.pedido), feitas = ts ? Object.keys(ts.takes || {}).length : 0;
       h += '<div class="card cli" data-p="' + esc(x.pedido) + '"><span><b>' + esc(x.nome || x.pedido) + '</b><small>#' + esc(x.pedido) + (x.duracao ? ' · ' + esc(x.duracao) : '') + (x.entrega ? ' · entrega ' + esc(x.entrega) : '') + (x.enviado ? ' · <span class="ok-msg">enviado ✓</span>' : '') + '</small></span><span class="pg">' + feitas + '/' + fs.length + '</span></div>';
     }
+    // 2.99.585: AGENDA (todos os pedidos fechados e não entregues, com a data, o andamento e o texto) — vem da extensão
+    if (AG.length) {
+      const hoje = new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 10), br = d => d ? d.split('-').reverse().slice(0, 2).join('/') : 'sem data';
+      h += '<h2>AGENDA DE ENTREGAS (' + AG.length + ')</h2>' + AG.map((x, i) => '<div class="card" style="padding:10px 12px"><div class="cli" data-ag="' + i + '"><span><b>' + esc(x.nome) + '</b><small>#' + esc(x.pedido) + (x.duracao ? ' · ' + esc(x.duracao) : '') + (x.servico ? ' · ' + esc(x.servico) : '') + '</small><small>' + esc(x.etapa) + (x.gravado ? ' · <span class="ok-msg">gravado ✓</span>' : '') + '</small></span><span class="pg" style="color:' + (x.entrega && x.entrega < hoje ? '#ff6b6b' : x.entrega === hoje ? 'var(--acc)' : 'var(--mut)') + '">' + (x.entrega === hoje ? 'HOJE' : x.entrega && x.entrega < hoje ? 'ATRASADO ' + br(x.entrega) : br(x.entrega)) + '</span></div>'
+        + '<div class="agtx" id="agtx' + i + '" hidden style="margin-top:8px;white-space:pre-wrap;color:#c4d0ca;font-size:15px;border-top:1px solid var(--line);padding-top:8px">' + (x.texto ? esc(x.texto) : '<span class="dica">Texto ainda não aprovado.</span>') + (x.texto ? '<div class="topo" style="margin-top:8px"><button class="pri sm" data-grav="' + i + '">🎙 Gravar este texto</button></div>' : '') + '</div></div>').join('');
+    }
     m.innerHTML = h + htmlAvulso();
-    [].forEach.call(m.querySelectorAll('.cli'), c => c.onclick = () => abrir(L.find(z => z.pedido === c.getAttribute('data-p'))));
+    [].forEach.call(m.querySelectorAll('.cli[data-p]'), c => c.onclick = () => abrir(L.find(z => z.pedido === c.getAttribute('data-p'))));
+    [].forEach.call(m.querySelectorAll('.cli[data-ag]'), c => c.onclick = () => { const t = $('agtx' + c.getAttribute('data-ag')); t.hidden = !t.hidden; });
+    [].forEach.call(m.querySelectorAll('[data-grav]'), b => b.onclick = () => { const x = AG[+b.getAttribute('data-grav')]; abrir({ pedido: x.pedido, nome: x.nome, texto: x.texto, duracao: x.duracao, entrega: x.entrega }); });
     ligarAvulso();
   }
   function htmlAvulso() { return '<h2>TEXTO AVULSO</h2><div class="card"><textarea id="txAv" placeholder="Cole aqui um texto para gravar frase a frase"></textarea><div class="topo"><button class="pri sm" id="btAv">Gravar este texto</button></div></div>'; }
@@ -196,6 +204,7 @@ kbd{background:#1a211e;border:1px solid var(--line);border-radius:4px;padding:0 
       if (n > SR * 0.3) { takes[i] = { sr: SR, pcm: a }; await salvarJob(); if (!$('autoplay') || $('autoplay').checked) tocar(SR, limpar(takes[i])); }
       refresh(); return;
     }
+    sessao('play-and-record');
     try { await abrirMic(); } catch (e) { $('info').innerHTML = '<span class="err">O microfone foi bloqueado. Libere nas permissões do navegador (cadeado na barra de endereço) e tente de novo.</span>'; return; }
     if (player) try { player.stop(); } catch (e) {}
     if (!F[cur] || !F[cur].t) return;
@@ -230,7 +239,11 @@ kbd{background:#1a211e;border:1px solid var(--line);border-radius:4px;padding:0 
   }
   const nomeArq = () => String((job.nome || 'gravacao') + ' - Locução (celular)').replace(/[\\/:*?"<>|]+/g, ' ').trim() + '.wav';
   function baixarBlob(bl, nome) { const a = document.createElement('a'); a.href = URL.createObjectURL(bl); a.download = nome; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000); }
-  function tocar(sr, pcm) { if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); if (player) try { player.stop(); } catch (e) {} const ab = ctx.createBuffer(1, pcm.length, sr); ab.copyToChannel ? ab.copyToChannel(pcm, 0) : ab.getChannelData(0).set(pcm); player = ctx.createBufferSource(); player.buffer = ab; player.connect(ctx.destination); ctx.resume(); player.start(); }
+  // volume da prévia: no iPhone o som saía pelo alto-falante de ligação (sessão de gravação) e o take cru (sem ganho automático) fica baixo.
+  // Para ouvir: troca a sessão para 'playback' e normaliza só a prévia (o WAV enviado não muda).
+  function sessao(t) { try { if (navigator.audioSession) navigator.audioSession.type = t; } catch (e) {} }
+  function alto(pcm) { let p = 0; for (let i = 0; i < pcm.length; i++) { const a = Math.abs(pcm[i]); if (a > p) p = a; } const g = p > 0.0005 ? Math.min(0.95 / p, 30) : 1; if (g < 1.1) return pcm; const o = new Float32Array(pcm.length); for (let i = 0; i < pcm.length; i++) o[i] = pcm[i] * g; return o; }
+  function tocar(sr, pcm) { sessao('playback'); pcm = alto(pcm); if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)(); if (player) try { player.stop(); } catch (e) {} const ab = ctx.createBuffer(1, pcm.length, sr); ab.copyToChannel ? ab.copyToChannel(pcm, 0) : ab.getChannelData(0).set(pcm); player = ctx.createBufferSource(); player.buffer = ab; player.connect(ctx.destination); ctx.resume(); player.start(); }
   async function enviar() {
     const r = montar(); if (!r) return;
     if (r.faltam && !confirm('Faltam ' + r.faltam + ' frase(s). Enviar assim mesmo?')) return;
