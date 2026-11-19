@@ -1,0 +1,307 @@
+{
+ "v": 1,
+ "atualizado": "2026-11-19T15:57:16.736Z",
+ "cenas": [
+  {
+   "t": "video",
+   "id": "beet",
+   "n": "BEET",
+   "desde": "2026-11-19",
+   "g": 0
+  },
+  {
+   "t": "photo",
+   "id": "red",
+   "n": "RED",
+   "desde": "2026-11-19",
+   "g": 0
+  },
+  {
+   "t": "video",
+   "id": "vimpact",
+   "n": "VÍDEO IMPACTO",
+   "desde": "2026-11-19",
+   "g": 0
+  },
+  {
+   "t": "video",
+   "id": "vfall",
+   "n": "VÍDEO QUEDA",
+   "desde": "2026-11-19",
+   "g": 0
+  },
+  {
+   "t": "video",
+   "id": "vvortex",
+   "n": "VÍDEO VÓRTICE",
+   "desde": "2026-11-19",
+   "g": 0
+  },
+  {
+   "t": "video",
+   "id": "vglasses",
+   "n": "VÍDEO ÓCULOS",
+   "desde": "2026-11-19",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "chrome",
+   "n": "CROMO 3D",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "neon",
+   "n": "NEON",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "totem",
+   "n": "TOTEM",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "outline",
+   "n": "TRAÇO",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "photo",
+   "id": "flash",
+   "n": "FLASH",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "dots",
+   "n": "DOT MATRIX",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "scan",
+   "n": "SCANLINES",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "rings",
+   "n": "ANÉIS",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "slats",
+   "n": "PERSIANA",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "photo",
+   "id": "neonline",
+   "n": "CONTORNO NEON",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "echo",
+   "n": "ECO",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "holo",
+   "n": "HOLO 3D",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "grid",
+   "n": "GRADE",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "photo",
+   "id": "halftone",
+   "n": "RETÍCULA",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "glitch",
+   "n": "GLITCH",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "contrast",
+   "n": "CONTRASTE",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "quad",
+   "n": "QUADRANTES",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "stack",
+   "n": "SANFONA",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "photo",
+   "id": "scanph",
+   "n": "SCANLINES",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "wave",
+   "n": "ONDA",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "punch",
+   "n": "SOCO",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "coin",
+   "n": "MOEDA",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "laser",
+   "n": "LASER",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "photo",
+   "id": "echoph",
+   "n": "ECO",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "particles",
+   "n": "PARTÍCULAS",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "blocks",
+   "n": "BLOCOS",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "neon2",
+   "n": "NEON DUPLO",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "photo",
+   "id": "totemph",
+   "n": "TOTEM",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "radar",
+   "n": "RADAR",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "barcode",
+   "n": "CÓDIGO",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "circuit",
+   "n": "CIRCUITO",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "sweep",
+   "n": "VARREDURA",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "photo",
+   "id": "holoph",
+   "n": "HOLOGRAMA",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "layers",
+   "n": "CAMADAS",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "logo",
+   "id": "wall",
+   "n": "PAREDE",
+   "desde": "2026-01-01",
+   "g": 0
+  },
+  {
+   "t": "video",
+   "id": "vneon",
+   "n": "VÍDEO NEON",
+   "desde": "2026-11-19",
+   "g": 0
+  },
+  {
+   "t": "video",
+   "id": "vglitch",
+   "n": "VÍDEO GLITCH",
+   "desde": "2026-11-19",
+   "g": 0
+  }
+ ]
+}
