@@ -1,0 +1,19 @@
+PARA OS AGENTES QUE MEXEM NESTA EXTENSÃO — ELA ATUALIZA O SITE SOZINHA (desde a 2.99.572)
+
+As páginas desta pasta (site/*.html) SÃO as páginas do site aberturaparashow.com.br.
+Ao instalar ou recarregar a extensão, o background.js (função siteAtualizar, lista SITE_PAGINAS) compara cada página daqui
+com a do repositório do site no GitHub (configuração ghRepoPag; se vazia, ghRepo; usuário ghUser, token ghToken)
+e, se estiver diferente, substitui lá com um commit "site: <nome> (extensão <versão>)". O GitHub Pages publica em ~1 min.
+
+Regras:
+- Para mudar uma página do site, edite AQUI (site/<nome>.html), suba a versão no manifest.json e entregue. Não peça
+  para o dono subir o arquivo na mão.
+- Só ATUALIZA arquivo que já existe no repositório (<nome>.html ou <nome>/index.html). Nunca cria página nem apaga nada.
+- Página nova do site: além de criar o arquivo aqui, acrescente o nome em SITE_PAGINAS e peça ao dono para criar o arquivo
+  no repositório uma vez (ou mude siteAtualizar para criar).
+- O resultado fica em chrome.storage.local.siteAtualizado e sai como notificação ("🌐 Site atualizado" / "⚠ Site não atualizado").
+- Disparo manual: chrome.runtime.sendMessage({ tipo: 'siteAtualizar' }).
+
+Páginas hoje:
+- animacoes (escolha de cenas da animação de logo; promoção relâmpago com rl/rc/rlat/rlmax).
+- gravaragora (2.99.574, pode ser CRIADA: está em SITE_CRIAR): gravação frase a frase no PC e no celular. Parâmetros no # : u = endereço do Apps Script, k = chave (ficam no localStorage do aparelho), p = pedido, n = nome, t = texto em base64url (abre direto, sem Apps Script). Ponte com o Drive: site/gravaragora-apps-script.gs (o dono instala na conta Google dele; doGet textos/gravacoes, doPost textos/audio). Na extensão: content.js GA_PAGINA, htmlRecEscolha, gaSincronizar (a cada 10 min: manda textos aprovados não gravados, busca gravações novas desde gaDesde e registra em textos[pedido].gravacoes com origem 'celular'); background.js mensagem gaApi.

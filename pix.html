@@ -14,7 +14,7 @@
 <p id="m">Abrindo o pagamento…</p>
 <script>
 // a extensão troca o marcador abaixo pelo endereço do Apps Script de Pagamentos ao publicar (background.js, siteAtualizar)
-var EXEC = 'https://script.google.com/macros/s/AKfycbxPgkTMNmRUJjY1fXa51Ayb1NTOrCAXBE0rmk9SdcMRsefQQT7kakiibOEK27ZW_NRtUg/exec';
+var EXEC = 'COLE_AQUI_O_ENDERECO_/exec';
 var p = new URLSearchParams(location.search), q = ['a=pix'];
 ['v', 'e', 'r'].forEach(function (k) { var x = p.get(k); if (x && /^[A-Za-z0-9.\-]{1,40}$/.test(x)) q.push(k + '=' + encodeURIComponent(x)); });
 if (/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(EXEC) && p.get('v')) {

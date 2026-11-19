@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex">
@@ -90,7 +90,9 @@ h1#tit span{color:#ff3b4f}
 .verCenas{display:inline-flex;align-items:center;gap:8px;margin:2px 0 0;background:#121a16;border:1px solid #2b3a34;color:#e9efe9;border-radius:10px;padding:10px 13px;font:700 12px Inter,system-ui;text-decoration:none}
 .verCenas span{color:#8b9a93;font-weight:400;font-size:11px}
 .verCenas:hover{border-color:#f5c518;color:#f5c518}
+.c .tagNovo{position:absolute;left:7px;top:27px;background:#ff1e46;color:#fff;font:800 9px Inter,system-ui;letter-spacing:.06em;padding:2px 6px;border-radius:999px;z-index:1}
 .c .tagFoto{position:absolute;left:7px;top:7px;background:#f5c518;color:#111;font:800 9px Inter,system-ui;letter-spacing:.06em;padding:2px 6px;border-radius:999px;z-index:1}
+.c .tagFoto.tagVid{background:#19e36b;color:#04140a}
 .fichaTecnica{margin-top:34px;border-top:1px solid var(--line);padding-top:8px}
 .fichaTecnica h2{margin-top:0}
 
@@ -141,7 +143,7 @@ h1#tit span{color:#ff3b4f}
   <div class="rl" id="rl"></div>
 </header>
 <main id="main">
-  <div class="catalogoCab" id="cenas"><h2>ESCOLHA AS CENAS DA SUA ANIMAÇÃO</h2><p class="sub">Estas são as cenas que podem entrar na sua animação no painel. As de <b>foto</b> estão misturadas com as de logo. Me chame no WhatsApp para escolher as suas.</p></div>
+  <div class="catalogoCab" id="cenas"><h2>ESCOLHA AS CENAS DA SUA ANIMAÇÃO</h2><p class="sub">Estas são as cenas que podem entrar na sua animação no painel. As de <b>foto</b> estão misturadas com as de logo. As de <b>vídeo</b> (no topo) usam um vídeo seu gravado com <b>fundo verde ou azul</b>; a gente recorta e aplica na cena. Me chame no WhatsApp para escolher as suas.</p></div>
   <div class="grade" id="gMix"></div>
   <div class="info">
     <ul class="chips">
@@ -169,8 +171,11 @@ h1#tit span{color:#ff3b4f}
 <div class="barra"><div class="in"><div class="tot" id="tot"><b>Toque nas cenas que você quer</b><small>Elas ficam marcadas. Depois aperte OK.</small></div><button class="okb" id="ok" disabled="">OK</button></div></div>
 <script>
 (function () {
-  var LOGO = [['chrome','CROMO 3D'],['neon','NEON'],['totem','TOTEM'],['outline','TRAÇO'],['dots','DOT MATRIX'],['scan','SCANLINES'],['rings','ANÉIS'],['slats','PERSIANA'],['echo','ECO'],['holo','HOLO 3D'],['grid','GRADE'],['tunnel','TÚNEL'],['glitch','GLITCH'],['contrast','CONTRASTE'],['quad','QUADRANTES'],['stack','SANFONA'],['wave','ONDA'],['punch','SOCO'],['coin','MOEDA'],['laser','LASER'],['particles','PARTÍCULAS'],['blocks','BLOCOS'],['neon2','NEON DUPLO'],['mirrorx','ESPELHO'],['radar','RADAR'],['barcode','CÓDIGO'],['circuit','CIRCUITO'],['sweep','VARREDURA'],['layers','CAMADAS'],['wall','PAREDE'],['ripple','ONDAS']];
-  var FOTO = [['flash','FLASH'],['neonline','CONTORNO NEON'],['halftone','RETÍCULA'],['scanph','SCANLINES'],['echoph','ECO'],['totemph','TOTEM'],['holoph','HOLOGRAMA']];
+  var LOGO = [['chrome','CROMO 3D'],['neon','NEON'],['totem','TOTEM'],['outline','TRAÇO'],['dots','DOT MATRIX'],['scan','SCANLINES'],['rings','ANÉIS'],['slats','PERSIANA'],['echo','ECO'],['holo','HOLO 3D'],['grid','GRADE'],['glitch','GLITCH'],['contrast','CONTRASTE'],['quad','QUADRANTES'],['stack','SANFONA'],['wave','ONDA'],['punch','SOCO'],['coin','MOEDA'],['laser','LASER'],['particles','PARTÍCULAS'],['blocks','BLOCOS'],['neon2','NEON DUPLO'],['radar','RADAR'],['barcode','CÓDIGO'],['circuit','CIRCUITO'],['sweep','VARREDURA'],['layers','CAMADAS'],['wall','PAREDE']];
+  // VÍDEO: o cliente manda um vídeo com fundo verde ou azul (chroma key)
+  var VIDEO = [['beet','BEET'],['vimpact','VÍDEO IMPACTO'],['vglasses','VÍDEO ÓCULOS'],['vfall','VÍDEO QUEDA'],['vvortex','VÍDEO VÓRTICE'],['vneon','VÍDEO NEON'],['vglitch','VÍDEO GLITCH']];
+  var NOVOS = {beet:1,red:1,vimpact:1,vglasses:1,vfall:1,vvortex:1,vneon:1,vglitch:1};
+  var FOTO = [['red','RED'],['flash','FLASH'],['neonline','CONTORNO NEON'],['halftone','RETÍCULA'],['scanph','SCANLINES'],['echoph','ECO'],['totemph','TOTEM'],['holoph','HOLOGRAMA']];
   var q = new URLSearchParams(location.search), modo = q.get('m') === 'escolher' ? 'escolher' : 'ver', pedido = (q.get('p') || '').replace(/[^\w-]/g, ''), zap = (q.get('w') || '').replace(/\D/g, '');
   var promo = q.get('pr') === '1', ate = Number(q.get('ate')) || 0;
   var brinde = q.get('b') === '1', maxB = Math.max(1, Number(q.get('max')) || 3), EXTRA = 50;   // brinde: até maxB cenas grátis; cada cena a mais = R$ 50
@@ -183,7 +188,7 @@ h1#tit span{color:#ff3b4f}
   var sel = {}, brl = function (v) { return 'R$ ' + Number(v).toLocaleString('pt-BR'); };
   function card(id, nome, tipo, grade) {
     var b = document.createElement('button'); b.className = 'c'; b.type = 'button'; b.setAttribute('aria-pressed', 'false'); b.setAttribute('aria-label', nome);
-    b.innerHTML = '<img loading="lazy" alt="" src="anim-' + tipo + '_' + id + '.gif" onerror="this.style.opacity=0"><span class="n">' + nome + '</span>' + (tipo === 'photo' ? '<span class="tagFoto">FOTO</span>' : '') + '<span class="ok"></span>';
+    b.innerHTML = '<img loading="lazy" alt="" src="anim-' + tipo + '_' + id + '.gif" onerror="this.style.opacity=0"><span class="n">' + nome + '</span>' + (tipo === 'photo' ? '<span class="tagFoto">FOTO</span>' : tipo === 'video' ? '<span class="tagFoto tagVid">VÍDEO · CHROMA</span>' : '') + (NOVOS[id] ? '<span class="tagNovo">NOVO</span>' : '') + '<span class="ok"></span>';
     b.onclick = function () { if (modo !== 'escolher') return; var k = tipo + ':' + id; if (sel[k]) delete sel[k]; else { if (rl && Object.keys(sel).length >= rlMax) { alert('Na promoção relâmpago entram até ' + rlMax + ' cenas.'); return; } sel[k] = nome; } b.classList.toggle('on', !!sel[k]); b.setAttribute('aria-pressed', String(!!sel[k])); atualizar(); };
     grade.appendChild(b);
   }
@@ -191,6 +196,8 @@ h1#tit span{color:#ff3b4f}
     var mixed = [], fi = 0, step = Math.max(1, Math.round(LOGO.length / FOTO.length));
     LOGO.forEach(function (x, i) { mixed.push({ tipo: 'logo', d: x }); if ((i + 1) % step === 0 && fi < FOTO.length) mixed.push({ tipo: 'photo', d: FOTO[fi++] }); });
     while (fi < FOTO.length) mixed.push({ tipo: 'photo', d: FOTO[fi++] });
+    var iR = mixed.findIndex(function (m) { return m.d[0] === 'red'; }); if (iR > 0) mixed.unshift(mixed.splice(iR, 1)[0]);
+    VIDEO.slice().reverse().forEach(function (x) { mixed.unshift({ tipo: 'video', d: x }); });
     var g = document.getElementById('gMix');
     mixed.forEach(function (m) { card(m.d[0], m.d[1], m.tipo, g); });
   })();
@@ -224,9 +231,9 @@ h1#tit span{color:#ff3b4f}
   }
   document.getElementById('ok').onclick = function () {
     var ks = Object.keys(sel); if (!ks.length) return;
-    var c = ks.filter(function (k) { return k.indexOf('logo:') === 0; }).map(function (k) { return k.slice(5); }), f = ks.filter(function (k) { return k.indexOf('photo:') === 0; }).map(function (k) { return k.slice(6); });
+    var c = ks.filter(function (k) { return k.indexOf('logo:') === 0; }).map(function (k) { return k.slice(5); }), f = ks.filter(function (k) { return k.indexOf('photo:') === 0; }).map(function (k) { return k.slice(6); }), vv = ks.filter(function (k) { return k.indexOf('video:') === 0; }).map(function (k) { return k.slice(6); });
     var p = preco(ks.length), v = brinde ? Math.max(0, ks.length - maxB) * EXTRA : rl ? (painel === 'laterais' ? rlat : rc) : (promo ? p[1] : p[2]);
-    var txt = 'Quero a animação para o telão! ' + (pedido ? '#' + pedido + ' ' : '') + '\n' + ks.length + ' cenas · ' + brl(v) + (rl ? ' (promoção relâmpago, Ultra HD, ' + (painel === 'laterais' ? 'painel central + laterais' : 'só o painel central') + ')\n[rl:' + painel + ']' : '') + '\nLogo: ' + c.map(function (k) { return sel['logo:' + k]; }).join(', ') + (f.length ? '\nFoto: ' + f.map(function (k) { return sel['photo:' + k]; }).join(', ') : '') + '\n[c:' + c.join(',') + '|f:' + f.join(',') + ']';
+    var txt = 'Quero a animação para o telão! ' + (pedido ? '#' + pedido + ' ' : '') + '\n' + ks.length + ' cenas · ' + brl(v) + (rl ? ' (promoção relâmpago, Ultra HD, ' + (painel === 'laterais' ? 'painel central + laterais' : 'só o painel central') + ')\n[rl:' + painel + ']' : '') + '\nLogo: ' + c.map(function (k) { return sel['logo:' + k]; }).join(', ') + (f.length ? '\nFoto: ' + f.map(function (k) { return sel['photo:' + k]; }).join(', ') : '') + (vv.length ? '\nVídeo (chroma): ' + vv.map(function (k) { return sel['video:' + k]; }).join(', ') : '') + '\n[c:' + c.join(',') + '|f:' + f.join(',') + (vv.length ? '|v:' + vv.join(',') : '') + ']';
     location.href = 'https://wa.me/' + zap + '?text=' + encodeURIComponent(txt);
   };
   atualizar();
