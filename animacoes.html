@@ -186,13 +186,13 @@ h1#tit span{color:#ff3b4f}
   if (rl) promo = false;
   document.body.className = modo === 'escolher' ? 'esc' : 'ver';
   var sel = {}, brl = function (v) { return 'R$ ' + Number(v).toLocaleString('pt-BR'); };
-  function card(id, nome, tipo, grade) {
+  function card(id, nome, tipo, grade, ver) {
     var b = document.createElement('button'); b.className = 'c'; b.type = 'button'; b.setAttribute('aria-pressed', 'false'); b.setAttribute('aria-label', nome);
-    b.innerHTML = '<img loading="lazy" alt="" src="anim-' + tipo + '_' + id + '.gif" onerror="this.style.opacity=0"><span class="n">' + nome + '</span>' + (tipo === 'photo' ? '<span class="tagFoto">FOTO</span>' : tipo === 'video' ? '<span class="tagFoto tagVid">VÍDEO · CHROMA</span>' : '') + (NOVOS[id] ? '<span class="tagNovo">NOVO</span>' : '') + '<span class="ok"></span>';
+    b.innerHTML = '<img loading="lazy" alt="" src="anim-' + tipo + '_' + id + '.gif' + (ver ? '?v=' + ver : '') + '" onerror="this.style.opacity=0"><span class="n">' + nome + '</span>' + (tipo === 'photo' ? '<span class="tagFoto">FOTO</span>' : tipo === 'video' ? '<span class="tagFoto tagVid">VÍDEO · CHROMA</span>' : '') + (NOVOS[id] ? '<span class="tagNovo">NOVO</span>' : '') + '<span class="ok"></span>';
     b.onclick = function () { if (modo !== 'escolher') return; var k = tipo + ':' + id; if (sel[k]) delete sel[k]; else { if (rl && Object.keys(sel).length >= rlMax) { alert('Na promoção relâmpago entram até ' + rlMax + ' cenas.'); return; } sel[k] = nome; } b.classList.toggle('on', !!sel[k]); b.setAttribute('aria-pressed', String(!!sel[k])); atualizar(); };
     grade.appendChild(b);
   }
-  (function () {
+  function montarFixo() {   // sem catalogo.json: listas fixas acima
     var mixed = [], fi = 0, step = Math.max(1, Math.round(LOGO.length / FOTO.length));
     LOGO.forEach(function (x, i) { mixed.push({ tipo: 'logo', d: x }); if ((i + 1) % step === 0 && fi < FOTO.length) mixed.push({ tipo: 'photo', d: FOTO[fi++] }); });
     while (fi < FOTO.length) mixed.push({ tipo: 'photo', d: FOTO[fi++] });
@@ -200,7 +200,17 @@ h1#tit span{color:#ff3b4f}
     VIDEO.slice().reverse().forEach(function (x) { mixed.unshift({ tipo: 'video', d: x }); });
     var g = document.getElementById('gMix');
     mixed.forEach(function (m) { card(m.d[0], m.d[1], m.tipo, g); });
-  })();
+  }
+  // catalogo.json (gerado pelo painel da galeria): ordem, nomes, NOVO (30 dias desde a entrada) e versão do GIF
+  function montarCatalogo(cat) {
+    var g = document.getElementById('gMix'), agora = Date.now(); NOVOS = {};
+    cat.cenas = cat.cenas.filter(function (c) { return c && /^(logo|photo|video)$/.test(c.t) && /^[a-z0-9]+$/.test(c.id) && c.n; });
+    cat.cenas.forEach(function (c) { if (c.desde && agora - Date.parse(c.desde) < 30 * 864e5) NOVOS[c.id] = 1; });
+    cat.cenas.forEach(function (c) { card(c.id, c.n, c.t, g, c.g); });
+  }
+  var montou = false, montar = function (cat) { if (montou) return; montou = true; if (cat && cat.cenas && cat.cenas.length) montarCatalogo(cat); else montarFixo(); };
+  try { fetch('catalogo.json?v=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(montar, function () { montar(null); }); } catch (e) { montar(null); }
+  setTimeout(function () { montar(null); }, 6000);
   function preco(n) { for (var i = 0; i < tabela.length; i++) if (n <= tabela[i][0]) return tabela[i]; return tabela[tabela.length - 1]; }
   function atualizar() {
     var n = Object.keys(sel).length, tot = document.getElementById('tot');
